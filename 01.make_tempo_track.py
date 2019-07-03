@@ -49,7 +49,7 @@ def main():
             old_tempo_track.append(ms)
     
     new_tempo_track = []
-    first_beat = start_time + 2.5
+    first_beat = start_time + 0.5 # the xcorr finds the END of the chirp, I think
     print(start_time, first_beat)
     for ms in old_tempo_track:
         elapsed_ms = ms - old_tempo_track[0]
