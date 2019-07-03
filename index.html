@@ -15,8 +15,7 @@
                 display: grid;
                 background-color:skyblue;
             }
-    
-
+            
             #wrapper {
                 width: 500px;
                 height: 200px;
@@ -24,30 +23,50 @@
                 border-radius: 10px;
                 box-shadow: 10px 10px;
                 margin: auto;
-
+                
                 display:flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
             }
-
-            #wrapper > button {
+            
+            #info {
                 display: flex;
                 margin: 10px;
+                flex-direction: row;
             }
+            
+
+            #controls {
+                display: flex;
+                margin: 10px;
+                flex-direction: row;
+            }
+            
+            #info *, #controls * {
+                margin: 10px;
+            }
+
         </style>
     </head>
 
     <body>
         <div id="wrapper">
-            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="false" id="toggle">Play</button>
-            <button type="button" class="btn btn-primary" id="speed-up">Speed up</button>
-            <button type="button" class="btn btn-primary" id="slow-down">Slow down</button>
-            BPM: <div id='bpm'>-</div>
+            <div id="info">
+                <div id='bpm'>BPM: -</div>
+                <div id="beat">Beat: -</div>
+            </div>
+            <div id="controls">
+                    <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="false" id="toggle">Play</button>
+                    <button type="button" class="btn btn-primary" id="speed-up">Speed up</button>
+                    <button type="button" class="btn btn-primary" id="slow-down">Slow down</button>
+            </div>
         </div>
 
         <script>
             var synth = new Tone.MembraneSynth().toMaster()
             var player = new Tone.Player('http://arunganesan.com/up-long.wav').toMaster();
+            // var player = new Tone.Player('./sounds/up-long.wav').toMaster();
             var measure = 0;
             var beat = 0;
             
@@ -56,16 +75,15 @@
                 //the time is the sample-accurate time of the event
                 measure += 1;
                 beat = 0;
-
                 synth.triggerAttackRelease('C3', '4n', time)
-                console.log(measure, ':',  beat, '@', $.now());
+                showBeat();
             }
             
             function triggerBeats(time){
                 //the time is the sample-accurate time of the event
                 synth.triggerAttackRelease('C2', '4n', time)
                 beat += 1;
-                console.log(measure, ':',  beat, '@', $.now());
+                showBeat()
             }
             
             //schedule a few notes
@@ -77,18 +95,23 @@
             //set the transport to repeat
             Tone.Transport.loopEnd = '1m'
             Tone.Transport.loop = true
-
+            
+            function showBeat() {
+                let msg = '' + measure + ':' + beat + '@' + $.now();
+                $('#beat').text('Beat: ' + msg);
+                console.log(msg);
+            }
 
             function showBPM() {
-                $('#bpm').text(Tone.Transport.bpm.value.toFixed(2));
+                $('#bpm').text('BPM: '+ Tone.Transport.bpm.value.toFixed(2));
             }
             
             
             $("#toggle").click((e) => {
                 if ($('#toggle').attr('aria-pressed') == 'false') {
                     $('#toggle').text('Stop');
-                    synth.triggerAttackRelease('C4', '8n');
-                    // player.start();
+                    // synth.triggerAttackRelease('C4', '8n');
+                    player.start();
                     setTimeout(() => {
                         Tone.Transport.toggle();    
                     }, 2500);
