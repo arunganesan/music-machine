@@ -37,6 +37,7 @@ COLORS = ['blue']*2 + ['orange']*2 \
         + ['blue']*2 + ['yellow']*2
 
 PLACE_AT_BEATS = [16, 52, 60]
+#PLACE_AT_BEATS = [17, 53, 61]
 
 PER_LINE = 4
 
@@ -67,7 +68,7 @@ def highlight_bar (idx, ax, per_bar_bbox,  per_bar_times, curr_time, color):
         return None
     
     x, y, w, h = per_bar_bbox[idx]
-    rect = patches.Rectangle((x, y), w * perc, h, color=color)
+    rect = patches.Rectangle((x, y), w * perc, h, color=color, alpha=0.25)
     ax.add_patch(rect)
     return rect
 
@@ -135,7 +136,10 @@ def main():
         collections.append(beat_text)
 
         for idx, color in color_per_bar.items():
-            rect = highlight_bar(idx, ax, per_bar_bbox, per_bar_times, curr_time, color)
+            rect = highlight_bar(
+                idx, ax, 
+                per_bar_bbox, per_bar_times, 
+                curr_time, color)
             if rect is None:
                 continue
             collections.append(rect)
@@ -149,7 +153,7 @@ def main():
         coll = draw_frame(f)
         frames.append(coll)
     
-    ani = animation.ArtistAnimation(fig, frames, interval=MSPF, blit=True)
+    ani = animation.ArtistAnimation(fig, frames, interval=MSPF)
     ani.save(ofilename)
 
     """

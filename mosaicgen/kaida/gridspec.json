@@ -1,0 +1,23 @@
+{
+    "width": 1600,
+    "height": 1200,
+    "grid": [
+        {
+            "file": "recording.mov",
+            "rows": 1,
+            "cols": 4,
+            "row": 1,
+            "col": 1,
+            "rowspan": 1,
+            "colspan": 3
+        },{
+            "file": "kaida.mp4",
+            "rows": 1,
+            "cols": 4,
+            "row": 1,
+            "col": 4,
+            "rowspan": 1,
+            "colspan": 1
+        }
+    ]
+}
