@@ -26,8 +26,6 @@ import numpy as np
 
 LINEHEIGHT = 0.2
 BARSPACE = 0.02
-UNDERLINE_DIP = 0.15
-
 
 ofilename = 'kaida.mp4'
 
@@ -56,7 +54,7 @@ def draw_bar (ax, bar, x=0, y=0):
     
     return x_[0], y_[0], w, h, text
 
-def highlight_bar (idx, ax, per_bar_bbox,  per_bar_times, curr_time):
+def highlight_bar (idx, ax, per_bar_bbox,  per_bar_times, curr_time, color):
     # get the bar start and end time
     t0, t1 = per_bar_times[idx]
     
@@ -68,7 +66,6 @@ def highlight_bar (idx, ax, per_bar_bbox,  per_bar_times, curr_time):
     if perc == 0: 
         return None
     
-    color = COLORS[idx]
     x, y, w, h = per_bar_bbox[idx]
     rect = patches.Rectangle((x, y), w * perc, h, color=color)
     ax.add_patch(rect)
@@ -81,7 +78,7 @@ def main():
     args = parser.parse_args()
     
     per_beat_time = open(args.tempotrack, 'r').readlines()
-    per_beat_time = list(map(float, per_beat_time))
+    per_beat_time = np.array(list(map(float, per_beat_time)))
     per_bar_times = {}
     for idx, s in enumerate(per_beat_time):
         if idx == len(per_beat_time) - 1:
@@ -101,12 +98,13 @@ def main():
     plt.ylim([-2, 1])
     
     
-    MSPF = 50
-    DUR = 10
+    MSPF = 100
+    DUR = 50
     
     text_collection = []
     offset = [0, 0]
     per_bar_bbox = {}
+    color_per_bar = {}
     
     idx_offset = 0
     for times_offset in range(len(PLACE_AT_BEATS)):
@@ -121,25 +119,29 @@ def main():
                 offset[1] += 0
             x0, y0, w, h, text = draw_bar(ax, bar, x=offset[0], y=offset[1])
             text_collection.append(text)
-            per_bar_bbox[idx] = [x0, y0, w, h]
-        
+
+            bar_offset = PLACE_AT_BEATS[times_offset]
+            per_bar_bbox[bar_offset + idx] = [x0, y0, w, h]
+            color_per_bar[bar_offset + idx] = COLORS[idx]
     
+    
+
     def draw_frame (fidx):
+        collections = []
+
         curr_time = fidx * MSPF / 1000
-        
-        collections = list(text_collection)
-        for idx in range(len(COLORS)):
-            rect = highlight_bar(idx, ax, per_bar_bbox, per_bar_times, curr_time)
+        curr_beat = np.argmin(np.abs(per_beat_time - curr_time))
+        beat_text = ax.text(0, 0, '{}'.format(curr_beat))
+        collections.append(beat_text)
+
+        for idx, color in color_per_bar.items():
+            rect = highlight_bar(idx, ax, per_bar_bbox, per_bar_times, curr_time, color)
             if rect is None:
                 continue
             collections.append(rect)
         
+        collections += text_collection
         return collections
-    
-    #for idx, color in enumerate(COLORS):
-    #    x, y, w, h = per_bar_bbox[idx]
-    #    rect = patches.Rectangle((x, y), w, h, color=color)
-    #    ax.add_patch(rect)
     
     num_frames = DUR * 1000 // MSPF
     frames = []
@@ -149,6 +151,7 @@ def main():
     
     ani = animation.ArtistAnimation(fig, frames, interval=MSPF, blit=True)
     ani.save(ofilename)
+
     """
     * At that beat, start animating in a bar
         * At each frame, calculate the time
@@ -160,9 +163,7 @@ def main():
         * In general, calculate the percent finished with min(0, 1)
         * Then draw for each bar. That's it.
     """
-    
 
-    #plt.savefig('kaida.png')
 
 if __name__ == '__main__':
     main()
