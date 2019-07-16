@@ -7,6 +7,7 @@ import subprocess
 
 UPCHIRP = 'sounds/up-long.wav'
 AUDIO = 'recordings/audio.wav'
+OFILE = 'recordings/tempo.txt'
 FFMPEG_CMD = 'ffmpeg -y -i {videofile} -vn -ar 44100 {audiofile}'
 
 def read_and_normalize_audio (audiofile):
@@ -55,12 +56,15 @@ def main():
         elapsed_ms = ms - old_tempo_track[0]
         new_tempo_track.append(first_beat + elapsed_ms / 1000.0)
     
+        
+
     # create subtitles that match this time
     # for debug purposes
     srt_lines = []
 
+    ofile = open(OFILE, 'w') 
     for idx in range(1, len(new_tempo_track)):
-       
+        ofile.write('{}\n'.format(new_tempo_track[idx-1]))
         srt_lines.append('''{idx}
 {fromt} --> {tot}
 Beat {idx}
@@ -69,7 +73,8 @@ Beat {idx}
                 fromt=format_secs(new_tempo_track[idx-1]),
                 tot=format_secs(new_tempo_track[idx]),
                 idx=idx))
-    
+    ofile.close()
+
     ofile = 'recordings/subtitles.srt'
     with open(ofile, 'w') as f:
         for l in srt_lines:
