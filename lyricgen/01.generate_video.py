@@ -101,27 +101,29 @@ def main():
     plt.ylim([-2, 1])
     
     
-    MSPF = 200
+    MSPF = 50
     DUR = 10
+    
+    text_collection = []
+    offset = [0, 0]
+    per_bar_bbox = {}
+    for idx, bar in enumerate(KAIDA):
+        if idx % PER_LINE == 0:
+            offset[0] = 0
+            offset[1] -= LINEHEIGHT
+        else:
+            offset[0] += w + BARSPACE
+            offset[1] += 0
+        #print(offset)
+        x0, y0, w, h, text = draw_bar(ax, bar, x=offset[0], y=offset[1])
+        text_collection.append(text)
+        per_bar_bbox[idx] = [x0, y0, w, h]
+    
+    
     def draw_frame (fidx):
         curr_time = fidx * MSPF / 1000
         
-        offset = [0, 0]
-        per_bar_bbox = {}
-        collections = []
-        
-        for idx, bar in enumerate(KAIDA):
-            if idx % PER_LINE == 0:
-                offset[0] = 0
-                offset[1] -= LINEHEIGHT
-            else:
-                offset[0] += w + BARSPACE
-                offset[1] += 0
-            #print(offset)
-            x0, y0, w, h, text = draw_bar(ax, bar, x=offset[0], y=offset[1])
-            collections.append(text)
-            per_bar_bbox[idx] = [x0, y0, w, h]
-        
+        collections = list(text_collection)
         for idx in range(len(COLORS)):
             rect = highlight_bar(idx, ax, per_bar_bbox, per_bar_times, curr_time)
             if rect is None:
