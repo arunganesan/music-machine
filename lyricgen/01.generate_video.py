@@ -38,7 +38,7 @@ KAIDA = [
 COLORS = ['blue']*2 + ['orange']*2 \
         + ['blue']*2 + ['yellow']*2
 
-PLACE_AT_BEATS = [17, 53, 61]
+PLACE_AT_BEATS = [16, 52, 60]
 
 PER_LINE = 4
 
@@ -107,18 +107,22 @@ def main():
     text_collection = []
     offset = [0, 0]
     per_bar_bbox = {}
-    for idx, bar in enumerate(KAIDA):
-        if idx % PER_LINE == 0:
-            offset[0] = 0
-            offset[1] -= LINEHEIGHT
-        else:
-            offset[0] += w + BARSPACE
-            offset[1] += 0
-        #print(offset)
-        x0, y0, w, h, text = draw_bar(ax, bar, x=offset[0], y=offset[1])
-        text_collection.append(text)
-        per_bar_bbox[idx] = [x0, y0, w, h]
     
+    idx_offset = 0
+    for times_offset in range(len(PLACE_AT_BEATS)):
+        _offset = len(KAIDA) * times_offset
+        for idx, bar in enumerate(KAIDA):
+            _idx = idx + _offset
+            if _idx % PER_LINE == 0:
+                offset[0] = 0
+                offset[1] -= LINEHEIGHT
+            else:
+                offset[0] += w + BARSPACE
+                offset[1] += 0
+            x0, y0, w, h, text = draw_bar(ax, bar, x=offset[0], y=offset[1])
+            text_collection.append(text)
+            per_bar_bbox[idx] = [x0, y0, w, h]
+        
     
     def draw_frame (fidx):
         curr_time = fidx * MSPF / 1000
@@ -134,7 +138,6 @@ def main():
     
     #for idx, color in enumerate(COLORS):
     #    x, y, w, h = per_bar_bbox[idx]
-    #    print(x, y, w, h)
     #    rect = patches.Rectangle((x, y), w, h, color=color)
     #    ax.add_patch(rect)
     
@@ -142,7 +145,6 @@ def main():
     frames = []
     for f in tqdm(list(range(num_frames)), 'Frame'):
         coll = draw_frame(f)
-        print(len(coll))
         frames.append(coll)
     
     ani = animation.ArtistAnimation(fig, frames, interval=MSPF, blit=True)
