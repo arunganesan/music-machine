@@ -92,7 +92,7 @@ def main():
         * For each bar, index the start and end time of that bar
     """
     
-    fig = plt.figure()
+    fig = plt.figure(figsize=(7, 10))
     ax = plt.gca()
     plt.axis('off')
     plt.xlim([0, 5])

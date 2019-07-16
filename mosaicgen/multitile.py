@@ -34,7 +34,8 @@ def main():
     for video_file in all_video_files:
         basename, ext = os.path.splitext(video_file)
         command = "ffmpeg -y"
-        command += " -i {}/{} -an".format(args.processdir, video_file)
+        #command += " -i {}/{} -an".format(args.processdir, video_file)
+        command += " -i {}/{}".format(args.processdir, video_file)
         command += " -q:v 4"
         command += " {}/{}.ts".format(args.processdir, basename)
         os.system(command)
@@ -45,7 +46,8 @@ def main():
     for video_file in all_video_files:
         basename, ext = os.path.splitext(video_file)
         filename = "{}/{}.ts".format(args.processdir, basename)
-        command += " -i {} -an".format(filename)
+        #command += " -i {} -an".format(filename)
+        command += " -i {}".format(filename)
     
     OFILE = 'mosaic.mp4'
     command += ' -filter_complex "'
