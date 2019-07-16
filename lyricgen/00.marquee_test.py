@@ -22,14 +22,30 @@ def main():
 
     fig = plt.figure()
     ax = plt.gca()
-    width, height = 2, 1
+
+    x, y = 10, 10
+    w, h = None, None
 
     num_frames = DURATION // MSPF
     for f in range(num_frames):
         collections = []
         perc = f / num_frames
-        collections.append(plt.text(10, 10, "Dha Ge Na Tu Na"))
-        rect = patches.Rectangle((10, 10), width * perc, height)
+
+        text = ax.text(x, y, "Dha Ge Na Tu Na")
+
+        if w is None:
+            plt.draw()
+            inv = ax.transData.inverted()
+            bbox = text.get_window_extent()
+            inv_bbox = inv.transform(bbox)
+            x_, y_ = zip(*inv_bbox)
+            w = 10*(x_[1] - x_[0])
+            h = (y_[1] - y_[0]) * 10
+            print(w, h, x_, y_)
+            # exit(1)
+        
+        collections.append(text)
+        rect = patches.Rectangle((x, y), w * perc, h)
         ax.add_patch(rect)
         collections.append(rect)
 

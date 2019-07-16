@@ -45,7 +45,7 @@ def main():
     old_tempo_track = []
     with open(args.tempo, 'r') as f:
         for line in f.readlines():
-            ms = int(line.strip().split('@')[1])
+            ms = int(line.strip().split(' ')[1])
             old_tempo_track.append(ms)
     
     new_tempo_track = []

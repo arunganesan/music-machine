@@ -1,3 +1,5 @@
+*.mov
+.*.swp
 *.wav
 *.mp4
 *.DS_Store
