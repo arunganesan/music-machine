@@ -24,13 +24,15 @@ import numpy as np
     * Or, more generally, tags per note or per bar -- could be "tihai" or "theme" or w/e
 """
 
-LINEHEIGHT = 0.2
+LINEHEIGHT = 0.12
+X0 = 0 # 1
+Y0 = 0
 BARSPACE = 0.02
 
 ofilename = 'kaida.mp4'
 
 KAIDA = [
-        "Dha Tet", "Dha Ge", "Na Dha", "TRKT", 
+        "Dha Tet", "Dha Ge", "Na Dha", "TRKT",
         "Dha Tet", "Dha Ge", "Tu Na", "Ke Na"]
 
 COLORS = ['blue']*2 + ['orange']*2 \
@@ -41,10 +43,17 @@ PLACE_AT_BEATS = [16, 52, 60]
 
 PER_LINE = 4
 
+
 def draw_bar (ax, bar, x=0, y=0):
     #print('Drawing at x={}, y={}'.format(x, y))
-    text = ax.text(x, y, bar)
-
+    text = ax.text(
+            x + X0, 
+            y + Y0, 
+            bar, 
+            verticalalignment='center',
+            horizontalalignment='center',
+            color='black', fontfamily='serif', fontsize=25)
+    
     plt.draw()
     inv = ax.transData.inverted()
     bbox = text.get_window_extent()
@@ -92,14 +101,19 @@ def main():
         * For each bar, index the start and end time of that bar
     """
     
-    fig = plt.figure(figsize=(7, 10))
+    fig = plt.figure(figsize=(7, 10), facecolor='black')
+    fig.set_facecolor('black')
     ax = plt.gca()
+    ax.set_facecolor('black')
     plt.axis('off')
-    plt.xlim([0, 5])
-    plt.ylim([-2, 1])
     
+   
+    #plt.xticks([])
+    #plt.yticks([])
     
-    MSPF = 100
+    plt.tight_layout()
+    
+    MSPF = 50
     DUR = 50
     
     text_collection = []
@@ -107,6 +121,14 @@ def main():
     per_bar_bbox = {}
     color_per_bar = {}
     
+    plt.xlim([0, 3])
+    plt.ylim([-2, 1])
+     
+    _x0 = np.inf
+    _x1 = -np.inf
+    _y0 = np.inf
+    _y1 = -np.inf
+
     idx_offset = 0
     for times_offset in range(len(PLACE_AT_BEATS)):
         _offset = len(KAIDA) * times_offset
@@ -123,18 +145,39 @@ def main():
 
             bar_offset = PLACE_AT_BEATS[times_offset]
             per_bar_bbox[bar_offset + idx] = [x0, y0, w, h]
+
+            _x0 = min(x0, _x0)
+            _x1 = max(x0 + w, _x1)
+            _y0 = min(y0, _y0)
+            _y1 = max(y0 + h, _y1)
+
             color_per_bar[bar_offset + idx] = COLORS[idx]
     
+    x0, y0, w, h, _text = draw_bar(ax, 'Beat ', 0, 0)
     
-
+    _x0 = min(x0, _x0)
+    _x1 = max(x0 + w, _x1)
+    _y0 = min(y0, _y0)
+    _y1 = max(y0 + h, _y1)
+    
+    plt.xlim([_x0, _x1])
+    plt.ylim([_y0, _y1])
+    
     def draw_frame (fidx):
         collections = []
-
+        
         curr_time = fidx * MSPF / 1000
         curr_beat = np.argmin(np.abs(per_beat_time - curr_time))
-        beat_text = ax.text(0, 0, '{}'.format(curr_beat))
-        collections.append(beat_text)
 
+        beat_text = ax.text(
+            0.25, 0, 
+            '{}'.format(curr_beat),
+            verticalalignment='center',
+            horizontalalignment='center',
+            color='black', fontfamily='serif', fontsize=25)
+        
+        collections.append(beat_text)
+        
         for idx, color in color_per_bar.items():
             rect = highlight_bar(
                 idx, ax, 
@@ -144,6 +187,8 @@ def main():
                 continue
             collections.append(rect)
         
+        #plt.savefig('frame.png')
+        #exit(1)
         collections += text_collection
         return collections
     
