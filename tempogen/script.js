@@ -100,7 +100,7 @@ function onMIDIMessage(message) {
     // console.log('MIDI data', data); // MIDI data [144, 63, 73]
     if (data[0] == 176) {
         if (data[1] == 1) {
-            Tone.Transport.bpm.value = data[2] * 2;
+            Tone.Transport.bpm.value = data[2] / 2 + 100;
             showBPM();
         }
     }

@@ -6,8 +6,10 @@ import scipy.signal as sps
 import subprocess
 
 UPCHIRP = 'sounds/up-long.wav'
-AUDIO = 'recordings/audio.wav'
-OFILE = 'recordings/tempo.txt'
+
+SUBS_OFILE = 'subtitles.srt'
+AUDIO = 'audio.wav'
+TEMPO_OFILE = 'adjusted-tempo.txt'
 FFMPEG_CMD = 'ffmpeg -y -i {videofile} -vn -ar 44100 {audiofile}'
 
 def read_and_normalize_audio (audiofile):
@@ -28,23 +30,25 @@ def format_secs (secs):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--media', default='recordings/teentaal-07.02.2019.mp4')
-    parser.add_argument('--tempo', default='recordings/teentaal-07.02.2019.txt')
-    parser.add_argument('--snippet', nargs=2, type=int, default=[13, 16])
+    parser.add_argument('basedir')
     args = parser.parse_args()
+
+    media_file = '{}/video.mp4'.format(args.basedir)
+    tempo_file = '{}/tempo.txt'.format(args.basedir)
     
     # 1. Find the chirp = t0.
-    cmd = FFMPEG_CMD.format(videofile=args.media, audiofile=AUDIO)
+    audio_ofile = '{}/{}'.format(args.basedir, AUDIO)
+    cmd = FFMPEG_CMD.format(videofile=media_file, audiofile=audio_ofile)
     subprocess.call(cmd, shell=True)
     
     UPFS, up = read_and_normalize_audio(UPCHIRP)
-    FS, audio = read_and_normalize_audio(AUDIO)
+    FS, audio = read_and_normalize_audio(audio_ofile)
     upxcorr = sps.fftconvolve(audio, up[::-1], mode='full')
     start_time = np.argmax(upxcorr) / float(FS)
     
     # 2. Set the tempo track to start from t0 + 2.5. In the future, we'll do this more systematically
     old_tempo_track = []
-    with open(args.tempo, 'r') as f:
+    with open(tempo_file, 'r') as f:
         for line in f.readlines():
             ms = int(line.strip().split(' ')[1])
             old_tempo_track.append(ms)
@@ -62,7 +66,8 @@ def main():
     # for debug purposes
     srt_lines = []
 
-    ofile = open(OFILE, 'w') 
+    tempo_ofile = '{}/{}'.format(args.basedir, TEMPO_OFILE)
+    ofile = open(tempo_ofile, 'w') 
     for idx in range(1, len(new_tempo_track)):
         ofile.write('{}\n'.format(new_tempo_track[idx-1]))
         srt_lines.append('''{idx}
@@ -75,7 +80,7 @@ Beat {idx}
                 idx=idx))
     ofile.close()
 
-    ofile = 'recordings/subtitles.srt'
+    ofile = '{}/subtitles.srt'.format(args.basedir)
     with open(ofile, 'w') as f:
         for l in srt_lines:
             f.write(l)
