@@ -31,7 +31,7 @@ X0 = 0 # 1
 Y0 = 0
 BARSPACE = 0.02
 WIDTH = 0.75
-ofilename = 'kaida.mp4'
+ofilename = 'lyrics.mp4'
 
 PER_LINE = 4
 

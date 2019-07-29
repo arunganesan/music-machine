@@ -27,7 +27,7 @@ def main():
     WIDTH = raw_GS['width']
     HEIGHT = raw_GS['height']
     
-    #master_audio_file = 'cropped-master.wav'
+    master_audio_file = 'cropped-master.wav'
     
     # Just convert to TS file
     all_video_files = gridspec.keys()
@@ -78,7 +78,6 @@ def main():
     # Glue audio file
     command = 'ffmpeg -y -i {}/{}'.format(args.processdir, OFILE)
     #command += ' -i {}/{}'.format(args.processdir, master_audio_file)
-    #command += ' -shortest -c:v copy -c:a mp3 -b:a 256k'
     command += ' -shortest -c:v copy -c:a mp3 -b:a 256k'
     command += ' {}/glued-{}'.format(args.processdir, OFILE)
     os.system(command)
