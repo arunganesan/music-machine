@@ -30,48 +30,81 @@ LINEHEIGHT = 0.12
 X0 = 0 # 1
 Y0 = 0
 BARSPACE = 0.02
-
+WIDTH = 0.75
 ofilename = 'kaida.mp4'
 
 PER_LINE = 4
 
 
 def draw_bar (ax, bar, x=0, y=0):
-    #print('Drawing at x={}, y={}'.format(x, y))
+    x0 = x + X0
+    y0 = y + Y0
+    
     text = ax.text(
-            x + X0, 
-            y + Y0, 
+            0.5 * (x0 + x0 + WIDTH), 
+            0.5 * (y0 + y0 + LINEHEIGHT), 
             bar, 
             verticalalignment='center',
             horizontalalignment='center',
             color='black', fontfamily='serif', fontsize=25)
     
-    plt.draw()
-    inv = ax.transData.inverted()
-    bbox = text.get_window_extent()
-    inv_bbox = inv.transform(bbox)
-    x_, y_ = zip(*inv_bbox)
-    w = (x_[1] - x_[0])
-    h = (y_[1] - y_[0]) 
-    
-    return x_[0], y_[0], w, h, text
+    return x, y, WIDTH, LINEHEIGHT, text #x_[0], y_[0], w, h, text
 
-def highlight_bar (idx, ax, per_bar_bbox,  per_bar_times, curr_time, color):
+def highlight_bar (beat, ax, per_bar_bbox,  per_bar_times, curr_time, color):
     # get the bar start and end time
-    t0, t1 = per_bar_times[idx]
+    if beat not in per_bar_times:
+        beat = max(per_bar_times.keys())
+    t0, t1 = per_bar_times[beat]
     
     curr_time -= t0
     t1 -= t0
-    t0 = 0
     perc = min(max(curr_time / t1, 0), 1)
     
     if perc == 0: 
         return None
     
-    x, y, w, h = per_bar_bbox[idx]
-    rect = patches.Rectangle((x, y), w * perc, h, color=color, alpha=0.25)
+    if beat not in per_bar_bbox: 
+        print('Bear {} not found in {}'.format(beat, per_bar_bbox.keys()))
+        return None
+    
+    x, y, w, h = per_bar_bbox[beat]
+    rect = patches.Rectangle((x, y), w * perc, h - 0.01, color=color, alpha=0.25)
     ax.add_patch(rect)
     return rect
+
+def get_page (curr_beat, pages):
+    previous_page = pages[0]
+    for pidx, page in enumerate(pages):
+        if curr_beat >= page['from']:
+            previous_page = pages[pidx]
+            if curr_beat <= page['to']:
+                return page
+    
+    return previous_page
+
+
+def draw_page (ax, curr_beat, pages):
+    idx_offset = 0
+    
+    page = get_page(curr_beat, pages)
+    
+    idx_offset = 0
+    text_collection = []
+    offset = [0, 0]
+    
+    for idx, bar in enumerate(page['notes']):
+        _idx = idx + idx_offset
+        if _idx % PER_LINE == 0:
+            offset[0] = 0
+            offset[1] -= LINEHEIGHT
+        else:
+            offset[0] += w + BARSPACE
+            offset[1] += 0
+        
+        x0, y0, w, h, text = draw_bar(ax, bar, x=offset[0], y=offset[1])
+        text_collection.append(text)
+        
+    return text_collection
 
 def main():
     import argparse
@@ -93,25 +126,15 @@ def main():
         * For each bar, index the start and end time of that bar
     """
     
-    fig = plt.figure(figsize=(7, 10), facecolor='black')
-    fig.set_facecolor('black')
+    fig = plt.figure(figsize=(7, 10))
     ax = plt.gca()
-    ax.set_facecolor('black')
     plt.axis('off')
-    
-   
-    #plt.xticks([])
-    #plt.yticks([])
     
     plt.tight_layout()
     
-    MSPF = 250
-    DUR = 60
+    MSPF = 50
+    DUR = 90 # XXX this should be the length of the actual vudeo
     
-    text_collection = []
-    offset = [0, 0]
-    per_bar_bbox = {}
-    color_per_bar = {}
     
     plt.xlim([0, 3])
     plt.ylim([-2, 1])
@@ -120,89 +143,73 @@ def main():
     _x1 = -np.inf
     _y0 = np.inf
     _y1 = -np.inf
+    
+    pages = []
 
-    idx_offset = 0
+    for pageno, (bar_offset, notes, colors) in enumerate(Placement):
+        
+        offset = [0, 0]
+        per_bar_bbox = {}
+        color_per_bar = {}
 
-    for bar_offset, notes, colors in Placement:
         for idx, bar in enumerate(notes):
-            _idx = idx + idx_offset
-            if _idx % PER_LINE == 0:
+            if idx % PER_LINE == 0:
                 offset[0] = 0
                 offset[1] -= LINEHEIGHT
             else:
-                offset[0] += w + BARSPACE
+                offset[0] += WIDTH + BARSPACE
                 offset[1] += 0
-            x0, y0, w, h, text = draw_bar(ax, bar, x=offset[0], y=offset[1])
-            text_collection.append(text)
-
-            per_bar_bbox[bar_offset + idx] = [x0, y0, w, h]
-
-            _x0 = min(x0, _x0)
-            _x1 = max(x0 + w, _x1)
-            _y0 = min(y0, _y0)
-            _y1 = max(y0 + h, _y1)
-
+            
+            per_bar_bbox[bar_offset + idx] = [*offset, WIDTH, LINEHEIGHT]
+            
+            _x0 = min(offset[0], _x0)
+            _x1 = max(offset[0] + WIDTH, _x1)
+            _y0 = min(offset[1], _y0)
+            _y1 = max(offset[1] + LINEHEIGHT, _y1)
+            
             color_per_bar[bar_offset + idx] = colors[idx]
+        
+        pages.append({
+            'from': bar_offset,
+            'to': len(notes) + bar_offset,
+            'notes': notes, 
+            'bbox': per_bar_bbox,
+            'colors': color_per_bar })
     
-    x0, y0, w, h, _text = draw_bar(ax, 'Beat ', 0, 0)
-    
-    _x0 = min(x0, _x0)
-    _x1 = max(x0 + w, _x1)
-    _y0 = min(y0, _y0)
-    _y1 = max(y0 + h, _y1)
+    #plt.cla()
+    #plt.axis('off')
     
     plt.xlim([_x0, _x1])
-    plt.ylim([_y0, _y1])
+    plt.ylim([_y0 - LINEHEIGHT, _y1 + LINEHEIGHT])
     
-    def draw_frame (fidx):
+    num_frames = DUR * 1000 // MSPF
+    frames = []
+
+    for fidx in tqdm(list(range(num_frames)), 'Frame'):
         collections = []
         
         curr_time = fidx * MSPF / 1000
         curr_beat = np.argmin(np.abs(per_beat_time - curr_time))
-
-        beat_text = ax.text(
-            0.25, 0, 
-            '{}'.format(curr_beat),
-            verticalalignment='center',
-            horizontalalignment='center',
-            color='black', fontfamily='serif', fontsize=25)
+        page = get_page(curr_beat, pages)
         
+        _, _, _, _, beat_text = draw_bar(ax, 'Beat {}'.format(curr_beat), WIDTH * 1.5, 0) 
         collections.append(beat_text)
         
-        for idx, color in color_per_bar.items():
+        for _bar, color in page['colors'].items():
             rect = highlight_bar(
-                idx, ax, 
-                per_bar_bbox, per_bar_times, 
+                _bar, ax, 
+                page['bbox'], per_bar_times, 
                 curr_time, color)
             if rect is None:
                 continue
             collections.append(rect)
         
-        #plt.savefig('frame.png')
-        #exit(1)
-        collections += text_collection
-        return collections
-    
-    num_frames = DUR * 1000 // MSPF
-    frames = []
-    for f in tqdm(list(range(num_frames)), 'Frame'):
-        coll = draw_frame(f)
-        frames.append(coll)
+        collections += draw_page(ax, curr_beat, pages)
+        
+        frames.append(collections)
     
     ani = animation.ArtistAnimation(fig, frames, interval=MSPF)
     ani.save(ofilename)
-
-    """
-    * At that beat, start animating in a bar
-        * At each frame, calculate the time
-        * For each bar, calculate the start and end time of bar
-        * If current time is past that bar, fully color it in
-        * If current time is before the bar, leave it emtpy
-        * If it is in between, draw just the percent of it
-
-        * In general, calculate the percent finished with min(0, 1)
-        * Then draw for each bar. That's it.
-    """
 
 
 if __name__ == '__main__':

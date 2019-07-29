@@ -23,19 +23,20 @@ VARIATION1 += "Ta TR - KTTK - TRKT - Ta TR".split(' - ')
 VARIATION1 += THEME
 
 COLORS_V1 = "blue blue blue blue orange orange orange orange".split(' ')
-COLORS_V1 += COLORS_THEME
+COLORS_V1 += "gray gray gray gray gray gray gray gray".split(' ')
 COLORS_V1 += COLORS_V1
 
 VARIATION2 = "Dha TR - KTTK - TRKT - Dha TR".split(' - ')
 VARIATION2 += "KTTK - TRKT - Dha TR - KTTK".split(' - ')
 VARIATION2 += "TRKT - Dha TR - KTTK - TRKT".split(' - ')
 VARIATION2 += "KTTK - TRKT - Dha Dha - TRKT".split(' - ')
-VARIATION2 = "Ta TR - KTTK - TRKT - Ta TR".split(' - ')
+VARIATION2 += "Ta TR - KTTK - TRKT - Ta TR".split(' - ')
 VARIATION2 += "KTTK - TRKT - Ta TR - KTTK".split(' - ')
 VARIATION2 += "TRKT - Dha TR - KTTK - TRKT".split(' - ')
 VARIATION2 += "KTTK - TRKT - Dha Dha - TRKT".split(' - ')
 
-COLORS_V2 = "blue blue blue orange orange orange blue blue blue orange orange orange yellow yellow".split(' ')
+COLORS_V2 = "blue blue blue orange orange orange blue blue blue orange orange orange gray gray gray gray".split(' ')
+COLORS_V2 += COLORS_V2
 COLORS_V2 += COLORS_V2
 
 Placement = [
