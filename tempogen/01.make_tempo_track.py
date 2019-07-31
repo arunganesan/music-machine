@@ -77,7 +77,7 @@ Beat {idx}
 '''.format(
                 fromt=format_secs(new_tempo_track[idx-1]),
                 tot=format_secs(new_tempo_track[idx]),
-                idx=idx))
+                idx=idx-1))
     ofile.close()
 
     ofile = '{}/subtitles.srt'.format(args.basedir)

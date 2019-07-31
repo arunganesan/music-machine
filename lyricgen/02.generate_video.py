@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.patches as patches
 import numpy as np
+import os
 
 from notes import Placement
 
@@ -109,9 +110,12 @@ def draw_page (ax, curr_beat, pages):
 def main():
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--tempotrack', default='recordings/tempo.txt')
+    parser.add_argument('--mspf', type=int, default=500)
+    parser.add_argument('tempotrack', default='recordings/tempo.txt')
     args = parser.parse_args()
     
+    dirname = os.path.dirname(args.tempotrack)
+
     per_beat_time = open(args.tempotrack, 'r').readlines()
     per_beat_time = np.array(list(map(float, per_beat_time)))
     per_bar_times = {}
@@ -132,9 +136,8 @@ def main():
     
     plt.tight_layout()
     
-    MSPF = 50
-    DUR = 90 # XXX this should be the length of the actual vudeo
-    
+    MSPF = args.mspf
+    DUR = int(np.ceil(max(per_beat_time)))
     
     plt.xlim([0, 3])
     plt.ylim([-2, 1])
@@ -146,7 +149,11 @@ def main():
     
     pages = []
 
-    for pageno, (bar_offset, notes, colors) in enumerate(Placement):
+    for pageno, details in enumerate(Placement):
+        bar_offset = details['beat']
+        notes = details['notes']
+        colors = details['colors']
+        title = details['title']
         
         offset = [0, 0]
         per_bar_bbox = {}
@@ -173,18 +180,16 @@ def main():
             'from': bar_offset,
             'to': len(notes) + bar_offset,
             'notes': notes, 
+            'title': title,
             'bbox': per_bar_bbox,
             'colors': color_per_bar })
-    
-    #plt.cla()
-    #plt.axis('off')
     
     plt.xlim([_x0, _x1])
     plt.ylim([_y0 - LINEHEIGHT, _y1 + LINEHEIGHT])
     
     num_frames = DUR * 1000 // MSPF
     frames = []
-
+    
     for fidx in tqdm(list(range(num_frames)), 'Frame'):
         collections = []
         
@@ -192,7 +197,7 @@ def main():
         curr_beat = np.argmin(np.abs(per_beat_time - curr_time))
         page = get_page(curr_beat, pages)
         
-        _, _, _, _, beat_text = draw_bar(ax, 'Beat {}'.format(curr_beat), WIDTH * 1.5, 0) 
+        _, _, _, _, beat_text = draw_bar(ax, '{title}. Beat {beat}'.format(title=page['title'], beat=curr_beat), WIDTH * 1.5, 0) 
         collections.append(beat_text)
         
         for _bar, color in page['colors'].items():
@@ -209,7 +214,7 @@ def main():
         frames.append(collections)
     
     ani = animation.ArtistAnimation(fig, frames, interval=MSPF)
-    ani.save(ofilename)
+    ani.save('{}/{}'.format(dirname, ofilename))
 
 
 if __name__ == '__main__':

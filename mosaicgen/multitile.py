@@ -27,7 +27,7 @@ def main():
     WIDTH = raw_GS['width']
     HEIGHT = raw_GS['height']
     
-    master_audio_file = 'cropped-master.wav'
+    #master_audio_file = 'cropped-master.wav'
     
     # Just convert to TS file
     all_video_files = gridspec.keys()
