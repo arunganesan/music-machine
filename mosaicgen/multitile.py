@@ -16,6 +16,7 @@ def main():
     from readgrid import read_spec
     
     parser = argparse.ArgumentParser()
+    parser.add_argument('--fast', action='store_true')
     parser.add_argument('processdir')
     args = parser.parse_args()
     
@@ -24,8 +25,13 @@ def main():
     assert os.path.exists(specfile)
     gridspec = read_spec(specfile)
     raw_GS = json.loads(open(specfile).read())
+
     WIDTH = raw_GS['width']
     HEIGHT = raw_GS['height']
+    
+    if args.fast:
+        WIDTH /= 10
+        HEIGHT /= 10
     
     #master_audio_file = 'cropped-master.wav'
     
