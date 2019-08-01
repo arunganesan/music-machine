@@ -1,0 +1,7 @@
+Ideas
+
+* You can easily display variations by number or by fully writing it out
+
+* And, of course, you can visualize it very pretty-like
+
+* You can *GENERATE* variations and *tihais* very easily. They might not sound good though so you have to manually go through them.

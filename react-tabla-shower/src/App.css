@@ -1,0 +1,79 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+.App-body {
+  margin-top: 25px;
+}
+
+.paper {
+  margin: 50px;
+  margin-top: 25px;
+  height: 700px;
+  padding: 25px;
+}
+
+
+@font-face {
+  font-family: 'texgyrecursor';
+  src: local('texgyrecursor'), url(/fonts/texgyrecursor.otf) format('otf');
+}
+
+
+.theme {
+  font-family: 'textgyrecursor';
+  border: solid thin black;
+  padding: 25px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.theme table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.theme td {
+  text-align: center;
+  padding: 5px;
+}
+
+
+.theme tr {
+}
+
+.themeTable td {
+  padding: 0 15px 0 15px;
+}
+
+.themeTable input {
+  text-align: center;
+  width: 40px;
+}
+
+.themeTable {
+  width: 100%;
+}

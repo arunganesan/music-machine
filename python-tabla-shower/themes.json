@@ -1,0 +1,41 @@
+{
+  "grng": [
+      "(Dha-TT) (GRNG) (GRNG) (TRKT)",
+      "(Dha-TT) (GRNG) (Tu-Na-) (KTTK)"
+   ],
+
+   "drdr": [
+      "(Dha-TR) (KTTK) (DRDR) (KTTK)",
+      "(Dha-TR) (KTTK) (Tu-Na-) (KTTK)"
+   ],
+
+   "nagedene": [
+      "(Na Ge) (Dhe Ne) (Ge Ne) (Ta Ka)",
+      "(Ge Ne) (Ta Ka) (Te Ne) (Ke Ne)"
+   ],
+
+   "dhene": [
+      "(Dhe Ne) (Ge Ne) (Ta Ka) (Dhe Ne)",
+      "(Ge Ne) (Ghe Ne) (Ge Ne) (Ta Ka)"
+   ],
+
+   "trkttk": [
+      "(Dha-TR) (KTTK) (TRKT) (Dha-TR)",
+      "(KTTK) (TRKT) (Dha-Dha-) (TRKT)"
+   ],
+
+   "tej-qawali-01": "(Ge Ta Thin Na) (- Ta Dhin Na)",
+   "tej-qawali-02": "(Ge - Thin Na) (- - Dhin Na)",
+   "tej-qawali-03": "(Ta Ge Thin Na) (- - Dhin Na)",
+   "tej-qawali-04": [
+      "(Ge - Thin[1] Na) (- - Dhin[1] Na)",
+      "1: Play flat thin and Dhin like Tet"
+    ],
+   "tej-qawali-05": "(Dha - Ta Ta) (Ta - Dha Ta)",
+   "tej-qawali-06": "(Dha - Ta Tin) (Ta - Dha Tin)",
+   "tej-qawali-07": "(Dha - Ta Tet) (Ta - Dha Tet)",
+   "tej-qawali-08": [
+      "(Dha - Ta Ta) (Ta - Ta Ta)",
+      "(Ta - Ta Ta) (Ta - Dha Ta)"
+    ]
+}

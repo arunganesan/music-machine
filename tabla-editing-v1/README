@@ -1,0 +1,10 @@
+# Different workflows
+We can do three kinds of things with these scripts.
+1. Recording with caption
+2. Multi-layered recording
+3. Looped recording (this is mostly a work in progress)
+
+Generally, for step 1 we have to do:
+1. `./STEP-1.sh`
+2. Edit caption.json and gridspec.json (optionally use `make_caption_spec.py` to make caption.json) 
+3. `./STEP-2.sh`
