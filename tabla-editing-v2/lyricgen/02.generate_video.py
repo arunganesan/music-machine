@@ -36,6 +36,9 @@ ofilename = 'lyrics.mp4'
 
 PER_LINE = 4
 
+#FIGSIZE = (7, 10)
+FIGSIZE = (10, 4.375)
+
 
 def draw_bar (ax, bar, x=0, y=0):
     x0 = x + X0
@@ -130,7 +133,7 @@ def main():
         * For each bar, index the start and end time of that bar
     """
     
-    fig = plt.figure(figsize=(7, 10))
+    fig = plt.figure(figsize=FIGSIZE)
     ax = plt.gca()
     plt.axis('off')
     

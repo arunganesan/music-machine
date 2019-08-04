@@ -1,1 +1,1 @@
-recordings/July30-GRNG-02/notes.py
+recordings/07.30.2019-Practice-02/notes.py

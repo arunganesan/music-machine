@@ -1,6 +1,7 @@
 var synth = new Tone.MembraneSynth().toMaster()
 var player = new Tone.Player('./sounds/up-long.wav').toMaster();
 var beat = 0;
+var beatTimes = [];
 
 //this function is called right before the scheduled time
 function triggerSum(time){
@@ -29,6 +30,7 @@ Tone.Transport.loop = true
 
 function showBeat() {
     t = $.now()
+    beatTimes.push({ 'beat': beat, 'time': t});
     $('#beat').text('Beat: ' + beat);
     console.log(beat, t);
 }
@@ -36,6 +38,16 @@ function showBeat() {
 function showBPM() {
     $('#bpm').text('BPM: '+ Tone.Transport.bpm.value.toFixed(2));
 }
+
+
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
 
 
 $("#toggle").click((e) => {
@@ -49,6 +61,7 @@ $("#toggle").click((e) => {
     } else {
         $('#toggle').text('Start');
         Tone.Transport.toggle();
+        download(JSON.stringify(beatTimes), 'file.json', 'text/plain');  
     }
     
     showBPM();
