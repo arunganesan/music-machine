@@ -200,7 +200,7 @@ def main():
         curr_beat = np.argmin(np.abs(per_beat_time - curr_time))
         page = get_page(curr_beat, pages)
         
-        _, _, _, _, beat_text = draw_bar(ax, '{title}. Beat {beat}'.format(title=page['title'], beat=curr_beat), WIDTH * 1.5, 0) 
+        _, _, _, _, beat_text = draw_bar(ax, '{title}'.format(title=page['title']), WIDTH * 1.5, 0) 
         collections.append(beat_text)
         
         for _bar, color in page['colors'].items():

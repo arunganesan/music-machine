@@ -1,1 +1,1 @@
-recordings/07.30.2019-Practice-02/notes.py
+recordings/08.01.2019-DRDRDR-02/notes.py
