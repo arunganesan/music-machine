@@ -1,0 +1,36 @@
+body, html {
+    height: 100%;
+    display: grid;
+    background-color:skyblue;
+}
+
+#wrapper {
+    width: 500px;
+    height: 200px;
+    background-color:lightyellow;
+    border-radius: 10px;
+    box-shadow: 10px 10px;
+    margin: auto;
+    
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#info {
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+}
+
+
+#controls {
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+}
+
+#info *, #controls * {
+    margin: 10px;
+}
