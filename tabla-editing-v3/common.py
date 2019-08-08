@@ -23,6 +23,7 @@ RED = ['red']
 ORANGE = ['orange']
 THEME_COLORS = GRAY * 16
 
+
 def Theme (THEME, KALI):
     return Piece(
         title='Theme',
