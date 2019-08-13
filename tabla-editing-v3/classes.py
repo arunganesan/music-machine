@@ -89,13 +89,32 @@ def generate_lyrics_snippets (snippet):
         snippet.take.get_lyrics_file(), 
         snippet.from_beat, 
         snippet.length)
-    
+
+
+import os
+
+def if_exists(filename):
+    if os.path.exists(filename):
+        return filename
+    return None
 
 class Take ():
-    def __init__ (self, filename):
-        self.filename = filename
+    def __init__ (self, basedir, basename):
+        self.basename = basename
         self.master_track = []
+
         # automatically parse folders to find corresponding files like lyrics and tempo and multi-video
+        self.audio_file = if_exists('{}/{}/{}.wav'.format(basedir, 'audio', basename))
+        self.tempo_file = if_exists('{}/{}/{}.json'.format(basedir, 'tempo', basename))
+        assert self.tempo_file is not None, 'Tempo file not found'
+        self.video_file = if_exists('{}/{}/{}.MOV'.format(basedir, 'video', basename))
+
+        # tempo align if needed
+        # attach the audio file if it exists and if needed
+        # create a separate file for tempo-aligned audio-attached file name
+        # all this only needs to happen once
+
+
     
     def add_lyrics (self, from_beats, notes, to_beat=None):
         " adds the notes to the master track of notes aligned by beat"
@@ -113,14 +132,16 @@ class Take ():
         " generate a video. put all this in one page. "
     
     def generate (self, from_beat, to_beat, gridspec, cellname):
-        " first make sure the audio is aligned "
+        # the following two should have already happened
+        " first make sure the audio is aligned " 
         " and make sure the tempo file is aligned "
-        " then take this subset, trim, create file, return file name "
-        " lol the actual work happens here "
 
-    def get_camera (self):
-        "1"
-    
+        # ffmpeg -i {} -ss {} -to {} should work
+        # need to go from *_beat to time in file. 
+        # this is done through the adjusted tempo file
+        " then take this subset, trim, create file, return file name "
+
+
     def get_lyrics_file (self):
         # returns a take with this lyrics file
         "2"
@@ -169,6 +190,31 @@ class GridSpec ():
 Arrange
 """
 
+def tile_files (sequenced_filenames):
+    """
+    arrange files in this grid
+    """
+    ffmpeg_command = "ffmpeg -y <list of input files> -filter_complex <set full size>"
+    for idx, sequenced in enumerate(sequenced_filenames):
+        x,y = sequenced['offset']
+        if idx == 0:
+            command += ' [base][video-{c}] overlay=shortest=1:x={x}:y={y} [tmp{n}];'.format(c=idx, n=idx+1, x=x, y=y)
+        elif idx == len(sequenced_filenames) - 1:
+            command += ' [tmp{c}][video-{c}] overlay=shortest=1:x={x}:y={y}'.format(c=idx, x=x, y=y)
+        else:
+            command += ' [tmp{c}][video-{c}] overlay=shortest=1:x={x}:y={y} [tmp{n}];'.format(c=idx, n=idx+1, x=x, y=y)
+
+def sequence_files (filenames):
+    """
+    Go through each file and append them together
+    """
+    new_filename = ""
+    return new_filename
+
+def find_offset (gridspec, cellname):
+    return 1, 2
+
+
 class Arrangement ():
     def __init__ (self):
         "1"
@@ -189,3 +235,23 @@ class Arrangement ():
                 patch them together.
             * Using concat
         """
+        # recursively generate for each arrangement
+        sequenced_filenames = []
+
+        for sequence in self.sequences:
+            gridspec = sequence['gridspec']
+            cellname = sequence['cellname']
+
+            filenames = []
+            for snippet in sequence['snippets_list']:
+                filenames.append(snippet.generate(gridspec, cellname))
+            
+            # now, put it all together
+            sequenced = sequence_files(filenames)
+            sequenced_filenames.append({
+                'offset': find_offset(gridspec, cellname),
+                'filename': sequenced
+            })
+        
+        # put them together in this grid
+        tile_files(sequenced_filenames)

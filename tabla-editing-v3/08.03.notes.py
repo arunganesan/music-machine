@@ -7,13 +7,14 @@ kali = "TeNe KeNe TakKa TeNe".split(' ')
 kali += "KeNe DheNe GeNe TakKa".split(' ')
 notes = TablaNotes(theme, kali)
 
-T1 = Take('take01')
-T2 = Take('take02')
-T3 = Take('take03')
-T4 = Take('take04')
-T5 = Take('take05')
-T6 = Take('take06')
-T7 = Take('take07')
+BASEDIR = 'recordings/08.03.2019'
+T1 = Take(BASEDIR, 'take01')
+T2 = Take(BASEDIR, 'take02')
+T3 = Take(BASEDIR, 'take03')
+T4 = Take(BASEDIR, 'take04')
+T5 = Take(BASEDIR, 'take05')
+T6 = Take(BASEDIR, 'take06')
+T7 = Take(BASEDIR, 'take07')
 
 # theme, kali
 theme_kali = notes.theme + notes.kali
@@ -88,3 +89,5 @@ arrangement.add_sequence(grid, 'video-cell', [theme, v1, v2, v3, v4, v5, v6, tih
 arrangement.add_sequence(grid, 'lyrics-cell', map(
     generate_lyrics_snippets, 
     [theme, v1, v2, v3, v4, v5, v6, tihai]))
+
+
