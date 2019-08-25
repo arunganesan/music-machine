@@ -90,7 +90,6 @@ def generate_lyrics_snippets (snippet):
         snippet.from_beat, 
         snippet.length)
 
-
 import os
 
 def if_exists(filename):
@@ -98,9 +97,38 @@ def if_exists(filename):
         return filename
     return None
 
+def read_and_normalize_audio (audiofile):
+  from scipy.io import wavfile
+  rate, signal = wavfile.read(audiofile)
+  converted = np.array(signal, dtype=np.float64)
+  normalized = converted / np.amax(converted)
+  return rate, normalized 
+
+def format_secs (secs):
+    mins = int(secs // 60)
+    secs -= mins * 60
+    int_secs = int(secs // 1)
+    fractional = secs - int_secs
+    ms = int(fractional * 1000)
+    return '00:{:02d}:{:02d},{}'.format(mins, int_secs, ms)
+
+
 class Take ():
+    def tempo_align_if_needed(self):
+        tempo_aligned_file = '{}/{}/{}/adjusted-tempo.txt'.format(basedir, 'tmp', self.basename)
+        if os.path.exists(tempo_aligned_file):
+            return ..
+        
+        generate it and return the file NameError
+        actually... this just generates. no need to return i think
+        FFMPEG_CMD = 'ffmpeg -y -i {videofile} -vn -ar 44100 {audiofile}'
+
+    def attach_clean_audio_if_needed (self):
+        " take audio file "
+
     def __init__ (self, basedir, basename):
         self.basename = basename
+        self.basedir = basedir
         self.master_track = []
 
         # automatically parse folders to find corresponding files like lyrics and tempo and multi-video
@@ -109,7 +137,8 @@ class Take ():
         assert self.tempo_file is not None, 'Tempo file not found'
         self.video_file = if_exists('{}/{}/{}.MOV'.format(basedir, 'video', basename))
 
-        # tempo align if needed
+        self.tempo_align_if_needed()
+        self.attach_clean_audio_if_needed()
         # attach the audio file if it exists and if needed
         # create a separate file for tempo-aligned audio-attached file name
         # all this only needs to happen once
