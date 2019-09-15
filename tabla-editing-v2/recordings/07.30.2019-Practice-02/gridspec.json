@@ -1,0 +1,23 @@
+{
+    "width": 1500,
+    "height": 1500,
+    "grid": [
+        {
+            "file": "video.mp4",
+            "rows": 100,
+            "cols": 1,
+            "row": 1,
+            "col": 1,
+            "rowspan": 56,
+            "colspan": 1
+        },{
+            "file": "lyrics.mp4",
+            "rows": 100,
+            "cols": 1,
+            "row": 56,
+            "col": 1,
+            "rowspan": 44,
+            "colspan": 1
+        }
+    ]
+}

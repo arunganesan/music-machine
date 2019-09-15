@@ -113,35 +113,104 @@ def format_secs (secs):
     return '00:{:02d}:{:02d},{}'.format(mins, int_secs, ms)
 
 
+import json
+import scipy.signal as sps
+import subprocess
+import numpy as np
+
+UPCHIRP = 'sounds/up-long.wav'
+
 class Take ():
     def tempo_align_if_needed(self):
-        tempo_aligned_file = '{}/{}/{}/adjusted-tempo.txt'.format(basedir, 'tmp', self.basename)
-        if os.path.exists(tempo_aligned_file):
-            return ..
+        self.tempo_aligned_file = '{}/adjusted-tempo.txt'.format(self.tmpdir)
+        self.subtitles_file = '{}/subtitles.srt'.format(self.tmpdir)
+        if not os.path.exists(self.tempo_aligned_file):
+            # adjusted tempo 
+            tempo_details = json.load(open(self.tempo_file, 'r'))
+
+            # remove the audio file
+            audio_tmp_file = '{}/audio-extracted.wav'.format(self.tmpdir)
+            FFMPEG_CMD = 'ffmpeg -y -i {videofile} -vn -ar 44100 {audiofile}'
+            subprocess.call(FFMPEG_CMD.format(
+                videofile=self.video_file,
+                audiofile=audio_tmp_file,
+            ))
+
+            UPFS, up = read_and_normalize_audio(UPCHIRP)
+            FS, audio = read_and_normalize_audio(audio_tmp_file)
+            audio = audio[:, 0]
+
+            upxcorr = sps.fftconvolve(audio, up[::-1], mode='full')
+            start_time = np.argmax(upxcorr) / float(FS)
+
+            # 2. Set the tempo track to start from t0 + 2.5. In the future, we'll do this more systematically
+            old_tempo_track = np.ndarray(len(tempo_details))
+            for details in tempo_details:
+                beat= details['beat'] - 1
+                ms = details['time']
+                old_tempo_track[beat] = ms
+
+            new_tempo_track = []
+            first_beat = start_time + 0.5 # the xcorr finds the END of the chirp, I think
+            print(start_time, first_beat)
+            for ms in old_tempo_track:
+                elapsed_ms = ms - old_tempo_track[0]
+                new_tempo_track.append(first_beat + elapsed_ms / 1000.0)
         
-        generate it and return the file NameError
-        actually... this just generates. no need to return i think
-        FFMPEG_CMD = 'ffmpeg -y -i {videofile} -vn -ar 44100 {audiofile}'
+            # create subtitles that match this time
+            # for debug purposes
+            srt_lines = []
+
+            ofile = open(self.tempo_aligned_file, 'w') 
+            for idx in range(1, len(new_tempo_track)):
+                ofile.write('{}\n'.format(new_tempo_track[idx-1]))
+                srt_lines.append('''{idx}
+                    {fromt} --> {tot}
+                    Beat {idx}
+                '''.format(
+                                fromt=format_secs(new_tempo_track[idx-1]),
+                                tot=format_secs(new_tempo_track[idx]),
+                                idx=idx-1))
+            ofile.close()
+            
+            
+            with open(self.subtitles_file, 'w') as f:
+                for l in srt_lines:
+                    f.write(l)
+
+
+            
+
+
+
 
     def attach_clean_audio_if_needed (self):
         " take audio file "
+        import replaceaudio
+        self.video_file = replaceaudio.replace_audio(
+            self.audio_file, 
+            self.video_file, 
+            tmpdir=self.tmpdir)
+        
+
+        
+
 
     def __init__ (self, basedir, basename):
         self.basename = basename
         self.basedir = basedir
         self.master_track = []
-
-        # automatically parse folders to find corresponding files like lyrics and tempo and multi-video
-        self.audio_file = if_exists('{}/{}/{}.wav'.format(basedir, 'audio', basename))
-        self.tempo_file = if_exists('{}/{}/{}.json'.format(basedir, 'tempo', basename))
-        assert self.tempo_file is not None, 'Tempo file not found'
-        self.video_file = if_exists('{}/{}/{}.MOV'.format(basedir, 'video', basename))
-
-        self.tempo_align_if_needed()
-        self.attach_clean_audio_if_needed()
+        self.tmpdir = '{}/{}/{}'.format(self.basedir, 'tmp', self.basename)
+        
         # attach the audio file if it exists and if needed
+        self.audio_file = if_exists('{}/{}/{}.wav'.format(basedir, 'audio', basename))
+        self.video_file = if_exists('{}/{}/{}.mov'.format(basedir, 'video', basename))
+        self.attach_clean_audio_if_needed()
+        
         # create a separate file for tempo-aligned audio-attached file name
-        # all this only needs to happen once
+        self.tempo_file = if_exists('{}/{}/{}.json'.format(basedir, 'tempo', basename))
+        assert (self.tempo_file is not None), 'Tempo file not found'
+        self.tempo_align_if_needed()
 
 
     
@@ -161,12 +230,21 @@ class Take ():
         " generate a video. put all this in one page. "
     
     def generate (self, from_beat, to_beat, gridspec, cellname):
-        # the following two should have already happened
-        " first make sure the audio is aligned " 
-        " and make sure the tempo file is aligned "
-
         # ffmpeg -i {} -ss {} -to {} should work
-        # need to go from *_beat to time in file. 
+        # need to go from *_beat to time in file.
+        per_beat_time = open(self.tempo_aligned_file, 'r').readlines()
+        per_beat_time = np.array(list(map(float, per_beat_time)))
+        per_bar_times = {}
+        for idx, s in enumerate(per_beat_time):
+            if idx == len(per_beat_time) - 1:
+                break
+            next_s = per_beat_time[idx + 1]
+            per_bar_times[idx] = [s, next_s]
+        
+        from_time = per_bar_times[from_beat]
+        to_time = per_bar_times[to_beat]
+        
+
         # this is done through the adjusted tempo file
         " then take this subset, trim, create file, return file name "
 
