@@ -324,23 +324,23 @@ def tile_files (sequenced_filenames):
     import hashlib
     basename = hashlib.md5(str(sequenced_filenames).encode('utf-8')).hexdigest()
     ofilename = 'tmp/{}.mov'.format(basename)
+    if not os.path.exists(ofilename):
+        input_str = ' '.join(['-i {}'.format(seq['filename']) for seq in sequenced_filenames])
+        filter_input = ''.join(['[{}:v]'.format(idx) for idx in range(len(sequenced_filenames))])
+        position_str = '|'.join(['{}_{}'.format(*seq['offset']) for seq in sequenced_filenames])
 
-
-    input_str = ' '.join(['-i {}'.format(seq['filename']) for seq in sequenced_filenames])
-    filter_input = ''.join(['[{}:v]'.format(idx) for idx in range(len(sequenced_filenames))])
-    position_str = '|'.join(['{}_{}'.format(*seq['offset']) for seq in sequenced_filenames])
-
-    filter_str = '{} xstack=inputs={}:layout={}[v]'.format(
-        filter_input,
-        len(sequenced_filenames),
-        position_str)
-    
-    outfile = 'output.mp4'
-    cmd = 'ffmpeg {input_str} -filter_complex "{filter_str}" -map "[v]" {ofilename}'.format(
-        input_str=input_str,
-        filter_str=filter_str,
-        ofilename=ofilename)
-    
+        filter_str = '{} xstack=inputs={}:layout={}[v]'.format(
+            filter_input,
+            len(sequenced_filenames),
+            position_str)
+        
+        outfile = 'output.mp4'
+        cmd = 'ffmpeg {input_str} -filter_complex "{filter_str}" -map "[v]" {ofilename}'.format(
+            input_str=input_str,
+            filter_str=filter_str,
+            ofilename=ofilename)
+        subprocess.call(cmd)
+        
     return ofilename
 
 
