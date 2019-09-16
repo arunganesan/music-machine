@@ -313,17 +313,35 @@ def tile_files (sequenced_filenames):
     """
     arrange files in this grid
     """
-    ffmpeg_command = "ffmpeg -y <list of input files> -filter_complex <set full size>"
-    for idx, sequenced in enumerate(sequenced_filenames):
-        x,y = sequenced['offset']
-        if idx == 0:
-            command += ' [base][video-{c}] overlay=shortest=1:x={x}:y={y} [tmp{n}];'.format(c=idx, n=idx+1, x=x, y=y)
-        elif idx == len(sequenced_filenames) - 1:
-            command += ' [tmp{c}][video-{c}] overlay=shortest=1:x={x}:y={y}'.format(c=idx, x=x, y=y)
-        else:
-            command += ' [tmp{c}][video-{c}] overlay=shortest=1:x={x}:y={y} [tmp{n}];'.format(c=idx, n=idx+1, x=x, y=y)
 
 
+    
+    # for each video create map of the x/y offsets
+    # already stored in sequenced['offset']
+
+    cmd = 'ffmpeg'
+    
+    import hashlib
+    basename = hashlib.md5(str(sequenced_filenames).encode('utf-8')).hexdigest()
+    ofilename = 'tmp/{}.mov'.format(basename)
+
+
+    input_str = ' '.join(['-i {}'.format(seq['filename']) for seq in sequenced_filenames])
+    filter_input = ''.join(['[{}:v]'.format(idx) for idx in range(len(sequenced_filenames))])
+    position_str = '|'.join(['{}_{}'.format(*seq['offset']) for seq in sequenced_filenames])
+
+    filter_str = '{} xstack=inputs={}:layout={}[v]'.format(
+        filter_input,
+        len(sequenced_filenames),
+        position_str)
+    
+    outfile = 'output.mp4'
+    cmd = 'ffmpeg {input_str} -filter_complex "{filter_str}" -map "[v]" {ofilename}'.format(
+        input_str=input_str,
+        filter_str=filter_str,
+        ofilename=ofilename)
+    
+    return ofilename
 
 
 def sequence_files (filenames):
@@ -349,7 +367,10 @@ def sequence_files (filenames):
 
 
 def find_offset (gridspec, cellname):
-    return 1, 2
+    _spec = gridspec.spec[cellname]
+    width = gridspec.width * _spec['col'] / _spec['cols']
+    height = gridspec.height * _spec['row'] / _spec['rows']
+    return (width, height)
 
 
 class Arrangement ():
