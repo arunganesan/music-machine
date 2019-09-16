@@ -243,10 +243,22 @@ class Take ():
         
         from_time = per_bar_times[from_beat]
         to_time = per_bar_times[to_beat]
+        _spec = gridspec.spec[cellname]
+        width = gridspec.width * _spec['colspan'] / _spec['cols']
+        height = gridspec.height * _spec['rowspan'] / _spec['rows']
+        self.generated_filename = '{}/snippet-{}-{}-{}-{}'.format(self.tmpdir, from_time, to_time, width, height)
+        if not os.path.exists(self.generated_filename):
+            cmd = 'ffmpeg -i input -vf '
+            cmd += '-ss {} -to {} '.format(from_time, to_time)
+            cmd += '"scale={width}:{height}:force_original_aspect_ratio=decrease,pad={width}:{height}:(ow-iw)/2:(oh-ih)/2"'.format(
+                width=width,
+                height=height
+            )
+            cmd += ' {}'.format(self.generated_filename)
+            subprocess.call(cmd)
         
+        return self.generated_filename
 
-        # this is done through the adjusted tempo file
-        " then take this subset, trim, create file, return file name "
 
 
     def get_lyrics_file (self):
@@ -268,7 +280,7 @@ class Snippet ():
         call take.generate(from_beat, to_beat, gridspec, cellname)
         return file
         """
-        self.take.generate(
+        return self.take.generate(
             self.from_beat, 
             self.to_beat, 
             gridspec, cellname)
@@ -311,12 +323,30 @@ def tile_files (sequenced_filenames):
         else:
             command += ' [tmp{c}][video-{c}] overlay=shortest=1:x={x}:y={y} [tmp{n}];'.format(c=idx, n=idx+1, x=x, y=y)
 
+
+
+
 def sequence_files (filenames):
     """
     Go through each file and append them together
     """
-    new_filename = ""
-    return new_filename
+    import hashlib
+    basename = hashlib.md5('---'.join(filenames).encode('utf-8')).hexdigest()
+    ofilename = 'tmp/{}.mov'.format(basename) 
+
+    if not os.path.exists(ofilename):
+        listfilename = 'tmp/{}.txt'.format(basename)
+        listfile = open(listfilename, 'w')
+        for filename in filenames:
+            listfile.write(filename + '\n')
+        listfile.close()
+            
+        cmd = "ffmpeg -f concat -i {} -c copy {}".format(
+            listfilename,
+            ofilename
+        )
+    return ofilename
+
 
 def find_offset (gridspec, cellname):
     return 1, 2
