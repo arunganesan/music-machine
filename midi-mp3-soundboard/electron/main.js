@@ -8,13 +8,13 @@ let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width:1900,
-        height:1080,
-        show: false,
+        width:1000,
+        height:400,
+      show: false,
+        frame: false,
         webPreferences: {
           sandbox: false,
           nodeIntegration: true,
-          preload: path.join(__dirname, 'preload.js'),
           enableRemoteModule: true,
         }
     });

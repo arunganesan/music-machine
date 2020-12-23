@@ -1,9 +1,7 @@
 .container {
   margin: 0 auto;
-  margin-top: 50px;
   width: 1000px;
   height: 400px;
-  border: solid thin black;
   position: relative;
 }
 
@@ -14,7 +12,6 @@
   border-radius: 7px;
   border: solid thin black;
   background-color: rgba(256, 256, 256, 1);
-
   text-align: center;
   font-size: 10px;
   overflow: hidden;
