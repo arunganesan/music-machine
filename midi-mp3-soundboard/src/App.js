@@ -28,14 +28,6 @@ function App() {
             }
           }
         );
-        midiInput.current.addListener('noteoff', 'all',
-          () => {
-            if (isElectron()) {
-              sound.current.pause();
-              sound.current.currentTime = 0;
-            }
-          }
-        );
       }
     });
     return () => {
