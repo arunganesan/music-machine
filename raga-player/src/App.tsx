@@ -29,6 +29,10 @@ const RAGAS: {[key: string]: string[][]} = {
   'darbari kanada': [
     'n1. s r2 g1 s m1 p d1 n1 s^'.split(' '),
     's^ d1 n1 p m1 p g1 m1 r2 s'.split(' ')
+  ],
+  'mayamalavagaula': [
+    's r1 g2 m1 p d1 n2 s^'.split(' '),
+    's^ n2 d1 p m1 g2 r1 s'.split(' '),
   ]
 };
 
@@ -38,6 +42,31 @@ type Song = {
 };
 
 const SONGS: { [key: string]: Song } = {
+  'ente kannunir': {
+    'raga': 'mayamalavagaula',
+    'notes': [
+      'n s^*2 n/4 s^/4 n/4 s^/4 n*2 d/4 p/4 d/4 m/4 m p m g/3 r/3 r/3 s*2',
+      'g m p m g r g/2 m/2 p m/4 p/4 d/4 p/4 m/2 p/2 g',
+      'g m p m g r r s*4',
+      'm*7 m/2 p/2 g m p p p d/4 p/4 d/4 m/4',
+      'p/2 d/2 s^ s^ n/2 s^/2 d d s^ s^/3 n/3 s^/3 d d p*3',
+      'p s^*3 n/2 s^/2 n/6 d/6 p/6 d/6 p/6 m/6',
+      'm/2 p/2 d p m g/3 r/3 g/3 r r s*2'
+    ]
+  },
+  'kezhunnen manasam amma': {
+    'raga': 'darbari kanada',
+    'notes': [
+      'g*2 r s d.*2 n. s s*4 m m',
+      'p/2 s^/2 s^/4 n/4 r^/4 s^/4 n/2 p/2 m p g m r*4 s/2 r/2 m/2 g',
+      'm r s d. n. n. g/6 r/6 s/6 r/6 g/6 m/6 g/2 s*4',
+      'm*3 p*3 n/2 d/2 n/2 s^/3 n/3 d/3 n/2 s^/2 n s^ s^*3',
+      'r^*3 s^/2 n/2 d n n/2 s^/2 s^*4',
+      'g^*3 r^*2 s^/2 n/2 n/2 s^/2 r^*2 s^*2 d/2 n/2 m p',
+      'm/2 p/2 n p g r s r r s/2 r/2 m/2 g/2',
+      'm r s d. n. n. g/6 r/6 s/6 r/6 g/6 m/6 g/2 s*4',
+    ]
+  },
   'arikil undenkilum':  {
     'raga': 'sivaranjini',
     'notes': [
