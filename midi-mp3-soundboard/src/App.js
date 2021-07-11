@@ -5,7 +5,62 @@ import React, { useState, useRef, useEffect } from 'react';
 import isElectron from 'is-electron';
 import _ from 'lodash';
 
+import spell from './sounds/battle/spell.wav';
 import swing from './sounds/battle/swing.wav';
+import sword_unsheath from './sounds/battle/sword-unsheathe.wav';
+import bottle from './sounds/inventory/bottle.wav';
+import bubble from './sounds/inventory/bubble3.wav';
+import chainmail from './sounds/inventory/chainmail1.wav';
+import cloth from './sounds/inventory/cloth.wav';
+import coin from './sounds/inventory/coin2.wav';
+import growl from './sounds/misc/growl.wav';
+import bite from './sounds/NPC/beetle/bite-small3.wav';
+import giant from './sounds/NPC/giant/giant2.wav';
+import monster1 from './sounds/NPC/gutteral beast/mnstr5.wav';
+import monster2 from './sounds/NPC/gutteral beast/mnstr4.wav';
+import monster3 from './sounds/NPC/gutteral beast/mnstr12.wav';
+import monster4 from './sounds/NPC/gutteral beast/mnstr14.wav';
+import ogre from './sounds/NPC/ogre/ogre4.wav';
+import shade from './sounds/NPC/shade/shade8.wav';
+import slime from './sounds/NPC/slime/slime10.wav';
+import door from './sounds/world/door.wav';
+import { openStreamDeck } from 'elgato-stream-deck';
+
+const path = require('path');
+
+// import streamDeck from
+
+
+
+const DefaultSounds = {
+  'C3': spell,
+  'C#3': swing,
+  'D3': sword_unsheath,
+  'D#3': bottle,
+  'E3': bubble,
+  'F3': chainmail,
+  'F#3': cloth,
+  'G3': coin,
+  'G#3': growl,
+  'A3': bite,
+  'A#3': giant,
+  'B3': monster1,
+  'C4': monster2,
+  'C#4': monster3,
+  'D4': monster4,
+  'D#4': ogre,
+  'E4': shade,
+  'F4': slime,
+  'F#4': door,
+  'G4': null,
+  'G#4': null,
+  'A4': null,
+  'A#4': null,
+  'B4': null,
+  'C5': null,
+
+}
+
 
 function App() {
   const midiInput = useRef(null);
@@ -20,22 +75,67 @@ function App() {
         midiInput.current.addListener('noteon', 'all',
           (e) => {
             const note = `${e.note.name}${e.note.octave}`;
-            const audioSrc = localStorage.getItem(note) ?? swing;
+            const audioSrc = localStorage.getItem(note) ?? DefaultSounds[note];
             sound.current = new Audio(audioSrc);
-
-            if (isElectron()) {
-              sound.current.play();
-            }
+            sound.current.play();
           }
         );
       }
     });
+
+
+
+    // const streamDeck = new StreamDeck();
+    const myStreamDeck = openStreamDeck()
+
+    myStreamDeck.on('down', keyIndex => {
+      console.log('key %d down', keyIndex)
+    })
+
+    myStreamDeck.on('up', keyIndex => {
+      console.log('key %d up', keyIndex)
+    })
+
+    // Fired whenever an error is detected by the `node-hid` library.
+    // Always add a listener for this event! If you don't, errors will be silently dropped.
+    myStreamDeck.on('error', error => {
+      console.error(error)
+    })
+
+    // Fill the first button form the left in the first row with a solid red color. This is synchronous.
+    myStreamDeck.fillColor(4, 255, 0, 0)
+    console.log('Successfully wrote a red square to key 4.')
+
+    // streamDeck.on('down', keyIndex => {
+    //   console.log('key %d down', keyIndex);
+    // });
+
+    // streamDeck.on('up', keyIndex => {
+    //   console.log('key %d up', keyIndex);
+    // });
+
+    // streamDeck.on('error', error => {
+    //   console.error(error);
+    // });
+
+    // // // Fill the second button from the left in the first row with an image of the GitHub logo.
+    // // // This is asynchronous and returns a promise.
+    // streamDeck.fillImageFromFile(3, path.resolve(__dirname, 'keyboard.jpg')).then(() => {
+    //   console.log('Successfully wrote a GitHub logo to key 3.');
+    // });
+
+    // // // Fill the first button form the left in the first row with a solid red color. This is synchronous.
+    // streamDeck.fillColor(4, 255, 0, 0);
+    // console.log('Successfully wrote a red square to key 4.');
+    // console.log(streamDeck);
+
     return () => {
       if (midiInput != null) {
         midiInput.current.removeListener();
       }
     };
   }, []);
+
 
   const KeyLocations = {
     'C3': { row: 1, offsetX: 286, nthKey: 0 },
@@ -67,34 +167,7 @@ function App() {
   }
 
 
-  const DefaultSounds = {
-    'C3': './sounds/battle/spell.wav',
-    'C#3': './sounds/battle/swing.wav',
-    'D3': './sounds/battle/sword-unsheathe.wav',
-    'D#3': './sounds/inventory/bottle.wav',
-    'E3': './sounds/inventory/bubble3.wav',
-    'F3': './sounds/inventory/chainmail1.wav',
-    'F#3': './sounds/inventory/cloth.wav',
-    'G3': './sounds/inventory/coin2.wav',
-    'G#3': './sounds/misc/growl.wav',
-    'A3': './sounds/NPC/beetle/bite-small3.wav',
-    'A#3': './sounds/NPC/giant/giant2.wav',
-    'B3': './sounds/NPC/gutteral beast/mnstr5.wav',
-    'C4': './sounds/NPC/gutteral beast/mnstr4.wav',
-    'C#4': './sounds/NPC/gutteral beast/mnstr12.wav',
-    'D4': './sounds/NPC/gutteral beast/mnstr14.wav',
-    'D#4': './sounds/NPC/ogre/ogre4.wav',
-    'E4': './sounds/NPC/shade/shade8.wav',
-    'F4': './sounds/NPC/slime/slime10.wav',
-    'F#4': './sounds/world/door.wav',
-    'G4': './sounds//.wav',
-    'G#4': './sounds//.wav',
-    'A4': './sounds//.wav',
-    'A#4': './sounds//.wav',
-    'B4': './sounds//.wav',
-    'C5': './sounds//.wav',
 
-  }
 
   return (
     <div className='container' style={{ background: `url(${keyboard}) no-repeat center` }}>
@@ -120,12 +193,13 @@ function Key(props) {
   const [filepath, setFilepath] = useState(localStorage.getItem(note));
 
   const getBasename = (path) => {
+    console.log(path);
     if (path == null) {
       return 'Not set';
     }
-
     const parts = path.split('/');
-    return parts[parts.length - 1];
+    const basename = parts[parts.length - 1];
+    return basename.split('.')[0];
   }
 
   return <div
@@ -137,8 +211,19 @@ function Key(props) {
       setFilepath(newFilepath);
       ev.preventDefault()
     }}
+    onClick={e => {
+      if (e.shiftKey) {
+        const newFilepath = DefaultSounds[note];
+        localStorage.setItem(note, newFilepath);
+        setFilepath(newFilepath);
+      } else {
+        let file = filepath ?? DefaultSounds[note];
+        const sound = new Audio(file);
+        sound.play();
+      }
+    }}
     style={{ top: startY, left: startX + offsetX }}>
-    {getBasename(filepath)}
+    <span>{getBasename(filepath ?? DefaultSounds[note])}</span>
   </div>
 }
 

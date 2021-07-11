@@ -13,6 +13,10 @@
   border: solid thin black;
   background-color: rgba(256, 256, 256, 1);
   text-align: center;
-  font-size: 10px;
+  font-size: 8px;
   overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
