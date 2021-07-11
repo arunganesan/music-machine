@@ -2,25 +2,26 @@ import { useState } from 'react';
 import './App.css';
 import * as React from 'react';
 
-import Tone from 'tone'
+// import Tone from 'tone'
+import * as Tone from 'tone'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form } from 'react-bootstrap';
 
 import _ from 'lodash';
 
-
-function sleep(ms) {
+function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
-const NOTE_RAGA_MAP = [
+const NOTE_RAGA_MAP: string[] = [
   's', 'r1', 'r2', 'g1',
   'g2', 'm1', 'm2', 'p',
   'd1', 'd2', 'n1', 'n2'
 ];
 
-const RAGAS = {
+const RAGAS: {[key: string]: string[][]} = {
   'sivaranjini': [
     's r2 g1 p d2 s^'.split(' '),
     's^ d2 p g1 r2 s'.split(' ')
@@ -40,9 +41,8 @@ const RAGAS = {
 
 const NOTE_LENGTH = 500;
 
-function ragaToSemitone(raga) {
-  console.log(raga);
-  return Array.from(raga).map(note => {
+function ragaToSemitone(raga: string[]) {
+  return Array.from(raga).map((note: string) => {
     let octave = 0;
     if (note.includes('^')) {
       note = note.replace('^', '');
@@ -55,10 +55,11 @@ function ragaToSemitone(raga) {
   });
 }
 
-async function playRaga(ragaName, shruti) {
+async function playRaga(ragaName: string, shruti: number) {
   const synth = new Tone.AMSynth().toMaster();
-  const raga = _.flatten(RAGAS[ragaName]);//.concat(RAGAS[ragaName][1]);
+  const raga = _.flatten(RAGAS[ragaName]);
   const semitones = ragaToSemitone(raga);
+  // @ts-ignore
   const frequencies = semitones.map(note => Tone.Frequency('C4').transpose(shruti + note));
 
   console.log(raga);
@@ -72,7 +73,7 @@ async function playRaga(ragaName, shruti) {
 }
 
 
-export default function App(props) {
+export default function App() {
   const [shruti, setShruti] = useState(-3);
   return (
     <div className="App">

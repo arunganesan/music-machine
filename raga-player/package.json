@@ -10,7 +10,8 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0",
-    "tone": "^13.8.25"
+    "tone": "^13.8.25",
+    "typescript": "^4.3.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,5 +33,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.171",
+    "@types/tone": "git+https://github.com/Tonejs/TypeScript.git"
   }
 }
