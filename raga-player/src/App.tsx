@@ -39,6 +39,24 @@ const RAGAS: {[key: string]: string[][]} = {
   ]
 };
 
+type Song = {
+  shruti: string,
+  notes: string[],
+};
+
+const SONGS: { [key: string]: Song } = {
+  'arikil undenkilum':  {
+    'shruti': 'sivaranjini',
+    'notes': [
+      'p. d. s r g g g r g/2 r/2 s/2 d./2 s*4',
+      's r g p p g r/2 g/4 p/4 g/2 r/2 s/2',
+      'r/2 g/4 r/4 s d. d. d. d./2 s/2 s/2 r/2 s d. d. p.',
+      'p. d. s r g r s s/2 r/4 g/4 r/2 s/2 d./2',
+      'p. d. s r g r s'
+    ]
+  }
+};
+
 const NOTE_LENGTH = 500;
 
 function ragaToSemitone(raga: string[]) {
