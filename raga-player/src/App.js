@@ -14,12 +14,16 @@ function sleep(ms) {
 }
 
 
-const NOTE_RAGA_MAP = ['s', 'r1', 'r2', 'g1', 'g2', 'm1', 'm2', 'p', 'd1', 'd2', 'n1', 'n2'];
+const NOTE_RAGA_MAP = [
+  's', 'r1', 'r2', 'g1',
+  'g2', 'm1', 'm2', 'p',
+  'd1', 'd2', 'n1', 'n2'
+];
 
 const RAGAS = {
   'sivaranjini': [
-    ['s', 'r2', 'g1', 'p', 'd2', 's^'],
-    ['s^', 'd2', 'p', 'g1', 'r2', 's']
+    's r2 g1 p d2 s^'.split(' '),
+    's^ d2 p g1 r2 s'.split(' ')
   ],
   'darbari kanada': [
     'n1. s r2 g1 s m1 p d1 n1 s^'.split(' '),
