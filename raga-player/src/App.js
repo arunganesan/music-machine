@@ -25,6 +25,13 @@ const RAGAS = {
     's r2 g1 p d2 s^'.split(' '),
     's^ d2 p g1 r2 s'.split(' ')
   ],
+  'arikil indenkilum': [
+    'p. d2. s r2 g1 g1 g1 r2 g1 r2 s d2. s s s s'.split(' '),
+    's r2 g1 p p g1 r2 g1 p g1 r2 s'.split(' '),
+    'r2 g1 r2 s d2. d2. d2. d2. s s r2 s d2. d2. p.'.split(' '),
+    'p. d2. s r2 g1 r2 s s r2 g1 r2 r2 s s d2. d2.'.split(' '),
+    'p. d2. s r2 g1 r2 s'.split(' '),
+  ],
   'darbari kanada': [
     'n1. s r2 g1 s m1 p d1 n1 s^'.split(' '),
     's^ d1 n1 p m1 p g1 m1 r2 s'.split(' ')
@@ -50,7 +57,7 @@ function ragaToSemitone(raga) {
 
 async function playRaga(ragaName, shruti) {
   const synth = new Tone.AMSynth().toMaster();
-  const raga = RAGAS[ragaName][0].concat(RAGAS[ragaName][1]);
+  const raga = _.flatten(RAGAS[ragaName]);//.concat(RAGAS[ragaName][1]);
   const semitones = ragaToSemitone(raga);
   const frequencies = semitones.map(note => Tone.Frequency('C4').transpose(shruti + note));
 
