@@ -14,23 +14,27 @@ function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
+async function playRaga(ragaName: string, shruti: number, speed: number) {
+  const notes = _.join(RAGAS[ragaName], ' ').split(' ');
+  await playNotes(notes, shruti, speed, {});
+}
 
 async function playSong(song: Song, shruti: number, speed: number) {
   // Find the mapping from each note
-  const raga = RAGAS[song['raga']];
+  const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
   let mapping: {[key: string]: string} = {};
-  _.flatten(raga).forEach(note => {
+  ragaNotes.forEach(note => {
     note = note.replace('^', '').replace('.', '');
     if (/\d/.test(note)) {
       const basenote = note.replace(/\d/, '');
       mapping[basenote] = note;
     }
   });
-
-  // Convert notes to a time and something in the note raga map
-  // eventually to frequencies
   const notes = _.join(song['notes'], ' ').split(' ');
+  await playNotes(notes, shruti, speed, mapping);
+}
+
+async function playNotes(notes: string[], shruti: number, speed: number, mapping: { [key: string]: string }) {
   const synth = new Tone.AMSynth().toMaster();
 
   for (let i = 0; i < notes.length; i++) {
@@ -46,14 +50,13 @@ async function playSong(song: Song, shruti: number, speed: number) {
     }
 
     let octave = 0;
-    if (note.includes('^')) {
-      note = note.replace('^', '');
-      octave = 1;
-    } else if (note.includes('.')) {
+    if (note.includes('.')) {
       note = note.replace('.', '');
       octave = -1;
+    } else if (note.toLowerCase() !== note) {
+      note = note.toLowerCase();
+      octave = 1;
     }
-
 
     const mappednote = _.has(mapping, note) ? mapping[note] : note;
     const semitone = NOTE_RAGA_MAP.indexOf(mappednote) + octave * 12;
@@ -61,34 +64,6 @@ async function playSong(song: Song, shruti: number, speed: number) {
     const frequency = Tone.Frequency('C4').transpose(shruti + semitone);
     synth.triggerAttackRelease(frequency, duration);
     await sleep(duration);
-  }
-  synth.triggerRelease();
-}
-
-
-function ragaToSemitone(raga: string[]) {
-  return Array.from(raga).map((note: string) => {
-    let octave = 0;
-    if (note.includes('^')) {
-      note = note.replace('^', '');
-      octave = 1;
-    } else if (note.includes('.')) {
-      note = note.replace('.', '');
-      octave = -1;
-    }
-    return NOTE_RAGA_MAP.indexOf(note) + octave * 12;
-  });
-}
-
-async function playRaga(ragaName: string, shruti: number, speed: number) {
-  const synth = new Tone.AMSynth().toMaster();
-  const raga = _.flatten(RAGAS[ragaName]);
-  const semitones = ragaToSemitone(raga);
-  // @ts-ignore
-  const frequencies = semitones.map(note => Tone.Frequency('C4').transpose(shruti + note));
-  for (let i = 0; i < frequencies.length; i++) {
-    synth.triggerAttackRelease(frequencies[i], speed);
-    await sleep(speed);
   }
   synth.triggerRelease();
 }
