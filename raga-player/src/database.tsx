@@ -20,6 +20,10 @@ export const RAGAS: { [key: string]: string[] } = {
   'mohanam': [
     's r2 g2 p d2 S',
     'S d2 p g2 r2 s',
+  ],
+  'cakravakam': [
+    's r1 g2 m1 p d2 n1 S',
+    'S n1 d2 p m1 g2 r1 s'
   ]
 };
 
@@ -29,6 +33,19 @@ export type Song = {
 };
 
 export const SONGS: { [key: string]: Song } = {
+  'nalancu naleykku': {
+    'raga': 'cakravakam',
+    'notes': [
+      'n. s r m g r g r s n.',
+      'n. s r m g r g r n. s',
+      'm/2 p/2 d n d d d d n R S',
+      'n/4 S/4 n/4 R/4 S n d/3 p/3 m/3 m m g/6 m/6 p/6 g/6 m/6 r n. s',
+      'd n d p/2 m/2 m m g m p d',
+      'm d n R R R S R/2 S/2 n R S',
+      'n S R G R S R S n n',
+      'n/4 S/4 n/4 R/4 S n d/3 p/3 m/3 m m g/6 m/6 p/6 g/6 m/6 r n. s',
+    ]
+  },
   'ente kannunir': {
     'raga': 'mayamalavagaula',
     'notes': [
