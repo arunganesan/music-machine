@@ -19,18 +19,24 @@
 .song-row {
   display: flex;
   color: black;
-  /* width: 75vw; */
-
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
+.song-card {
+  margin: 5px;
+  padding: 0px;
+  /* width: 500px; */
+}
+
+
 .song-row > Button {
   margin: 5px;
 }
 
-.song-card {
+
+.song-row > .form-control {
+  width: 100px !important;
   margin: 5px;
-  padding: 0px;
 }

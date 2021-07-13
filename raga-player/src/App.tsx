@@ -5,10 +5,11 @@ import './App.css';
 import * as React from 'react';
 import { NOTE_RAGA_MAP, RAGAS, SONGS } from './database';
 import Tone from 'tone'
-import { Card, Button, Form } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Card, Button, Form } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import _ from 'lodash';
+import { setConstantValue } from 'typescript';
 
 type ShrutiMap = { [key: string]: number };
 type TempoMap = { [key: string]: number };
@@ -37,7 +38,12 @@ async function playSong(song: Song, shruti: number, speed: number) {
   await playNotes(notes, shruti, speed, mapping);
 }
 
-async function playNotes(notes: string[], shruti: number, speed: number, mapping: { [key: string]: string }) {
+async function playNotes(
+  notes: string[],
+  shruti: number,
+  speed: number,
+  mapping: { [key: string]: string }
+) {
   const synth = new Tone.AMSynth().toMaster();
 
   for (let i = 0; i < notes.length; i++) {
@@ -72,52 +78,90 @@ async function playNotes(notes: string[], shruti: number, speed: number, mapping
 }
 
 
-function getShrutiName(shruti: number): string {
-  switch (shruti) {
-    case -5: return 'G3';
-    case -4: return 'G#3';
-    case -3: return 'A4';
-    case -2: return 'A#4';
-    case -1: return 'B4';
-    case 0: return 'C4';
-    case 1: return 'C#4';
-    case 2: return 'D4';
-    case 3: return 'D#4';
-    case 4: return 'E4';
-    case 5: return 'F4';
-  }
-  return '';
-}
+const SHRUTI_OFFSET_MAP: { [key: string]: string } = {
+  '-5': 'G3',
+  '-4': 'G#3',
+  '-3': 'A4',
+  '-2': 'A#4',
+  '-1': 'B4',
+  '0': 'C4',
+  '1': 'C#4',
+  '2': 'D4',
+  '3': 'D#4',
+  '4': 'E4',
+  '5': 'F4',
+};
 
+const DEFAULT_TEMPO = 250;
+const DEFAULT_SHRUTI = 0;
 
 export default function App() {
-  const [shruti, setShruti] = useState(-3);
-  const [shrutiMap, setShrutiMap] = useState<ShrutiMap>(JSON.parse(localStorage.getItem('shruti') ?? '{}'));
-  const [tempoMap, setTempoMap] = useState<TempoMap>(JSON.parse(localStorage.getItem('tempo') ?? '{}'));
-  const [speed, setSpeed] = useState(250);
+  const [forceUpdate, setForceUpdate] = useState(0);
+  const [shrutiMap, setShrutiMap] = useState<ShrutiMap>(
+    JSON.parse(localStorage.getItem('shruti') ?? '{}'));
+  const [tempoMap, setTempoMap] = useState<TempoMap>(
+    JSON.parse(localStorage.getItem('tempo') ?? '{}'));
+
+  const updateShrutiMap = (song: string, newShruti: string) => {
+    shrutiMap[song] = _.parseInt(newShruti);
+    localStorage.setItem('shruti', JSON.stringify(shrutiMap));
+    setShrutiMap(shrutiMap);
+    setForceUpdate(forceUpdate + 1);
+  }
+
+  const updateTempoMap = (song: string, newTempo: string) => {
+    tempoMap[song] = _.parseInt(newTempo);
+    localStorage.setItem('tempo', JSON.stringify(tempoMap));
+    setTempoMap(tempoMap);
+    setForceUpdate(forceUpdate + 1);
+  }
+
   return (
     <div className="App">
-      Shruti: {getShrutiName(shruti)}
-      <Form.Control type="range" min={-5} max={5} value={shruti} onChange={e => setShruti(parseInt(e.target.value))} />
-
-      Speed
-      <Form.Control type="number" value={speed} onChange={e => setSpeed(parseInt(e.target.value))} />
-
       {
         _.keys(SONGS).map(song =>
           <Card key={`${song}`} className='song-card'>
             <Card.Body>
               <div className='song-row'>
                 <div className='song-title'>{song}</div>
+
                 <Button
-                  onClick={async () => await playRaga(SONGS[song]['raga'], shruti, speed)}
-                >{SONGS[song]['raga']}
+                onClick={async () =>
+                    await playRaga(
+                      SONGS[song]['raga'],
+                      shrutiMap[song] ?? DEFAULT_SHRUTI,
+                      tempoMap[song] ?? DEFAULT_TEMPO)}>
+                  {SONGS[song]['raga']}
                 </Button>
 
                 <Button
-                  onClick={async () => await playSong(SONGS[song], shruti, speed)}>
+                  onClick={async () =>
+                    await playSong(
+                      SONGS[song],
+                      shrutiMap[song] ?? DEFAULT_SHRUTI,
+                      tempoMap[song] ?? DEFAULT_TEMPO)}>
                   Play song
-              </Button>
+                </Button>
+
+                <Form.Control
+                  className='song-shruti-input'
+                  as="select"
+                  value={shrutiMap[song] ?? DEFAULT_SHRUTI}
+                  onChange={e => updateShrutiMap(song, e.target.value)}>
+                  {_.keys(SHRUTI_OFFSET_MAP)
+                    .map(shrutiNum =>
+                      <option
+                        value={shrutiNum}
+                        key={`shruti map for ${song} - ${shrutiNum}`}>
+                        {SHRUTI_OFFSET_MAP[shrutiNum]}
+                      </option>
+                    )}
+                </Form.Control>
+
+                <Form.Control
+                  type="number"
+                  value={tempoMap[song] ?? DEFAULT_TEMPO}
+                  onChange={e => updateTempoMap(song, e.target.value)} />
               </div>
             </Card.Body>
           </Card>
