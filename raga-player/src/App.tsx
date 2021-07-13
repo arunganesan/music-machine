@@ -13,6 +13,10 @@ import { setConstantValue } from 'typescript';
 
 type ShrutiMap = { [key: string]: number };
 type TempoMap = { [key: string]: number };
+type SemitoneAndDuration = {
+  semitone: number,
+  duration: number,
+};
 
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -20,11 +24,11 @@ function sleep(ms: number) {
 
 async function playRaga(ragaName: string, shruti: number, speed: number) {
   const notes = _.join(RAGAS[ragaName], ' ').split(' ');
-  await playNotes(notes, shruti, speed, {});
+  const semitonesAndDuration = getSemitoneAndDuration(notes, shruti, speed, {});
+  await playSemitonesAndDurations(semitonesAndDuration);
 }
 
-async function playSong(song: Song, shruti: number, speed: number) {
-  // Find the mapping from each note
+function getSemitonesAndDurationOfSong(song: Song, shruti: number, speed: number):  SemitoneAndDuration[] {
   const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
   let mapping: { [key: string]: string } = {};
   ragaNotes.forEach(note => {
@@ -35,16 +39,45 @@ async function playSong(song: Song, shruti: number, speed: number) {
     }
   });
   const notes = _.join(song['notes'], ' ').split(' ');
-  await playNotes(notes, shruti, speed, mapping);
+  return getSemitoneAndDuration(notes, shruti, speed, mapping);
 }
 
-async function playNotes(
+async function playSong(song: Song, shruti: number, speed: number) {
+  const semitonesAndDuration = getSemitonesAndDurationOfSong(song, shruti, speed);
+  await playSemitonesAndDurations(semitonesAndDuration);
+}
+
+
+async function playStartingNote(song: Song, shruti: number) {
+  const semitonesAndDuration = getSemitonesAndDurationOfSong(song, shruti, 1000);
+  await playSemitonesAndDurations(semitonesAndDuration.slice(0, 1));
+}
+
+async function playLowestNote(song: Song, shruti: number) {
+  const semitonesAndDuration = getSemitonesAndDurationOfSong(song, shruti, 1000);
+  const lowest = _.minBy(semitonesAndDuration, semitoneAndDuration => semitoneAndDuration.semitone);
+  if (lowest !== undefined) {
+    await playSemitonesAndDurations([lowest]);
+  }
+}
+
+
+async function playHighestNote(song: Song, shruti: number) {
+  const semitonesAndDuration = getSemitonesAndDurationOfSong(song, shruti, 1000);
+  const lowest = _.maxBy(semitonesAndDuration, semitoneAndDuration => semitoneAndDuration.semitone);
+  if (lowest !== undefined) {
+    await playSemitonesAndDurations([lowest]);
+  }
+}
+
+
+function getSemitoneAndDuration(
   notes: string[],
   shruti: number,
   speed: number,
   mapping: { [key: string]: string }
-) {
-  const synth = new Tone.AMSynth().toMaster();
+): SemitoneAndDuration[] {
+  let semitoneAndDurations: SemitoneAndDuration[] = [];
 
   for (let i = 0; i < notes.length; i++) {
     let note = notes[i];
@@ -68,11 +101,26 @@ async function playNotes(
     }
 
     const mappednote = _.has(mapping, note) ? mapping[note] : note;
-    const semitone = NOTE_RAGA_MAP.indexOf(mappednote) + octave * 12;
+    const semitone = NOTE_RAGA_MAP.indexOf(mappednote) + octave * 12 + shruti;
+    semitoneAndDurations.push({
+      'semitone': semitone,
+      'duration': duration
+    });
+  }
+
+  return semitoneAndDurations;
+}
+
+async function playSemitonesAndDurations(
+  semitonesAndDuration: SemitoneAndDuration[]
+) {
+  // const semitonesAndDuration = getSemitoneAndDuration(notes, shruti, speed, mapping);
+  const synth = new Tone.AMSynth().toMaster();
+  for (let i = 0; i < semitonesAndDuration.length; i++) {
     // @ts-ignore
-    const frequency = Tone.Frequency('C4').transpose(shruti + semitone);
-    synth.triggerAttackRelease(frequency, duration);
-    await sleep(duration);
+    const frequency = Tone.Frequency('C4').transpose(semitonesAndDuration[i].semitone);
+    synth.triggerAttackRelease(frequency, semitonesAndDuration[i].duration);
+    await sleep(semitonesAndDuration[i].duration);
   }
   synth.triggerRelease();
 }
@@ -126,7 +174,7 @@ export default function App() {
                 <div className='song-title'>{song}</div>
 
                 <Button
-                onClick={async () =>
+                  onClick={async () =>
                     await playRaga(
                       SONGS[song]['raga'],
                       shrutiMap[song] ?? DEFAULT_SHRUTI,
@@ -142,6 +190,30 @@ export default function App() {
                       tempoMap[song] ?? DEFAULT_TEMPO)}>
                   Play song
                 </Button>
+
+                <Button
+                  onClick={async () => await playStartingNote(SONGS[song],
+                    shrutiMap[song] ?? DEFAULT_SHRUTI,)
+                  }>
+                  Starting note
+                </Button>
+
+
+                <Button
+                   onClick={async () => await playLowestNote(SONGS[song],
+                    shrutiMap[song] ?? DEFAULT_SHRUTI,)
+                  }>
+                  Lowest note
+                </Button>
+
+
+                <Button
+                  onClick={async () => await playHighestNote(SONGS[song],
+                    shrutiMap[song] ?? DEFAULT_SHRUTI,)
+                  }>
+                  Highest note
+                </Button>
+
 
                 <Form.Control
                   className='song-shruti-input'
