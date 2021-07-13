@@ -4,11 +4,14 @@ import { useState } from 'react';
 import './App.css';
 import * as React from 'react';
 import { NOTE_RAGA_MAP, RAGAS, SONGS } from './database';
-import * as Tone from 'tone'
-import { Button, Form } from 'react-bootstrap';
+import Tone from 'tone'
+import { Card, Button, Form } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import _ from 'lodash';
+
+type ShrutiMap = { [key: string]: number };
+type TempoMap = { [key: string]: number };
 
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -22,7 +25,7 @@ async function playRaga(ragaName: string, shruti: number, speed: number) {
 async function playSong(song: Song, shruti: number, speed: number) {
   // Find the mapping from each note
   const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
-  let mapping: {[key: string]: string} = {};
+  let mapping: { [key: string]: string } = {};
   ragaNotes.forEach(note => {
     note = note.replace('^', '').replace('.', '');
     if (/\d/.test(note)) {
@@ -89,6 +92,8 @@ function getShrutiName(shruti: number): string {
 
 export default function App() {
   const [shruti, setShruti] = useState(-3);
+  const [shrutiMap, setShrutiMap] = useState<ShrutiMap>(JSON.parse(localStorage.getItem('shruti') ?? '{}'));
+  const [tempoMap, setTempoMap] = useState<TempoMap>(JSON.parse(localStorage.getItem('tempo') ?? '{}'));
   const [speed, setSpeed] = useState(250);
   return (
     <div className="App">
@@ -97,24 +102,25 @@ export default function App() {
 
       Speed
       <Form.Control type="number" value={speed} onChange={e => setSpeed(parseInt(e.target.value))} />
-      {
-        _.keys(RAGAS).map(raga =>
-          <Button
-            style={{ height: '50px' }}
-            key={`button: ${raga}`}
-            onClick={async () => await playRaga(raga, shruti, speed)}
-            block>{raga}</Button>
-        )
-      }
 
       {
         _.keys(SONGS).map(song =>
-          <Button
-            style={{ height: '50px' }}
-            key={`button: ${song}`}
-            variant="warning"
-            onClick={async () => await playSong(SONGS[song], shruti, speed)}
-            block>{song}</Button>
+          <Card key={`${song}`} className='song-card'>
+            <Card.Body>
+              <div className='song-row'>
+                <div className='song-title'>{song}</div>
+                <Button
+                  onClick={async () => await playRaga(SONGS[song]['raga'], shruti, speed)}
+                >{SONGS[song]['raga']}
+                </Button>
+
+                <Button
+                  onClick={async () => await playSong(SONGS[song], shruti, speed)}>
+                  Play song
+              </Button>
+              </div>
+            </Card.Body>
+          </Card>
         )
       }
     </div>
