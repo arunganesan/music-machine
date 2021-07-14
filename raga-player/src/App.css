@@ -6,10 +6,7 @@
   min-height: 100vh;
 }
 
-.meditationStep {
-  text-align: center;
-  font-family: 'Courier New', Courier, monospace;
-}
+
 
 .activeStep {
   font-weight: bold;
@@ -38,4 +35,33 @@
 .song-row > .form-control {
   width: 100px !important;
   margin: 5px;
+}
+
+.note {
+  border: solid thin black;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.note.active {
+  border: solid thick red;
+}
+
+.note.lowest {
+  background: lightcoral;
+}
+
+.note.highest {
+  background-color: greenyellow;
+}
+
+.line {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
 }
