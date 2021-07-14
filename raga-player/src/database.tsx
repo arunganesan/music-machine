@@ -39,9 +39,10 @@ export const SONGS: { [key: string]: Song } = {
       'r/2 g r/2 g r/2 g r/2 g',
       's/2 g r/2 g r/2 g r/2 g',
       's/2 r s/2 r s/2 r s/2 r',
-      'r/2 g r/2 s/2 s/2 s s',
-      // 's r s s s s s', 's r s s s s s*5',
-      // 'g p d S S S S S S S S S S S',
+      'r/2 r g/2 r s/2 s s/2 s',
+      'g/2 p d/2 S S/2 S S/2 S',
+      'S/2 S S/2 S S/2 S R/2 S*4 d S d*2',
+      'd S d p p p d p g g r g r s s s s'
       // 'S R S d*2 d S d p*2 p d p g g p g r r g r s s s s',
       // 'g r g r g r g s g r g r g r g s r s r s r s r',
       // 'r g r s s s s'
