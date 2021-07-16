@@ -31,7 +31,7 @@ export function getSemitoneAndDuration(
         }
 
         const mappednote = _.has(mapping, note) ? mapping[note] : note;
-        const semitone = NOTE_RAGA_MAP.indexOf(mappednote) + octave * 12 + shruti;
+        const semitone = (mappednote === '_') ? Infinity : NOTE_RAGA_MAP.indexOf(mappednote) + octave * 12 + shruti;
         semitoneAndDurations.push({
             'semitone': semitone,
             'duration': duration

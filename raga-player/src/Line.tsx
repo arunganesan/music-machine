@@ -41,7 +41,7 @@ export default function LineDisplay(props: Props) {
         noteIndex += 1;
     }
     return <div className='line' >
-        {/* <button onClick={() => { }}>Play line</button> */}
+        <div className='lyric'>{props.line.lyrics}</div>
         {renderedLineNotes}
     </div >;
 }

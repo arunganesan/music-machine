@@ -80,13 +80,13 @@ export const SONGS: { [key: string]: Song } = {
   'ente kannunir': {
     'raga': 'mayamalavagaula',
     'lines': [
-      { lyrics: '', notes: 'n S*2 n/4 S/4 n/4 S/4 n*2 d/4 p/4 d/4 m/4 m p m g/3 r/3 r/3 s*2' },
-      { lyrics: '', notes: 'g m p m g r g/2 m/2 p m/4 p/4 d/4 p/4 m/2 p/2 g' },
-      { lyrics: '', notes: 'g m p m g r r s*4' },
-      { lyrics: '', notes: 'm*7 m/2 p/2 g m p p p d/4 p/4 d/4 m/4' },
-      { lyrics: '', notes: 'p/2 d/2 S S n/2 S/2 d d S S/3 n/3 S/3 d d p*3' },
-      { lyrics: '', notes: 'p S*3 n/2 S/2 n/6 d/6 p/6 d/6 p/6 m/6' },
-      { lyrics: '', notes: 'm/2 p/2 d p m g/3 r/3 g/3 r r s*2' }
+      { lyrics: 'ente kannunir etra kandalum (4)', notes: 'n*3 S n/2 S/2 n/2 S/2 n d/2 p/2 d/2 m/2 _/2 m/2 p m g r r s' },
+      { lyrics: 'manasaliyuka ille amme nin (4)', notes: '_ g/2 m p/2 m g r g m p*3 _ m/2 p/2 d/2 p/2 m/2 p/2 g' },
+      { lyrics: 'manasaliyuka ille... (4)', notes: '_ g/2 m p/2 m g r r*2 s*4 _*4' },
+      { lyrics: 'etrayo nalukalai nin padam alayunnu', notes: 'm*7 m/2 p/2 g m p p p d/4 p/4 d/4 m/4' },
+      { lyrics: 'ennitum angulil prasadam ille', notes: 'p/2 d/2 S S n/2 S/2 d d S S/3 n/3 S/3 d d p*3' },
+      { lyrics: 'amme....', notes: 'p S*3 n/2 S/2 n/6 d/6 p/6 d/6 p/6 m/6' },
+      { lyrics: 'angullil prasadam ille?', notes: 'm/2 p/2 d p m g/3 r/3 g/3 r r s*2' }
     ]
   },
   'kezhunnen manasam amma': {

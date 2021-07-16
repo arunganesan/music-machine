@@ -1,4 +1,4 @@
-import type {  ShrutiMap, TempoMap, SemitoneAndDuration } from './Types';
+import type { ShrutiMap, TempoMap, SemitoneAndDuration } from './Types';
 
 import { getSemitonesAndDurationOfSong, getSemitoneAndDuration } from './player';
 import { useState } from 'react';
@@ -83,9 +83,11 @@ export default function App() {
     const synth = new Tone.AMSynth().toMaster();
     for (let i = 0; i < semitonesAndDuration.length; i++) {
       setActiveNoteIndex(i);
-      // @ts-ignore
-      const frequency = Tone.Frequency('C4').transpose(semitonesAndDuration[i].semitone);
-      synth.triggerAttackRelease(frequency, semitonesAndDuration[i].duration);
+      if (semitonesAndDuration[i].semitone !== Infinity) {
+        // @ts-ignore
+        const frequency = Tone.Frequency('C4').transpose(semitonesAndDuration[i].semitone);
+        synth.triggerAttackRelease(frequency, semitonesAndDuration[i].duration);
+      }
       await sleep(semitonesAndDuration[i].duration);
       synth.triggerRelease();
       await sleep(50);
