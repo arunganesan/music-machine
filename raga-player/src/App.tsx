@@ -1,43 +1,20 @@
-import type { Song } from './database';
+import type {  ShrutiMap, TempoMap, SemitoneAndDuration } from './Types';
 
+import { getSemitonesAndDurationOfSong, getSemitoneAndDuration } from './player';
 import { useState } from 'react';
 import './App.css';
 import * as React from 'react';
-import { NOTE_RAGA_MAP, RAGAS, SONGS } from './database';
+import { SHRUTI_OFFSET_MAP, DEFAULT_SHRUTI, DEFAULT_TEMPO, RAGAS, SONGS } from './database';
 import Tone from 'tone'
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
+import LineDisplay from './Line';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import _ from 'lodash';
-import { setConstantValue } from 'typescript';
-
-type ShrutiMap = { [key: string]: number };
-type TempoMap = { [key: string]: number };
-type SemitoneAndDuration = {
-  semitone: number,
-  duration: number,
-};
 
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-const SHRUTI_OFFSET_MAP: { [key: string]: string } = {
-  '-5': 'G3',
-  '-4': 'G#3',
-  '-3': 'A4',
-  '-2': 'A#4',
-  '-1': 'B4',
-  '0': 'C4',
-  '1': 'C#4',
-  '2': 'D4',
-  '3': 'D#4',
-  '4': 'E4',
-  '5': 'F4',
-};
-
-const DEFAULT_TEMPO = 250;
-const DEFAULT_SHRUTI = 0;
 
 
 export default function App() {
@@ -65,67 +42,12 @@ export default function App() {
     setForceUpdate(forceUpdate + 1);
   }
 
-
-  function getSemitoneAndDuration(
-    notes: string[],
-    shruti: number,
-    speed: number,
-    mapping: { [key: string]: string }
-  ): SemitoneAndDuration[] {
-    let semitoneAndDurations: SemitoneAndDuration[] = [];
-
-    for (let i = 0; i < notes.length; i++) {
-      let note = notes[i];
-      // remove any time signature.
-      let duration = speed;
-      if (note.includes('/')) {
-        duration /= parseInt(note.slice(-1));
-        note = note.slice(0, note.indexOf('/'));
-      } else if (note.includes('*')) {
-        duration *= parseInt(note.slice(-1));
-        note = note.slice(0, note.indexOf('*'));
-      }
-
-      let octave = 0;
-      if (note.includes('.')) {
-        note = note.replace('.', '');
-        octave = -1;
-      } else if (note.toLowerCase() !== note) {
-        note = note.toLowerCase();
-        octave = 1;
-      }
-
-      const mappednote = _.has(mapping, note) ? mapping[note] : note;
-      const semitone = NOTE_RAGA_MAP.indexOf(mappednote) + octave * 12 + shruti;
-      semitoneAndDurations.push({
-        'semitone': semitone,
-        'duration': duration
-      });
-    }
-
-    return semitoneAndDurations;
-  }
-
-
   const playRaga = async (ragaName: string, shruti: number, speed: number) => {
     const notes = _.join(RAGAS[ragaName], ' ').split(' ');
     const semitonesAndDuration = getSemitoneAndDuration(notes, shruti, speed, {});
     await playSemitonesAndDurations(semitonesAndDuration);
   }
 
-  const getSemitonesAndDurationOfSong = (song: Song, shruti: number, speed: number): SemitoneAndDuration[] => {
-    const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
-    let mapping: { [key: string]: string } = {};
-    ragaNotes.forEach(note => {
-      note = note.replace('^', '').replace('.', '');
-      if (/\d/.test(note)) {
-        const basenote = note.replace(/\d/, '');
-        mapping[basenote] = note;
-      }
-    });
-    const notes = _.join(song.lines.map(line => line.notes), ' ').split(' ')
-    return getSemitoneAndDuration(notes, shruti, speed, mapping);
-  }
 
   const loadSong = (songname: string) => {
     setActiveSong(songname);
@@ -187,37 +109,20 @@ export default function App() {
     let renderedLines: JSX.Element[] = [];
     if (activeSong == null) return renderedLines;
     let fullSongNoteIndex = 0;
+
     for (let lineIdx = 0; lineIdx < SONGS[activeSong].lines.length; lineIdx++) {
-      const lineNotes = SONGS[activeSong].lines[lineIdx].notes.split(' ');
-      let renderedLineNotes: JSX.Element[] = [];
-      for (let noteIdx = 0; noteIdx < lineNotes.length; noteIdx++) {
-        let className = 'note';
-        if (activeNoteIndex === fullSongNoteIndex) {
-          className += ' active';
-        }
-
-        if (fullSongNoteIndex === lowestNoteIndex) {
-          className += ' lowest';
-        } else if (fullSongNoteIndex === highestNoteIndex) {
-          className += ' highest';
-        }
-
-        const newFullSongIndex = fullSongNoteIndex;
-
-        renderedLineNotes.push(<div
-          className={className}
-          onClick={async () => await playIndividualNote(newFullSongIndex)}
-          key={`note index ${newFullSongIndex}`}>
-          {lineNotes[noteIdx]}
-        </div>)
-        fullSongNoteIndex += 1;
-      }
-      renderedLines.push(<div
-        className='line'
-        key={`line index ${lineIdx}`}>
-        {/* <button onClick={() => { }}>Play line</button> */}
-        {renderedLineNotes}
-      </div>);
+      const line = SONGS[activeSong].lines[lineIdx];
+      const lineNotes = line.notes.split(' ');
+      renderedLines.push(<LineDisplay
+        line={line}
+        offsetNoteIndex={fullSongNoteIndex}
+        activeNoteIndex={activeNoteIndex}
+        lowestNoteIndex={lowestNoteIndex}
+        highestNoteIndex={highestNoteIndex}
+        key={`line index ${lineIdx}`}
+        playIndividualNote={playIndividualNote}
+      />);
+      fullSongNoteIndex += lineNotes.length;
     }
     return renderedLines;
   }

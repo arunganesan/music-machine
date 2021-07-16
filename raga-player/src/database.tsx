@@ -1,3 +1,24 @@
+import type { Song } from './Types';
+
+export const SHRUTI_OFFSET_MAP: { [key: string]: string } = {
+  '-5': 'G3',
+  '-4': 'G#3',
+  '-3': 'A4',
+  '-2': 'A#4',
+  '-1': 'B4',
+  '0': 'C4',
+  '1': 'C#4',
+  '2': 'D4',
+  '3': 'D#4',
+  '4': 'E4',
+  '5': 'F4',
+};
+
+export const DEFAULT_TEMPO = 250;
+
+export const DEFAULT_SHRUTI = 0;
+
+
 export const NOTE_RAGA_MAP: string[] = [
   's', 'r1', 'r2', 'g1',
   'g2', 'm1', 'm2', 'p',
@@ -25,16 +46,6 @@ export const RAGAS: { [key: string]: string[] } = {
     's r1 g2 m1 p d2 n1 S',
     'S n1 d2 p m1 g2 r1 s'
   ]
-};
-
-type Line = {
-  lyrics: string,
-  notes: string,
-}
-
-export type Song = {
-  raga: string,
-  lines: Line[],
 };
 
 export const SONGS: { [key: string]: Song } = {
