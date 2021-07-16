@@ -123,7 +123,7 @@ export default function App() {
         mapping[basenote] = note;
       }
     });
-    const notes = _.join(song['notes'], ' ').split(' ');
+    const notes = _.join(song.lines.map(line => line.notes), ' ').split(' ')
     return getSemitoneAndDuration(notes, shruti, speed, mapping);
   }
 
@@ -187,8 +187,8 @@ export default function App() {
     let renderedLines: JSX.Element[] = [];
     if (activeSong == null) return renderedLines;
     let fullSongNoteIndex = 0;
-    for (let lineIdx = 0; lineIdx < SONGS[activeSong].notes.length; lineIdx++) {
-      const lineNotes = SONGS[activeSong].notes[lineIdx].split(' ');
+    for (let lineIdx = 0; lineIdx < SONGS[activeSong].lines.length; lineIdx++) {
+      const lineNotes = SONGS[activeSong].lines[lineIdx].notes.split(' ');
       let renderedLineNotes: JSX.Element[] = [];
       for (let noteIdx = 0; noteIdx < lineNotes.length; noteIdx++) {
         let className = 'note';
@@ -215,6 +215,7 @@ export default function App() {
       renderedLines.push(<div
         className='line'
         key={`line index ${lineIdx}`}>
+        {/* <button onClick={() => { }}>Play line</button> */}
         {renderedLineNotes}
       </div>);
     }
