@@ -6,6 +6,8 @@ export type Line = {
 export type Song = {
     raga: string,
     lines: Line[],
+    lyrics?: string,
+    notes?: string,
 };
 
 

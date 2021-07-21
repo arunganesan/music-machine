@@ -1,6 +1,6 @@
 import type { ShrutiMap, TempoMap, SemitoneAndDuration } from './Types';
 
-import { getSemitonesAndDurationOfSong, getSemitoneAndDuration } from './player';
+import { getSemitonesAndDurationOfSong, getSemitoneAndDurationForBar, getSemitoneAndDuration } from './player';
 import { useState } from 'react';
 import './App.css';
 import * as React from 'react';
@@ -48,6 +48,36 @@ export default function App() {
     await playSemitonesAndDurations(semitonesAndDuration);
   }
 
+  const parseSong = async (songname: string) => {
+    const song = SONGS[songname];
+    const lyrics = song['lyrics'];
+    const notes = song['notes'];
+    if (lyrics == undefined || notes == undefined) {
+      return;
+    }
+
+    const lyricalBars = lyrics.split(',');
+    const musicalBars = notes.split(',');
+    if (lyricalBars.length !== musicalBars.length) {
+      console.log('Bars dont match up');
+      return
+    }
+
+    _.zip(lyricalBars, musicalBars).map(obj => console.log(obj));
+    const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
+    let mapping: { [key: string]: string } = {};
+    ragaNotes.forEach(note => {
+      note = note.replace('^', '').replace('.', '');
+      if (/\d/.test(note)) {
+        const basenote = note.replace(/\d/, '');
+        mapping[basenote] = note;
+      }
+    });
+    const shruti = shrutiMap[songname] ?? DEFAULT_SHRUTI;
+    const speed = tempoMap[songname] ?? DEFAULT_TEMPO;
+    const allSemitoneAndDurations = _.flatten(musicalBars.map(bar => getSemitoneAndDurationForBar(bar, shruti, speed, mapping)));
+    await playSemitonesAndDurations(allSemitoneAndDurations);
+  }
 
   const loadSong = (songname: string) => {
     setActiveSong(songname);
@@ -107,6 +137,30 @@ export default function App() {
     await playSemitonesAndDurations([semitonesAndDuration[noteIndex]]);
   };
 
+
+  const renderNotesV2 = () => {
+    let renderedLines: JSX.Element[] = [];
+    if (activeSong == null) return renderedLines;
+    let fullSongNoteIndex = 0;
+
+    for (let lineIdx = 0; lineIdx < SONGS[activeSong].lines.length; lineIdx++) {
+      const line = SONGS[activeSong].lines[lineIdx];
+      const lineNotes = line.notes.split(' ');
+      renderedLines.push(<LineDisplay
+        line={line}
+        offsetNoteIndex={fullSongNoteIndex}
+        activeNoteIndex={activeNoteIndex}
+        lowestNoteIndex={lowestNoteIndex}
+        highestNoteIndex={highestNoteIndex}
+        key={`line index ${lineIdx}`}
+        playIndividualNote={playIndividualNote}
+      />);
+      fullSongNoteIndex += lineNotes.length;
+    }
+    return renderedLines;
+  }
+
+
   const renderNotes = () => {
     let renderedLines: JSX.Element[] = [];
     if (activeSong == null) return renderedLines;
@@ -158,6 +212,11 @@ export default function App() {
                     <Button
                       onClick={() => loadSong(song)}>
                       Load
+                    </Button>
+
+                    <Button
+                      onClick={async () => await parseSong(song)}>
+                      Parse Song
                     </Button>
 
                     <Form.Control

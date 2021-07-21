@@ -2,6 +2,33 @@ import type { Song, SemitoneAndDuration } from './Types';
 import { NOTE_RAGA_MAP, RAGAS, SONGS } from './database';
 import _ from 'lodash';
 
+
+export function getSemitoneAndDurationForBar(
+    bar: string,
+    shruti: number,
+    lengthOfOneBar: number,
+    mapping: { [key: string]: string }
+): SemitoneAndDuration[] {
+    let notes: string[] = [];
+
+    // Break up into individual notes
+    bar.trim().split(' ').map(noteGroup => {
+        notes = _.concat(notes, noteGroup.split('').map(individualNote =>
+            `${individualNote}/${noteGroup.length}`));
+    });
+
+    // Get the semitones and durations
+    let semitoneAndDurations: SemitoneAndDuration[] = getSemitoneAndDuration(notes, shruti, 1000, mapping);
+
+    // Adjust overall duration to fit in one bar
+    const totalDuration = _.sumBy(semitoneAndDurations, semitoneAndDuration => semitoneAndDuration.duration);
+    for (let i = 0; i < semitoneAndDurations.length; i++) {
+        semitoneAndDurations[i].duration *= lengthOfOneBar / totalDuration;
+    }
+
+    return semitoneAndDurations;
+}
+
 export function getSemitoneAndDuration(
     notes: string[],
     shruti: number,

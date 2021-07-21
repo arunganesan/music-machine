@@ -48,6 +48,7 @@ export const RAGAS: { [key: string]: string[] } = {
   ]
 };
 
+
 export const SONGS: { [key: string]: Song } = {
   'jhilam jhilam': {
     'raga': 'mohanam',
@@ -79,6 +80,20 @@ export const SONGS: { [key: string]: Song } = {
   },
   'ente kannunir': {
     'raga': 'mayamalavagaula',
+    'lyrics': 'ente ,kannunir, etra kan,dalum,' +
+      'manasali,yuka il,le ,amme nin,' +
+      'manasali,yuka il,le,...,' +
+      'etrayo ,naliukalai, nin padam ,alayunnu,' +
+      'ennitum ,angulil ,prasadam il,le' +
+      'am,me,...,' +
+      'angulil ,prasadam il,le,...',
+    'notes': 'n S, nSnS n dpdm, m p m, grr s,' +
+      'g m p m, g r gm, p, mpdp mp g,' +
+      'g m p m, g r r, s,s,' +
+      'm m m, m m m m, mp g m, p p p dpdm,' +
+      'pd S S, nS d d, S SnS d d, p' +
+      'p, S, nS ndpdpm,' +
+      'mp d p, m grg r, r s, _',
     'lines': [
       { lyrics: 'ente kannunir etra kandalum (4)', notes: 'n*3 S n/2 S/2 n/2 S/2 n d/2 p/2 d/2 m/2 _/2 m/2 p m g r r s' },
       { lyrics: 'manasaliyuka ille amme nin (4)', notes: '_ g/2 m p/2 m g r g m p*3 _ m/2 p/2 d/2 p/2 m/2 p/2 g' },
