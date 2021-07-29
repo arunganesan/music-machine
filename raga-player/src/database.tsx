@@ -45,11 +45,27 @@ export const RAGAS: { [key: string]: string[] } = {
   'cakravakam': [
     's r1 g2 m1 p d2 n1 S',
     'S n1 d2 p m1 g2 r1 s'
+  ],
+  'kiravani': [
+    's r2 g1 m1 p d1 n2 S',
+    'S n2 d1 p m1 g1 r2 s'
   ]
 };
 
 
 export const SONGS: { [key: string]: Song } = {
+  'ethayo thedi': {
+    'raga': 'kiravani',
+    'lyrics': 'etayō tēṭi, alaintu inṭru, unai tēṭuki,rēn,' +
+      'kaṇmaṇiyē, karuṇaimazhayē, iruppiṭam tanai, sol,',
+      // 'maunattil lakṣam, pāṭhankaḷ tantāy,' +
+      // 'purintatellām, appōt,' +
+      // 'sūzhnilai vantāl, ellām marantēn,' +
+      // 'iggati toṭarntāl, narggatiyuṇḍō?',
+    'notes': 'p p m g r, r mpm g rg r s n., n. n. s g r, r,'
+      + 'r p m g r, r g r s, n. p. n. g r g, r s s s s,',
+    'lines': [],
+  },
   'jhilam jhilam': {
     'raga': 'mohanam',
     'lines': [

@@ -12,10 +12,18 @@ export function getSemitoneAndDurationForBar(
     let notes: string[] = [];
 
     // Break up into individual notes
-    bar.trim().split(' ').map(noteGroup => {
-        notes = _.concat(notes, noteGroup.split('').map(individualNote =>
-            `${individualNote}/${noteGroup.length}`));
-    });
+    const noteGroups = bar.trim().split(' ');
+    for (const noteGroup of noteGroups) {
+        const tokens = noteGroup.split('');
+        for (let i = 0; i < tokens.length; i++) {
+            let note = tokens[i];
+            if (i < tokens.length - 1 && tokens[i + 1] == '.') {
+                note += '.';
+                i += 1;
+            }
+            notes.push(`${note}/${noteGroup.length}`)
+        }
+    }
 
     // Get the semitones and durations
     let semitoneAndDurations: SemitoneAndDuration[] = getSemitoneAndDuration(notes, shruti, 1000, mapping);
