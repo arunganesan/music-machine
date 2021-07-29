@@ -87,8 +87,8 @@ export const SONGS: { [key: string]: Song } = {
       'ennitum ,angulil ,prasadam il,le' +
       'am,me,...,' +
       'angulil ,prasadam il,le,...',
-    'notes': 'n S, nSnS n dpdm, m p m, grr s,' +
-      'g m p m, g r gm, p, mpdp mp g,' +
+    'notes': '_ n S, nSnS n dpdm, m p m, grr s,' +
+      'gm m pm m, g r gm, p, mpdp mp g,' +
       'g m p m, g r r, s,s,' +
       'm m m, m m m m, mp g m, p p p dpdm,' +
       'pd S S, nS d d, S SnS d d, p' +

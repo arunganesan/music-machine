@@ -3,6 +3,7 @@ import type { ShrutiMap, TempoMap, SemitoneAndDuration } from './Types';
 import { getSemitonesAndDurationOfSong, getSemitoneAndDurationForBar, getSemitoneAndDuration } from './player';
 import { useState } from 'react';
 import './App.css';
+import { push as Menu } from 'react-burger-menu';
 import * as React from 'react';
 import { SHRUTI_OFFSET_MAP, DEFAULT_SHRUTI, DEFAULT_TEMPO, RAGAS, SONGS } from './database';
 import Tone from 'tone'
@@ -18,6 +19,17 @@ function sleep(ms: number) {
 
 
 export default function App() {
+  return <div id="outer-container">
+    <Menu isOpen={true} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
+      {_.keys(SONGS).map(song => <a key={`menu button ${song}`} href="/">{song}</a>)}
+    </Menu>
+    <main id="page-wrap">
+      <AppOld />
+    </main>
+  </div>;
+}
+
+function AppOld() {
   const [forceUpdate, setForceUpdate] = useState(0);
   const [activeSong, setActiveSong] = useState<string>();
   const [activeNoteIndex, setActiveNoteIndex] = useState<number>(0);

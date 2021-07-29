@@ -8,6 +8,7 @@
     "lodash": "^4.17.21",
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0-beta.14",
+    "react-burger-menu": "^3.0.6",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0",
     "tone": "^13.8.25",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.171",
+    "@types/react-burger-menu": "^2.8.1",
     "@types/tone": "git+https://github.com/Tonejs/TypeScript.git"
   }
 }
