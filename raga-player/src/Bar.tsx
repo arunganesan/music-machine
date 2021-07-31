@@ -2,6 +2,7 @@ import './sheet.css';
 import * as React from 'react';
 import _ from 'lodash';
 import Note from './Note';
+import { playSemitonesAndDurations, } from './player';
 
 import type { SemitoneAndDuration } from './Types';
 
@@ -9,8 +10,9 @@ type Props = {
     notes: string[],
     lyrics: string,
     semitoneAndDurations: SemitoneAndDuration[]
-    xscale?: number,
     yoffset?: number,
+    activeNoteIndex: number,
+    startingNoteIndex: number,
 }
 
 export default function Bar(props: Props) {
@@ -18,14 +20,17 @@ export default function Bar(props: Props) {
         notes,
         lyrics,
         semitoneAndDurations,
-        xscale = 1 / 20,
         yoffset = 0,
+        activeNoteIndex,
+        startingNoteIndex
     } = props;
     if (notes.length !== semitoneAndDurations.length) {
         return <div className='bar'>Note and duration lengths dont match up!</div>
     }
 
     let offsetX = 0;
+
+    const totalDuration = _.sum(semitoneAndDurations.map(sand => sand.duration));
 
     return <div className='bar'>
         <div className='notes'>
@@ -36,11 +41,14 @@ export default function Bar(props: Props) {
                     note={note}
                     offsetX={offsetX - sAndD.duration}
                     key={`note ${idx}`}
-                    xscale={xscale}
+                    xscale={1 / totalDuration}
                     yoffset={yoffset}
-                    semitoneAndDuration={semitoneAndDurations[idx]} />
+                    semitoneAndDuration={semitoneAndDurations[idx]}
+                    isActive={startingNoteIndex + idx === activeNoteIndex}
+                />
             })}
         </div>
-        <div className='lyrics'>{lyrics}</div>
+        <div onClick={async (e) => await playSemitonesAndDurations(
+            semitoneAndDurations, num => { })} className='lyrics'>{lyrics}</div>
     </div>
 }

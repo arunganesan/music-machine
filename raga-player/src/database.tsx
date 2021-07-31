@@ -25,7 +25,7 @@ export const NOTE_RAGA_MAP: string[] = [
 ];
 
 export const RAGAS: { [key: string]: string[] } = {
-  'sivaranjini': [
+  'śivaranjinī': [
     's r2 g1 p d2 S',
     'S d2 p g1 r2 s'
   ],
@@ -48,7 +48,8 @@ export const RAGAS: { [key: string]: string[] } = {
   'kīravāṇī': [
     's r2 g1 m1 p d1 n2 S',
     'S n2 d1 p m1 g1 r2 s'
-  ]
+  ],
+
 };
 
 
@@ -57,12 +58,12 @@ export const SONGS: { [key: string]: SongType } = {
     'raga': 'kīravāṇī',
     'lyrics': 'etayō tēṭi, alaintu inṭru, unai tēṭuki,rēn,' +
       'kaṇmaṇiyē, karuṇaimazhayē, iruppiṭam tanai, sol',
-      // 'maunattil lakṣam, pāṭhankaḷ tantāy,' +
-      // 'purintatellām, appōt,' +
-      // 'sūzhnilai vantāl, ellām marantēn,' +
-      // 'iggati toṭarntāl, narggatiyuṇḍō?',
+    // 'maunattil lakṣam, pāṭhankaḷ tantāy,' +
+    // 'purintatellām, appōt,' +
+    // 'sūzhnilai vantāl, ellām marantēn,' +
+    // 'iggati toṭarntāl, narggatiyuṇḍō?',
     'notes': 'p p m g r, r mpm g rg r s n., n. n. s g r, r,'
-      + 'r p m g r, r g r s, n. p. n. g r g, r s s s s',
+      + 'r m m g r, r g r s, n. p. n. n. s g, r s s s s',
     'lines': [],
   },
   'jhilam jhilam': {
@@ -109,15 +110,7 @@ export const SONGS: { [key: string]: SongType } = {
       'pd S S, nS d d, S SnS d d, p' +
       'p, S, nS ndpdpm,' +
       'mp d p, m grg r, r s, _',
-    'lines': [
-      { lyrics: 'ente kannunir etra kandalum (4)', notes: 'n*3 S n/2 S/2 n/2 S/2 n d/2 p/2 d/2 m/2 _/2 m/2 p m g r r s' },
-      { lyrics: 'manasaliyuka ille amme nin (4)', notes: '_ g/2 m p/2 m g r g m p*3 _ m/2 p/2 d/2 p/2 m/2 p/2 g' },
-      { lyrics: 'manasaliyuka ille... (4)', notes: '_ g/2 m p/2 m g r r*2 s*4 _*4' },
-      { lyrics: 'etrayo nalukalai nin padam alayunnu', notes: 'm*7 m/2 p/2 g m p p p d/4 p/4 d/4 m/4' },
-      { lyrics: 'ennitum angulil prasadam ille', notes: 'p/2 d/2 S S n/2 S/2 d d S S/3 n/3 S/3 d d p*3' },
-      { lyrics: 'amme....', notes: 'p S*3 n/2 S/2 n/6 d/6 p/6 d/6 p/6 m/6' },
-      { lyrics: 'angullil prasadam ille?', notes: 'm/2 p/2 d p m g/3 r/3 g/3 r r s*2' }
-    ]
+    'lines': [],
   },
   'kezhunnen manasam amma': {
     'raga': 'darbari kanada',
@@ -132,8 +125,43 @@ export const SONGS: { [key: string]: SongType } = {
       { lyrics: '', notes: 'm r s d. n. n. g/6 r/6 s/6 r/6 g/6 m/6 g/2 s*4' },
     ]
   },
+  'Muralī ninadam kātil': {
+    'raga': 'śivaranjinī',
+    'lyrics': 'muralī, ninadam, kātil, muzhangān,' +
+      'mazha muki,loli varnnam, mizhiyil, teḷiyān,' +
+      'karalin, kadanak,kanalukaḷ, anayān,' +
+      'varumō, kuvalaya, nayanā... ,kṛṣṇā,' +
+      'varumō, kuvalaya, nayanā,...,' +
+
+      'kilukile, naṭayum, naṛu puñ,ciriyum,' +
+      'karuṇāmṛta, rasam, ozhukum, mizhiyum,' +
+      'karaḷil, kaṇikand,azhalā,ṛīṭān,' +
+      'varumō, kuvalaya, nayanā,...,' +
+      'kṛṣṇā,...,...,...,' +
+      'kṛṣṇā,...,...,...,' +
+      'kṛṣṇā,...,...,...,',
+
+      // 'paramānanda kuḷirala ākum' +
+      // 'kaḷa muralīrava svaralaya rāgam' +
+      // 'ozhukiyzhukiyen hṛdayataṭākam' +
+      // 'niṛayaṇamē kara kaviyaṇamē... kṛṣṇā',
+    'notes': 's r g p,p,dSd dp p, mp mp mg g,' +
+      's,s,s,s,' +
+      's,s,s,s,' +
+      's,s,s,s,' +
+      's,s,s,s,' +
+
+      's,s,s,s,' +
+      's,s,s,s,' +
+      's,s,s,s,' +
+      's,s,s,s,' +
+      's,s,s,s,' +
+      's,s,s,s,' +
+      's,s,s,s,',
+    'lines': [],
+  },
   'arikil undenkilum': {
-    'raga': 'sivaranjini',
+    'raga': 'śivaranjinī',
     'lines': [
       { lyrics: '', notes: 'p. d. s r g*3 r g/2 r/2 s/2 d./2 s*4' },
       { lyrics: '', notes: 's r g p p*4 g r/2 g/4 p/4 g/2 r/2 s*2' },

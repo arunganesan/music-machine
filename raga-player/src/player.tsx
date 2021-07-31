@@ -1,6 +1,32 @@
 import type { SongType, SemitoneAndDuration } from './Types';
 import { NOTE_RAGA_MAP, RAGAS, SONGS } from './database';
 import _ from 'lodash';
+import Tone from 'tone'
+
+
+
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export const playSemitonesAndDurations = async (
+    semitonesAndDuration: SemitoneAndDuration[],
+    setActiveNoteIndex: (arg: number) => void,
+) => {
+    const synth = new Tone.AMSynth().toMaster();
+    for (let i = 0; i < semitonesAndDuration.length; i++) {
+        setActiveNoteIndex(i);
+        if (semitonesAndDuration[i].semitone !== Infinity) {
+            // @ts-ignore
+            const frequency = Tone.Frequency('C4').transpose(semitonesAndDuration[i].semitone);
+            synth.triggerAttackRelease(frequency, semitonesAndDuration[i].duration);
+        }
+        await sleep(semitonesAndDuration[i].duration);
+        synth.triggerRelease();
+        await sleep(50);
+    }
+    synth.triggerRelease();
+}
 
 
 export function getSemitoneAndDurationForBar(
