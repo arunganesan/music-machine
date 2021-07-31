@@ -1,6 +1,7 @@
 {
   "start": "PORT=1008 react-scripts start",
   "name": "raga-player",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
