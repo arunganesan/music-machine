@@ -96,13 +96,13 @@ export const SONGS: { [key: string]: SongType } = {
   },
   'ente kannunir': {
     'raga': 'mayamalavagaula',
-    'lyrics': 'ente ,kannunir, etra kan,dalum,' +
-      'manasali,yuka il,le ,amme nin,' +
+    'lyrics': 'ente, kannunir, etra kan,dalum,' +
+      'manasali,yuka il,le, amme nin,' +
       'manasali,yuka il,le,...,' +
-      'etrayo ,naliukalai, nin padam ,alayunnu,' +
-      'ennitum ,angulil ,prasadam il,le' +
+      'etrayo, naliukalai, nin padam, alayunnu,' +
+      'ennitum, angulil, prasadam il,le' +
       'am,me,...,' +
-      'angulil ,prasadam il,le,...',
+      'angulil, prasadam il,le,...',
     'notes': '_ n S, nSnS n dpdm, m p m, grr s,' +
       'gm m pm m, g r gm, p, mpdp mp g,' +
       'g m p m, g r r, s,s,' +
