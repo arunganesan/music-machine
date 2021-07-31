@@ -6,6 +6,32 @@
   min-height: 100vh;
 }
 
+@font-face {
+  font-family: "Hahmlet";
+  src: local("Hahmlet"),
+    url("./fonts/Hahmlet-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+}
+
+.song-menu-item {
+  cursor: pointer;
+  padding: 10px;
+  border-top: solid thin black;
+}
+
+.song-menu-item:last-child {
+  border-bottom: solid thin black;
+}
+
+
+.song-menu-item:hover {
+  background-color: gray;
+}
+
+.song-menu-item.active {
+  background-color: white;
+  color: black;
+}
 
 
 .activeStep {
@@ -69,6 +95,7 @@
 
 
 
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
@@ -111,7 +138,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* General sidebar styles */
 .bm-menu {
   background: #373a47;
-  padding: 2.5em 1.5em 0;
+  padding: 2.5em 0em 0;
   font-size: 1.15em;
 }
 
@@ -123,7 +150,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Wrapper for item list */
 .bm-item-list {
   color: #b8b7ad;
-  padding: 0.8em;
+  /* padding: 0.8em; */
 }
 
 /* Individual item */

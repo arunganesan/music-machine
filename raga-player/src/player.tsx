@@ -1,4 +1,4 @@
-import type { Song, SemitoneAndDuration } from './Types';
+import type { SongType, SemitoneAndDuration } from './Types';
 import { NOTE_RAGA_MAP, RAGAS, SONGS } from './database';
 import _ from 'lodash';
 
@@ -8,7 +8,10 @@ export function getSemitoneAndDurationForBar(
     shruti: number,
     lengthOfOneBar: number,
     mapping: { [key: string]: string }
-): SemitoneAndDuration[] {
+): {
+    'notes': string[],
+    'sand': SemitoneAndDuration[]
+} {
     let notes: string[] = [];
 
     // Break up into individual notes
@@ -34,7 +37,10 @@ export function getSemitoneAndDurationForBar(
         semitoneAndDurations[i].duration *= lengthOfOneBar / totalDuration;
     }
 
-    return semitoneAndDurations;
+    return {
+        'notes': notes,
+        'sand': semitoneAndDurations
+    };
 }
 
 export function getSemitoneAndDuration(
@@ -78,7 +84,7 @@ export function getSemitoneAndDuration(
 
 
 
-export function getSemitonesAndDurationOfSong(song: Song, shruti: number, speed: number): SemitoneAndDuration[] {
+export function getSemitonesAndDurationOfSong(song: SongType, shruti: number, speed: number): SemitoneAndDuration[] {
     const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
     let mapping: { [key: string]: string } = {};
     ragaNotes.forEach(note => {
