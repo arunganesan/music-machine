@@ -15,7 +15,7 @@ function sleep(ms: number) {
 
 export default function App() {
   const [forceUpdate, setForceUpdate] = useState(0);
-  const [activeSongName, setActiveSongName] = useState<string>('Muralī Ninadam Kātil');
+  const [activeSongName, setActiveSongName] = useState<string>('Karuna Sindho Bhairavi');
   const [shrutiMap, setShrutiMap] = useState<ShrutiMap>(
     JSON.parse(localStorage.getItem('shruti') ?? '{}'));
   const [tempoMap, setTempoMap] = useState<TempoMap>(
@@ -39,12 +39,12 @@ export default function App() {
   return <div id="outer-container">
     <Menu isOpen={false} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
       {_.keys(SONGS).map(song => {
-       return <div
+        return <div
           className={'song-menu-item ' + ((song === activeSongName) ? 'active' : '')}
           key={`menu button ${song}`}
-         onClick={() => {
-          setActiveSongName(song);
-         }}>
+          onClick={() => {
+            setActiveSongName(song);
+          }}>
           {song}
         </div>
       })}

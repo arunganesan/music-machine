@@ -49,11 +49,90 @@ export const RAGAS: { [key: string]: string[] } = {
     's r2 g1 m1 p d1 n2 S',
     'S n2 d1 p m1 g1 r2 s'
   ],
-
+  'sindhubhairavī': [
+    's r1 g1 m1 p d1 n1 S',
+    'S n1 d1 p m1 g1 r1 s',
+  ],
 };
 
 
 export const SONGS: { [key: string]: SongType } = {
+  'Karuna Sindho Bhairavi': {
+    'raga': 'sindhubhairavī',
+    'lyrics': 'Karuna, sindho, bhaira,vi,' +
+      'amṛtā,nanda,mayī de,vī,' +
+      'Karuna, sindho, bhaira,vi,' +
+
+      'Pūṛṇa, brahma sva,rūpiṇ,yai,' +
+      'saccidā,nanda, mūrtta,ye,' +
+      'ātmā, rāmāgra, gaṇyā,yai,' +
+      'amṛte,śvaryai, namo na,maḥ,' +
+
+      'Sarva, mangaḷa, māngal,ye' +
+      ',śive sa,rvartha, sādhi,ke' +
+      ',sarṇye, trayamba,ke gau,ri' +
+      ',nārā,yaṇi, namostu, te' +
+      ',Amṛte,śvari, namos,tu te' +
+
+      ',Tvameva, mata, ca pītā, tvameva' +
+      ',tvameva, bandhus, ca sakhā, tvameva' +
+      ',Tvameva, vidyā, dravinam, tvameva' +
+      ',tvameva, sarvam, amṛteśvari, mā' +
+      ',tvameva, sarvam, amṛteśvari, mā' +
+
+      ',Śaraṇ,āgata, dīnār,tha, pari,trāṇa, paraya,ṇē' +
+      ',sarva,syārthi ha,re de,vī' +
+      ',nār,āyani, namostu, te' +
+      ',Amṛt,eśvari, namostu, te' +
+
+      ',Śrīmā,tā śrī, mahārāj,ñī, śrīmat, simhāsan’,eśva,ri' +
+      ',cidagni, kuṇda, sambhū,tā, deva, kārya, samudya,tā' +
+      ',Amṛt,eṣvariyai, namo, namaḥ' +
+
+      ',Karuna, sindho, bhaira,vi, amṛtā,nanda,mayī, devī' +
+      ',Karuna, sindho, karuna, sindho, karuna, sindho, bhaira,vi',
+
+    'notes': 's r m,g rss,n.d. n. s,s,' +
+      'p d Sn,d p,m g gp,m,' +
+      's g mpd,m r,rg r,s,' +
+
+      'm m,m m g,p p,p,' +
+      'n n n,d2 m,pd1n d1,p,' +
+      'd d,d d p,mg gp,m,' +
+      'd d d,mg r,r g r,s,' +
+
+      'S S,S S S,Sn nR,S,' +
+      'n n n,d2 m,pd1n d1,p,' +
+      'd d d,d p,mg gp,m,' +
+      'sg mpd,m g,r rg,r s,' +
+      'n. n. g,g g,r g,r s,' +
+
+      's m m,mp mg,g g p,ndd m m,' +
+      'd d m,g r,r r grg,r s s,' +
+      'p pS S,S S,S R GRG,R S RSn,' +
+      'n n d2,pd2 d2m,p d1 nd1n d1 p,p,' +
+      'd d m,g r,r r grg r s,s,' +
+
+
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+      '_,_,_,_,' +
+
+      '_,_,_,_',
+    'lines': [],
+  },
   'Etayō Tēṭi': {
     'raga': 'kīravāṇī',
     'lyrics': 'etayō tēṭi, alaintu inṭru, unai tēṭuki,rēn,' +
@@ -68,18 +147,12 @@ export const SONGS: { [key: string]: SongType } = {
   },
   'jhilam jhilam': {
     'raga': 'mohanam',
-    'lines': [
-      { lyrics: '', notes: 'r/2 g r/2 g r/2 g r/2 g' },
-      { lyrics: '', notes: 's/2 g r/2 g r/2 g r/2 g' },
-      { lyrics: '', notes: 's/2 r s/2 r s/2 r s/2 r' },
-      { lyrics: '', notes: 'r/2 r g/2 r s/2 s s/2 s' },
-      { lyrics: '', notes: 'g/2 p d/2 S S/2 S S/2 S' },
-      { lyrics: '', notes: 'S/2 S S/2 S S/2 S R/2 S*4 d S d*2' },
-      { lyrics: '', notes: 'd S d p p p d p g g r g r s s s s' }
-      // 'S R S d*2 d S d p*2 p d p g g p g r r g r s s s s',
-      // 'g r g r g r g s g r g r g r g s r s r s r s r',
-      // 'r g r s s s s'
-    ],
+    'lyrics': 'jhilam jhilam,padam bhaveh',
+    'notes': 'rgg rgg rgg rgg, sgg rgg rgg rgg' +
+      'srr srr srr srr,rrr grr sss sss' +
+      'gpp dSS SSS SSS,SSS SSS SSS RSS, S, ds d' +
+      'd S d p, p p d p, g g r g, r s s s',
+    'lines': [],
   },
   'nalancu naleykku': {
     'raga': 'cakravakam',
@@ -141,10 +214,10 @@ export const SONGS: { [key: string]: SongType } = {
       'kṛṣṇā,...,...,...,' +
       'kṛṣṇā,...,...,...,',
 
-      // 'paramānanda kuḷirala ākum' +
-      // 'kaḷa muralīrava svaralaya rāgam' +
-      // 'ozhukiyzhukiyen hṛdayataṭākam' +
-      // 'niṛayaṇamē kara kaviyaṇamē... kṛṣṇā',
+    // 'paramānanda kuḷirala ākum' +
+    // 'kaḷa muralīrava svaralaya rāgam' +
+    // 'ozhukiyzhukiyen hṛdayataṭākam' +
+    // 'niṛayaṇamē kara kaviyaṇamē... kṛṣṇā',
     'notes': 's r g p,p,dSd dp p, m2p m2p m2g g,' +
       's,s,s,s,' +
       's,s,s,s,' +

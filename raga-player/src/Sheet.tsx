@@ -26,7 +26,7 @@ type Props = {
   updateTempo: (arg: number) => void,
 }
 
-const BARS_PER_LINE = 4;
+const BARS_PER_LINE = 8;
 
 export default function Sheet(props: Props) {
   const { song, songName, shruti, tempo, updateShruti, updateTempo } = props;
@@ -45,7 +45,7 @@ export default function Sheet(props: Props) {
   const musicalBars = notes.split(',');
   if (lyricalBars.length !== musicalBars.length) {
     console.log('Bars dont match up');
-    return <>"Bars don't match up"</>;
+    return <>Bars don't match up. Lyrics have {lyricalBars.length} and musical bars have {musicalBars.length}</>;
   }
   const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
   let mapping: { [key: string]: string } = {};
