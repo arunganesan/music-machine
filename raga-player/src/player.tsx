@@ -46,6 +46,11 @@ export function getSemitoneAndDurationForBar(
         const tokens = noteGroup.split('');
         for (let i = 0; i < tokens.length; i++) {
             let note = tokens[i];
+            if (i < tokens.length - 1 && !isNaN(parseInt(tokens[i+1]))) {
+                note += tokens[i + 1];
+                console.log('added');
+                i += 1;
+            }
             if (i < tokens.length - 1 && tokens[i + 1] == '.') {
                 note += '.';
                 i += 1;

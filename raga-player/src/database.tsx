@@ -125,7 +125,7 @@ export const SONGS: { [key: string]: SongType } = {
       { lyrics: '', notes: 'm r s d. n. n. g/6 r/6 s/6 r/6 g/6 m/6 g/2 s*4' },
     ]
   },
-  'Muralī ninadam kātil': {
+  'Muralī Ninadam Kātil': {
     'raga': 'śivaranjinī',
     'lyrics': 'muralī, ninadam, kātil, muzhangān,' +
       'mazha muki,loli varnnam, mizhiyil, teḷiyān,' +
@@ -145,7 +145,7 @@ export const SONGS: { [key: string]: SongType } = {
       // 'kaḷa muralīrava svaralaya rāgam' +
       // 'ozhukiyzhukiyen hṛdayataṭākam' +
       // 'niṛayaṇamē kara kaviyaṇamē... kṛṣṇā',
-    'notes': 's r g p,p,dSd dp p, mp mp mg g,' +
+    'notes': 's r g p,p,dSd dp p, m2p m2p m2g g,' +
       's,s,s,s,' +
       's,s,s,s,' +
       's,s,s,s,' +

@@ -47,7 +47,6 @@ export default function Sheet(props: Props) {
     console.log('Bars dont match up');
     return <>"Bars don't match up"</>;
   }
-  _.zip(lyricalBars, musicalBars).map(obj => console.log(obj));
   const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
   let mapping: { [key: string]: string } = {};
   ragaNotes.forEach(note => {
