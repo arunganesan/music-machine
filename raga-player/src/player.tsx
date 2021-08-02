@@ -112,19 +112,3 @@ export function getSemitoneAndDuration(
 
     return semitoneAndDurations;
 }
-
-
-
-export function getSemitonesAndDurationOfSong(song: SongType, shruti: number, speed: number): SemitoneAndDuration[] {
-    const ragaNotes = _.join(RAGAS[song['raga']], ' ').split(' ');
-    let mapping: { [key: string]: string } = {};
-    ragaNotes.forEach(note => {
-        note = note.replace('^', '').replace('.', '');
-        if (/\d/.test(note)) {
-            const basenote = note.replace(/\d/, '');
-            mapping[basenote] = note;
-        }
-    });
-    const notes = _.join(song.lines.map(line => line.notes), ' ').split(' ')
-    return getSemitoneAndDuration(notes, shruti, speed, mapping);
-}
