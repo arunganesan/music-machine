@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './App.css';
 import { push as Menu } from 'react-burger-menu';
 import * as React from 'react';
-import { DEFAULT_TEMPO, DEFAULT_SHRUTI, RAGAS, SONGS } from './database';
+import { DEFAULT_TEMPO, DEFAULT_SHRUTI, SONGS } from './database';
 import Sheet from './Sheet';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
