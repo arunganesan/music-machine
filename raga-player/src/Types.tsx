@@ -1,13 +1,7 @@
-export type LineType = {
-    lyrics: string,
-    notes: string,
-}
-
 export type SongType = {
     raga: string,
-    lines?: LineType[],
-    lyrics?: string,
-    notes?: string,
+    lyrics: string,
+    notes: string,
 };
 
 

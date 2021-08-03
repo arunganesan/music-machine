@@ -111,43 +111,22 @@ export const SONGS: { [key: string]: SongType } = {
       'd d m,g r,r r grg,r s s,' +
       'p pS S,S S,S R GRG,R S RSn,' +
       'n n d2,pd2 d2m,p d1 nd1n d1 p,p,' +
-      'd d m,g r,r r grg r s,s,' +
-
-
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-      '_,_,_,_,' +
-
-      '_,_,_,_',
-    'lines': [],
+      'd d m,g r,r r grg r s,s'
   },
   'Etayō Tēṭi': {
     'raga': 'kīravāṇī',
     'lyrics': 'etayō tēṭi, alaintu inṭru, unai tēṭuki,rēn,' +
-      'kaṇmaṇiyē, karuṇaimazhayē, iruppiṭam tanai, sol',
-    // 'maunattil lakṣam, pāṭhankaḷ tantāy,' +
-    // 'purintatellām, appōt,' +
-    // 'sūzhnilai vantāl, ellām marantēn,' +
-    // 'iggati toṭarntāl, narggatiyuṇḍō?',
+      'kaṇmaṇiyē, karuṇaimazhayē, iruppiṭam tanai, sol' +
+      'maunattil lakṣam, pāṭhankaḷ tantāy,' +
+      'purintatellām, appōt,' +
+      'sūzhnilai vantāl, ellām marantēn,' +
+      'iggati toṭarntāl, narggatiyuṇḍō?',
     'notes': 'p p m g r, r mpm g rg r s n., n. n. s g r, r,'
       + 'r m m g r, r g r s, n. p. n. n. s g, r s s s s',
-    'lines': [],
   },
   'Jhilam Jhilam': {
     'raga': 'mohanam',
-    'lyrics': 'jhilam jhilam,padam bhaveh,' + ','.repeat(9),
+    'lyrics': 'jhilam jhilam,padam bhaveh,',
     'notes': 'rgg rgg rgg rgg, sgg rgg rgg rgg,' +
       'srr srr srr srr,r grr s s,' +
       'gpp dSS S S,S S S RSS, S, dS d,' +
@@ -179,10 +158,9 @@ export const SONGS: { [key: string]: SongType } = {
       'gmpm, grr, s,s,' +
 
       ('m, m, mp g m, p p p dpdm,' +
-      'pd S S, nS d d, S SnS d d, p' +
-      'p, S, nS ndpdpm,' +
-      'mp d p, m grg r, r s, _,').repeat(3).slice(0, -1),
-    'lines': [],
+        'pd S S, nS d d, S SnS d d, p' +
+        'p, S, nS ndpdpm,' +
+        'mp d p, m grg r, r s, _,').repeat(3).slice(0, -1),
   },
   'Muralī Ninadam Kātil': {
     'raga': 'śivaranjinī',
@@ -206,6 +184,5 @@ export const SONGS: { [key: string]: SongType } = {
     // 'niṛayaṇamē kara kaviyaṇamē... kṛṣṇā',
     'notes': 's r g p,p,dSd dp p, m2p m2p m2g g,' +
       '_,'.repeat(44),
-    'lines': [],
   },
 };

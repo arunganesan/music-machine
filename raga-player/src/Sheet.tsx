@@ -37,12 +37,16 @@ export default function Sheet(props: Props) {
 
   const lyrics = song['lyrics'];
   const notes = song['notes'];
-  if (lyrics == undefined || notes == undefined) {
-    return <>'Need lyrics and notes'</>;
+  let lyricalBars = lyrics.split(',');
+  let musicalBars = notes.split(',');
+  const maxLength = Math.max(lyricalBars.length, musicalBars.length);
+  for (let i = lyricalBars.length - 1; i < maxLength - 1; i++) {
+    lyricalBars.push('-');
+  }
+  for (let i = musicalBars.length - 1; i < maxLength - 1; i++) {
+    musicalBars.push('_');
   }
 
-  const lyricalBars = lyrics.split(',');
-  const musicalBars = notes.split(',');
   if (lyricalBars.length !== musicalBars.length) {
     console.log('Bars dont match up');
     return <>Bars don't match up. Lyrics have {lyricalBars.length} and musical bars have {musicalBars.length}</>;
