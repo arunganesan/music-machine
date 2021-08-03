@@ -145,58 +145,44 @@ export const SONGS: { [key: string]: SongType } = {
       + 'r m m g r, r g r s, n. p. n. n. s g, r s s s s',
     'lines': [],
   },
-  'jhilam jhilam': {
+  'Jhilam Jhilam': {
     'raga': 'mohanam',
-    'lyrics': 'jhilam jhilam,padam bhaveh',
-    'notes': 'rgg rgg rgg rgg, sgg rgg rgg rgg' +
-      'srr srr srr srr,rrr grr sss sss' +
-      'gpp dSS SSS SSS,SSS SSS SSS RSS, S, ds d' +
+    'lyrics': 'jhilam jhilam,padam bhaveh,' + ','.repeat(9),
+    'notes': 'rgg rgg rgg rgg, sgg rgg rgg rgg,' +
+      'srr srr srr srr,r grr s s,' +
+      'gpp dSS S S,S S S RSS, S, dS d,' +
       'd S d p, p p d p, g g r g, r s s s',
-    'lines': [],
   },
-  'nalancu naleykku': {
-    'raga': 'cakravakam',
-    'lines': [
-      { lyrics: '', notes: 'n. s r m g r g r s n.' },
-      { lyrics: '', notes: 'n. s r m g r g r n. s' },
-      { lyrics: '', notes: 'm/2 p/2 d n d d d d n R S' },
-      { lyrics: '', notes: 'n/4 S/4 n/4 R/4 S n d/3 p/3 m/3 m m g/6 m/6 p/6 g/6 m/6 r n. s' },
-      { lyrics: '', notes: 'd n d p/2 m/2 m m g m p d' },
-      { lyrics: '', notes: 'm d n R R R S R/2 S/2 n R S' },
-      { lyrics: '', notes: 'n S R G R S R S n n' },
-      { lyrics: '', notes: 'n/4 S/4 n/4 R/4 S n d/3 p/3 m/3 m m g/6 m/6 p/6 g/6 m/6 r n. s' },
-    ]
-  },
-  'ente kannunir': {
+  'Ente Kaṇṇunīr': {
     'raga': 'mayamalavagaula',
-    'lyrics': 'ente, kannunir, etra kan,dalum,' +
-      'manasali,yuka il,le, amme nin,' +
-      'manasali,yuka il,le,...,' +
-      'etrayo, naliukalai, nin padam, alayunnu,' +
-      'ennitum, angulil, prasadam il,le' +
-      'am,me,...,' +
-      'angulil, prasadam il,le,...',
-    'notes': '_ n S, nSnS n dpdm, m p m, grr s,' +
-      'gm m pm m, g r gm, p, mpdp mp g,' +
-      'g m p m, g r r, s,s,' +
-      'm m m, m m m m, mp g m, p p p dpdm,' +
+    'lyrics': 'ente, kaṇṇunīr, etra kan,dālum,' +
+      'manasali,yuka il,lē, ammē nin,' +
+      'manasali,yuka il,lē,?,' +
+
+      'etrayō, nāḷukaḷāyi, nin pādam, aṇayunnu,' +
+      'enniṭṭum, anguḷḷil, prasādam il,lē ' +
+      'am,mē,...,' +
+      'anguḷḷil, prasādam il,lē,?,' +
+
+      'nin bhakta, dāsarkku, manaḥśānti, eṅkilum,' +
+      'nalkuvān, entinammē, maṭi kāṭṭu,nu ' +
+      'am,mē,...,' +
+      'entinu, maṭi kāṭṭu,nu,' +
+
+      'nin pāda, śaraṇārttham, aṇayumī, aṭiyane,' +
+      'śaraṇam, nalki, anugrahik,kū ' +
+      'am,mē,...,' +
+      'śaraṇam, nalki,anugrahik,kū,',
+
+    'notes': '_n S, nSnS n dpdm, m mpm m, grr s,' +
+      'gmpm, g r gm, p, mpdp mp g,' +
+      'gmpm, grr, s,s,' +
+
+      ('m, m, mp g m, p p p dpdm,' +
       'pd S S, nS d d, S SnS d d, p' +
       'p, S, nS ndpdpm,' +
-      'mp d p, m grg r, r s, _',
+      'mp d p, m grg r, r s, _,').repeat(3).slice(0, -1),
     'lines': [],
-  },
-  'kezhunnen manasam amma': {
-    'raga': 'darbari kanada',
-    'lines': [
-      { lyrics: '', notes: 'g*2 r s d.*2 n. s s*4 m m' },
-      { lyrics: '', notes: 'p/2 S/2 S/4 n/4 R/4 S/4 n/2 p/2 m p g m r*4 s/2 r/2 m/2 g' },
-      { lyrics: '', notes: 'm r s d. n. n. g/6 r/6 s/6 r/6 g/6 m/6 g/2 s*4' },
-      { lyrics: '', notes: 'm*3 p*3 n/2 d/2 n/2 S/3 n/3 d/3 n/2 S/2 n S S*3' },
-      { lyrics: '', notes: 'R*3 S/2 n/2 d n n/2 S/2 S*4' },
-      { lyrics: '', notes: 'G*3 R*2 S/2 n/2 n/2 S/2 R*2 S*2 d/2 n/2 m p' },
-      { lyrics: '', notes: 'm/2 p/2 n p g r s r r s/2 r/2 m/2 g/2' },
-      { lyrics: '', notes: 'm r s d. n. n. g/6 r/6 s/6 r/6 g/6 m/6 g/2 s*4' },
-    ]
   },
   'Muralī Ninadam Kātil': {
     'raga': 'śivaranjinī',
@@ -219,64 +205,7 @@ export const SONGS: { [key: string]: SongType } = {
     // 'ozhukiyzhukiyen hṛdayataṭākam' +
     // 'niṛayaṇamē kara kaviyaṇamē... kṛṣṇā',
     'notes': 's r g p,p,dSd dp p, m2p m2p m2g g,' +
-      's,s,s,s,' +
-      's,s,s,s,' +
-      's,s,s,s,' +
-      's,s,s,s,' +
-
-      's,s,s,s,' +
-      's,s,s,s,' +
-      's,s,s,s,' +
-      's,s,s,s,' +
-      's,s,s,s,' +
-      's,s,s,s,' +
-      's,s,s,s,',
+      '_,'.repeat(44),
     'lines': [],
   },
-  'arikil undenkilum': {
-    'raga': 'śivaranjinī',
-    'lines': [
-      { lyrics: '', notes: 'p. d. s r g*3 r g/2 r/2 s/2 d./2 s*4' },
-      { lyrics: '', notes: 's r g p p*4 g r/2 g/4 p/4 g/2 r/2 s*2' },
-      { lyrics: '', notes: 'r/2 g/4 r/4 s d. d.*2 d. d./2 s/2 s/2 r*4 s d. d. p.*2' },
-      { lyrics: '', notes: 'p. d. s r g*4 r s*2 s/2 r/4 g/4 r/2 s/2 d.*3' },
-      { lyrics: '', notes: 'p. d. s r g*4 r s*4' },
-
-      { lyrics: '', notes: 'd d p d d S d/3 p/3 g*2 g g r/2 g/2 s s*2' },
-      { lyrics: '', notes: 'p d d d/2 S/2 S/2 R/2 d/2 p*4' },
-      { lyrics: '', notes: 'd/2 S/2 R S d p*3 d*3 d/3 p/3 g/3 g g*2' },
-      { lyrics: '', notes: 'r g g g r r g g r*4 r/2 r/2 s/2 d./4 p.' },
-      { lyrics: '', notes: 'p. d. s s s r g*4 r s' }
-    ]
-  },
-  'isvari jagadisvari': {
-    'raga': 'mohanam',
-    'lines': [
-      { lyrics: '', notes: 'g*5 r g r/2 g/s s*3' },
-      { lyrics: '', notes: 's r s/2 d./2 p. d.*2 s r/2 g*2' },
-      { lyrics: '', notes: 'g p p p p p d p/2 g/2 g r' },
-      { lyrics: '', notes: 's r g/2 r/2 s d. d. s r/2 s*2' }
-    ]
-  },
-  'azhikkulil': {
-    'raga': 'mohanam',
-    'lines': [
-      { lyrics: '', notes: 'g g g g r g d p g r s/4 r/4 s/4 d./4' },
-      { lyrics: '', notes: 'd. d. r r r r g/3 r/3 s/3 d./4 s/4 d./4 s s s s s' },
-      { lyrics: '', notes: 'g/3 r/3 s/3 r g p p p p d d S/2 d/2 S/2 d/2 p' },
-      { lyrics: '', notes: 'p d/3 p/3 d/3 p g/2 r/2 r s s r g p/3 d/3 p/3 g/2 r/3 s/3' },
-      { lyrics: '', notes: 's r r r g/2 r/2 s/2 d./2 d. d. s s s*3' },
-
-      { lyrics: '', notes: 'g g g r g g g g d/3 p/3 d/3 p g/2 r/2 r/2 s/2' },
-      { lyrics: '', notes: 's r r g/3 r/3 s/3 s g/6 r/6 s/6 r/6 g/6 p/6 g*3' },
-      { lyrics: '', notes: 'g p d S S S S S/3 S/3 R/3 S/2 d/2 p d d d' },
-      { lyrics: '', notes: 'p d p/2 g/2 g/2 r/2 r s s r g/6 p/6 p/6 d/6 p/6 g*3' },
-
-      { lyrics: '', notes: 'g g r g g g p/2 g/2 r s d. d./2 p./2' },
-      { lyrics: '', notes: 'd. r r g/3 r/3 s/3 s r g g g p p' },
-      { lyrics: '', notes: 'g p p d/4 p/4 d/4 p/4 g r g g' },
-      { lyrics: '', notes: 'p/2 d/2 d/2 p/2 d d p d/2 p/2 g p S d' },
-      { lyrics: '', notes: 'g/2 p/2 d/2 S/2 S S/2 d/2 S R R R*3' }
-    ]
-  }
 };

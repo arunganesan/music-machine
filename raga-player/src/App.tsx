@@ -15,7 +15,7 @@ function sleep(ms: number) {
 
 export default function App() {
   const [forceUpdate, setForceUpdate] = useState(0);
-  const [activeSongName, setActiveSongName] = useState<string>('Karuna Sindho Bhairavi');
+  const [activeSongName, setActiveSongName] = useState<string>('Jhilam Jhilam');
   const [shrutiMap, setShrutiMap] = useState<ShrutiMap>(
     JSON.parse(localStorage.getItem('shruti') ?? '{}'));
   const [tempoMap, setTempoMap] = useState<TempoMap>(

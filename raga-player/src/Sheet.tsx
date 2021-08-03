@@ -26,7 +26,7 @@ type Props = {
   updateTempo: (arg: number) => void,
 }
 
-const BARS_PER_LINE = 8;
+const BARS_PER_LINE = 4;
 
 export default function Sheet(props: Props) {
   const { song, songName, shruti, tempo, updateShruti, updateTempo } = props;
