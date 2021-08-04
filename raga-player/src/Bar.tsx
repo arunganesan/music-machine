@@ -10,9 +10,10 @@ type Props = {
     notes: string[],
     lyrics: string,
     semitoneAndDurations: SemitoneAndDuration[]
-    yoffset?: number,
     activeNoteIndex: number,
     startingNoteIndex: number,
+    lowestNote: number,
+    highestNote: number,
 }
 
 export default function Bar(props: Props) {
@@ -20,9 +21,10 @@ export default function Bar(props: Props) {
         notes,
         lyrics,
         semitoneAndDurations,
-        yoffset = 0,
         activeNoteIndex,
-        startingNoteIndex
+        startingNoteIndex,
+        lowestNote,
+        highestNote,
     } = props;
     if (notes.length !== semitoneAndDurations.length) {
         return <div className='bar'>Note and duration lengths dont match up!</div>
@@ -42,9 +44,10 @@ export default function Bar(props: Props) {
                     offsetX={offsetX - sAndD.duration}
                     key={`note ${idx}`}
                     xscale={1 / totalDuration}
-                    yoffset={yoffset}
                     semitoneAndDuration={semitoneAndDurations[idx]}
                     isActive={startingNoteIndex + idx === activeNoteIndex}
+                    lowestNote={lowestNote}
+                    highestNote={highestNote}
                 />
             })}
         </div>

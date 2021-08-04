@@ -12,7 +12,8 @@ type Props = {
     offsetX: number,
     semitoneAndDuration: SemitoneAndDuration,
     xscale: number,
-    yoffset?: number,
+    lowestNote: number,
+    highestNote: number,
     isActive: boolean,
 }
 
@@ -23,17 +24,20 @@ export default function Note(props: Props) {
         offsetX,
         semitoneAndDuration,
         xscale,
-        yoffset = 0,
-        isActive
+        isActive,
+        lowestNote,
+        highestNote,
     } = props;
 
+    const range = highestNote - lowestNote;
+    console.log(range, highestNote, lowestNote);
     const scaleX = (xcoord: number) => xcoord * xscale * 100 + '%';
-    const scaleY = (ycoord: number) => ycoord * 4 + yoffset;
+    const scaleAndOffsetY = (semitone: number) => _.isFinite(semitone) ? (semitone - lowestNote) / range * 50 : 0;
 
     const style = {
         left: scaleX(offsetX),
         width: scaleX(semitoneAndDuration.duration),
-        bottom: scaleY(semitoneAndDuration.semitone),
+        bottom: scaleAndOffsetY(semitoneAndDuration.semitone),
     };
     return <div
         className={'note ' + ((isActive) ? 'active' : '')}

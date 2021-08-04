@@ -14,7 +14,7 @@ export const SHRUTI_OFFSET_MAP: { [key: string]: string } = {
   '5': 'F4',
 };
 
-export const DEFAULT_TEMPO = 250;
+export const DEFAULT_TEMPO = 1500;
 
 export const DEFAULT_SHRUTI = 0;
 
@@ -174,14 +174,13 @@ export const SONGS: { [key: string]: SongType } = {
       'karuṇāmṛta, rasam, ozhukum, mizhiyum,' +
       'karaḷil, kaṇikand,azhalā,ṛīṭān,' +
       'varumō, kuvalaya, nayanā,...,' +
-      'kṛṣṇā,...,...,...,' +
-      'kṛṣṇā,...,...,...,' +
-      'kṛṣṇā,...,...,...,',
+      'kṛṣṇā,...,...,...,'.repeat(3) +
 
-    // 'paramānanda kuḷirala ākum' +
-    // 'kaḷa muralīrava svaralaya rāgam' +
-    // 'ozhukiyzhukiyen hṛdayataṭākam' +
-    // 'niṛayaṇamē kara kaviyaṇamē... kṛṣṇā',
+      'paramā,nanda, kuḷira,la ākum,' +
+      'kaḷa mura,līrava, svaralaya, rāgam,' +
+      'ozhukiy,zhukiyen, hṛdayata,ṭākam,' +
+      'niṛayaṇa,mē kara, kaviyaṇa,mē...' +
+      'kṛṣṇā,...,...,...,'.repeat(3),
     'notes': 's r g p,p,dSd dp p, m2p m2p m2g g,' +
       '_,'.repeat(44),
   },

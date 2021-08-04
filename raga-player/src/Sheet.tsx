@@ -26,11 +26,12 @@ type Props = {
   updateTempo: (arg: number) => void,
 }
 
-const BARS_PER_LINE = 4;
 
 export default function Sheet(props: Props) {
   const { song, songName, shruti, tempo, updateShruti, updateTempo } = props;
   const [activeNoteIndex, setActiveNoteIndex] = useState<number>(0);
+  const [barsPerLine, setBarsPerLine] = useState<number>(4);
+
   const raga = RAGAS[song.raga];
   const semitonesAndDuration1 = getSemitoneAndDuration(raga[0].split(' '), shruti, tempo, {});
   const semitonesAndDuration2 = getSemitoneAndDuration(raga[1].split(' '), shruti, tempo, {});
@@ -63,7 +64,12 @@ export default function Sheet(props: Props) {
 
   const sandsPerBar = musicalBars.map(bar => getSemitoneAndDurationForBar(bar, shruti, tempo, mapping));
   const songAllSemitoneAndDurations = _.flatten(sandsPerBar.map(sandPerBar => sandPerBar.sand));
-  const totalNumLines = Math.ceil(musicalBars.length / BARS_PER_LINE);
+  const totalNumLines = Math.ceil(musicalBars.length / barsPerLine);
+
+
+  const allSemitones = songAllSemitoneAndDurations.map(sand => sand.semitone).filter(st => _.isFinite(st));
+  const lowestNote = _.min(allSemitones) ?? 0;
+  const highestNote = _.max(allSemitones) ?? 100;
 
   const playRaga = async (ragaName: string, shruti: number, speed: number) => {
     const notes = _.join(RAGAS[ragaName], ' ').split(' ');
@@ -97,7 +103,7 @@ export default function Sheet(props: Props) {
             Play song
           </Button>
 
-          <Form.Control
+          Shruti: <Form.Control
             className='song-shruti-input'
             as="select"
             value={shruti}
@@ -112,10 +118,15 @@ export default function Sheet(props: Props) {
               )}
           </Form.Control>
 
-          <Form.Control
+          Tempo per bar: <Form.Control
             type="number"
             value={tempo}
             onChange={e => updateTempo(_.parseInt(e.target.value))} />
+
+          Bars per line: <Form.Control
+            type="number"
+            value={barsPerLine}
+            onChange={e => setBarsPerLine(_.parseInt(e.target.value))} />
         </div>
       </Card.Body>
     </Card>
@@ -124,6 +135,8 @@ export default function Sheet(props: Props) {
       <div className='subtitle'>Raga: {props.song.raga}</div>
       <Line>
         <Bar
+          lowestNote={lowestNote}
+          highestNote={highestNote}
           notes={raga[0].split(' ')}
           lyrics='ascension'
           semitoneAndDurations={semitonesAndDuration1}
@@ -136,6 +149,8 @@ export default function Sheet(props: Props) {
           semitoneAndDurations={semitonesAndDuration2}
           startingNoteIndex={0}
           activeNoteIndex={-1}
+          lowestNote={lowestNote}
+          highestNote={highestNote}
         />
       </Line>
     </div>
@@ -144,8 +159,8 @@ export default function Sheet(props: Props) {
       <div className='subtitle'>Song</div>
       {_.range(0, totalNumLines).map(lineNo => {
         return <Line key={`line ${lineNo}`}>
-          {_.range(0, BARS_PER_LINE).map(barNo => {
-            const barIdx = lineNo * BARS_PER_LINE + barNo;
+          {_.range(0, barsPerLine).map(barNo => {
+            const barIdx = lineNo * barsPerLine + barNo;
             if (barIdx >= sandsPerBar.length) {
               return <></>;
             }
@@ -157,9 +172,10 @@ export default function Sheet(props: Props) {
               notes={sandPerBar.notes.map(note => note.split('/')[0])}
               semitoneAndDurations={sandPerBar.sand}
               lyrics={lyricalBars[barIdx]}
-              yoffset={20}
               startingNoteIndex={currentNoteIndex - totalNotesInBar}
               activeNoteIndex={activeNoteIndex}
+              lowestNote={lowestNote}
+              highestNote={highestNote}
             />;
           })}
         </Line>
