@@ -68,8 +68,8 @@ export default function Sheet(props: Props) {
 
 
   const allSemitones = songAllSemitoneAndDurations.map(sand => sand.semitone).filter(st => _.isFinite(st));
-  const lowestNote = _.min(allSemitones) ?? 0;
-  const highestNote = _.max(allSemitones) ?? 100;
+  const lowestNote = Math.min(_.min(allSemitones) ?? 0, 0);
+  const highestNote = Math.max(_.max(allSemitones) ?? 12, 12);
 
   const playRaga = async (ragaName: string, shruti: number, speed: number) => {
     const notes = _.join(RAGAS[ragaName], ' ').split(' ');

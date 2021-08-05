@@ -111,7 +111,13 @@ export const SONGS: { [key: string]: SongType } = {
       'd d m,g r,r r grg,r s s,' +
       'p pS S,S S,S R GRG,R S RSn,' +
       'n n d2,pd2 d2m,p d1 nd1n d1 p,p,' +
-      'd d m,g r,r r grg r s,s'
+      'd d m,g r,r r grg r s,s,' +
+
+      ('S S,S S S,Sn nR,S,' +
+      'n n n,d2 m,pd1n d1,p,' +
+      'd d d,d p,mg gp,m,' +
+      'sg mpd,m g,r rg,r s,' +
+      'n. n. g,g g,r g,r s,').repeat(2),
   },
   'Etayō Tēṭi': {
     'raga': 'kīravāṇī',
