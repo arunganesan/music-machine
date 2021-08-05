@@ -9,10 +9,6 @@ import Sheet from './Sheet';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import _ from 'lodash';
 
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export default function App() {
   const [forceUpdate, setForceUpdate] = useState(0);
   const [activeSongName, setActiveSongName] = useState<string>(
@@ -53,7 +49,7 @@ export default function App() {
       })}
     </Menu>
     <main id="page-wrap">
-      {activeSongName != '' && <Sheet
+      {activeSongName !== '' && <Sheet
         songName={activeSongName}
         song={SONGS[activeSongName]}
         shruti={shrutiMap[activeSongName] ?? DEFAULT_SHRUTI}

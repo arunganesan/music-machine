@@ -1,8 +1,7 @@
-import type { SongType, SemitoneAndDuration } from './Types';
-import { NOTE_RAGA_MAP, RAGAS, SONGS } from './database';
+import type { SemitoneAndDuration } from './Types';
+import { NOTE_RAGA_MAP, } from './database';
 import _ from 'lodash';
 import Tone from 'tone'
-
 
 
 function sleep(ms: number) {
@@ -51,7 +50,7 @@ export function getSemitoneAndDurationForBar(
                 console.log('added');
                 i += 1;
             }
-            if (i < tokens.length - 1 && tokens[i + 1] == '.') {
+            if (i < tokens.length - 1 && tokens[i + 1] === '.') {
                 note += '.';
                 i += 1;
             }

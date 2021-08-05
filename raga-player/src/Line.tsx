@@ -1,6 +1,5 @@
 import './sheet.css';
 import * as React from 'react';
-import _ from 'lodash';
 
 type Props = {
     children:

@@ -8,7 +8,7 @@ import {
   getSemitoneAndDuration
 } from './player';
 import {  Card, Button, Form } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { useState, } from 'react';
 
 
 import Bar from './Bar';
@@ -85,7 +85,7 @@ export default function Sheet(props: Props) {
 
   let currentNoteIndex = 0;
   return <div className='sheet'>
-    <div className='sheet-title'>{props.songName}</div>
+    <div className='sheet-title'>{songName}</div>
     <Card key={`${song}`} className='song-card'>
       <Card.Body>
         <div className='song-row'>
