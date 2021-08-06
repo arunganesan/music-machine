@@ -29,7 +29,7 @@ export const RAGAS: { [key: string]: string[] } = {
     's r2 g1 p d2 S',
     'S d2 p g1 r2 s'
   ],
-  'darbari kanada': [
+  'darbāri kānaḍa': [
     'n1. s r2 g1 s m1 p d1 n1 S',
     'S d1 n1 p m1 p g1 m1 r2 s'
   ],
@@ -114,10 +114,43 @@ export const SONGS: { [key: string]: SongType } = {
       'd d m,g r,r r grg r s,s,' +
 
       ('S S,S S S,Sn nR,S,' +
-      'n n n,d2 m,pd1n d1,p,' +
-      'd d d,d p,mg gp,m,' +
-      'sg mpd,m g,r rg,r s,' +
-      'n. n. g,g g,r g,r s,').repeat(2),
+        'n n n,d2 m,pd1n d1,p,' +
+        'd d d,d p,mg gp,m,' +
+        'sg mpd,m g,r rg,r s,' +
+        'n. n. g,g g,r g,r s,').repeat(2),
+  },
+  'Kēzhunnen Mānasam Ammā': {
+    'raga': 'darbāri kānaḍa',
+    'lyrics': 'kēzhunnen, mānasam, ammā, - kēlkkān,' +
+      'kātillē, ninakken,ammā, - ammā,' +
+      'kezhunnen, mānasam, ammā,...,' +
+
+      'piṭayum, hṛdayavumāyi, ninne, tēṭi,' +
+      'nāṭāke, alaññu ñān, ammā,,' +
+      'en munnil, varuvān, entini, tāmasam,' +
+      'entiha, ñān cheyvū, ammā, - ammā,' +
+      'entiha, ñan cheyvū, ammā,...,' +
+
+      'aśaktanām, ennōṭī, alambhāvam, kāṭṭuvān,' +
+      'aparādham, ñān entu, cheytu...,?,' +
+      'chūṭu kaṇṇī,rāl ñān, nin malar,aṭikaḷ,' +
+      'kazhukīṭām, ennennum, ammā, ammā,' +
+      'kazhukīṭām, ennennum, ammā,...,' +
+
+      'dussaha, māmī, prārabdha, bhārattāl,' +
+      'kuzhayunnu, ñān en, ammā,,' +
+      'taḷarumī, aṭiyanu, tāngu nal,kīṭuvān,' +
+      'tāmasam, arutē, ammā, - ammā,' +
+      'tāmasam, arutē, ammā,...,',
+    'notes': 'g r s, d. n. n., s s, m m,' +
+      'pS SnRS np, m p g, m r, sr mg,' +
+      'm r s, d. n. n., grsrgm gs,_,' +
+
+      ('m m m, p p p nd n_Snd, nS n, S S,' +
+      'R R R, Sn d n nS, S S,_,' +
+      'G G G, R R S_n, nS R S, dn m p,' +
+      'mp n p, g r s, r r, sr mg,' +
+      'm r s, d. n. n., grsrgm gs,_,').repeat(3),
   },
   'Etayō Tēṭi': {
     'raga': 'kīravāṇī',
@@ -187,7 +220,6 @@ export const SONGS: { [key: string]: SongType } = {
       'ozhukiy,zhukiyen, hṛdayata,ṭākam,' +
       'niṛayaṇa,mē kara, kaviyaṇa,mē...' +
       'kṛṣṇā,...,...,...,'.repeat(3),
-    'notes': 's r g p,p,dSd dp p, m2p m2p m2g g,' +
-      '_,'.repeat(44),
+    'notes': 's r g p,p,dSd dp p, m2p m2p m2g g,'
   },
 };
