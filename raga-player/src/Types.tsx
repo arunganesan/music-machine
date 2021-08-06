@@ -2,6 +2,7 @@ export type SongType = {
     raga: string,
     lyrics: string,
     notes: string,
+    tracks?: any
 };
 
 

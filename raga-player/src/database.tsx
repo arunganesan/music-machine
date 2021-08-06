@@ -41,9 +41,13 @@ export const RAGAS: { [key: string]: string[] } = {
     's r2 g2 p d2 S',
     'S d2 p g2 r2 s',
   ],
-  'cakravakam': [
+  'cakravākam': [
     's r1 g2 m1 p d2 n1 S',
     'S n1 d2 p m1 g2 r1 s'
+  ],
+  'sēnāvati': [
+    's r1 g2 m1 p d1 n1 S',
+    'S n1 d1 p m1 g2 r1 s'
   ],
   'kīravāṇī': [
     's r2 g1 m1 p d1 n2 S',
@@ -56,7 +60,17 @@ export const RAGAS: { [key: string]: string[] } = {
 };
 
 
+// ṣṭḥṇḷṛṅḍ
 export const SONGS: { [key: string]: SongType } = {
+  'Āṭalarasē': {
+    'raga': 'sēnāvati',
+    'lyrics': 'āṭalarasē, āṭalarasē,' +
+      'āṭumivarai, pārumarasē,' +
+      'tattuvankaḷ, kēṭṭarintār,' +
+      'tannil atanai, uṇarvatenṭrō?,',
+    'notes': 's r m m m, m gg r s s, _ d. n. s g1 r, r s ss s,' +
+    's sr m m, m m m pm, g gm pp pn, dd dp p p',
+  },
   'Karuna Sindho Bhairavi': {
     'raga': 'sindhubhairavī',
     'lyrics': 'Karuna, sindho, bhaira,vi,' +
@@ -121,6 +135,22 @@ export const SONGS: { [key: string]: SongType } = {
   },
   'Kēzhunnen Mānasam Ammā': {
     'raga': 'darbāri kānaḍa',
+    'tracks': [
+      // if not specified, just paste it once
+      // if -1, go until end
+      // if length is longer than file, repeat file
+      // if length is shorter, then crop file
+      { 'file': 'keherewa', 'from': 1, 'to': -1 },
+      { 'file': 'kezhunnen manasam 07.10.2021', 'from': 0 },
+
+
+      // Resample file to a uniform speed (e.g. 1000 per bar)
+      // Then just split it into bars and save it
+      // At each line you just have to play that bar sped up or slowed down
+      // Take song, split it up into bars. Individual files
+      // Then just resample them to the bar width. When you get to bar, just play that one
+      // Take some random music file, just rescale and test it out
+    ],
     'lyrics': 'kēzhunnen, mānasam, ammā, - kēlkkān,' +
       'kātillē, ninakken,ammā, - ammā,' +
       'kezhunnen, mānasam, ammā,...,' +
@@ -147,10 +177,10 @@ export const SONGS: { [key: string]: SongType } = {
       'm r s, d. n. n., grsrgm gs,_,' +
 
       ('m m m, p p p nd n_Snd, nS n, S S,' +
-      'R R R, Sn d n nS, S S,_,' +
-      'G G G, R R S_n, nS R S, dn m p,' +
-      'mp n p, g r s, r r, sr mg,' +
-      'm r s, d. n. n., grsrgm gs,_,').repeat(3),
+        'R R R, Sn d n nS, S S,_,' +
+        'G G G, R R S_n, nS R S, dn m p,' +
+        'mp n p, g r s, r r, sr mg,' +
+        'm r s, d. n. n., grsrgm gs,_,').repeat(3),
   },
   'Etayō Tēṭi': {
     'raga': 'kīravāṇī',
