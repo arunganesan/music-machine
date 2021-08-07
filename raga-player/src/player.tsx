@@ -3,8 +3,8 @@ import { NOTE_RAGA_MAP, } from './database';
 import _ from 'lodash';
 import * as Tone from 'tone'
 
-const onebar = require("./audio/vocals.wav");
-const longer = require("./audio/longer.mp3");
+// const onebar = require("./audio/vocals.wav");
+// const longer = require("./audio/longer.mp3");
 
 function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -19,33 +19,52 @@ export const playSemitonesAndDurations = async (
     // const player = new Tone.Player('vocals.wav').toMaster();
     // const player = new Tone.Player("vocals.wav").toMaster();
 
-    const player = new Tone.GrainPlayer(onebar, async () => {
-        // player.buffer = player.buffer.slice(0, 1);
-        console.log(player.buffer.duration);
-        player.playbackRate = player.buffer.duration * 1000 / perBarTempo;
-        console.log('new playback rate: ', player.playbackRate);
-        let noteCursor = 0;
-        for (let barIdx = 0; barIdx < semitonesAndDuration.length; barIdx++) {
-            player.start();
-            const bar = semitonesAndDuration[barIdx];
-            for (let i = 0; i < bar.length; i++) {
-                setActiveNoteIndex(noteCursor);
-                noteCursor += 1;
-                if (bar[i].semitone !== Infinity) {
-                    // @ts-ignore
-                    const frequency = Tone.Frequency('C4').transpose(bar[i].semitone);
-                    // @ts-ignore
-                    synth.triggerAttackRelease(frequency, bar[i].duration);
-                }
-                await sleep(bar[i].duration);
-                synth.triggerRelease();
-                // await sleep(50);
+    // const player = new Tone.GrainPlayer(onebar, async () => {
+    //     // player.buffer = player.buffer.slice(0, 1);
+    //     console.log(player.buffer.duration);
+    //     player.playbackRate = player.buffer.duration * 1000 / perBarTempo;
+    //     console.log('new playback rate: ', player.playbackRate);
+    //     let noteCursor = 0;
+    //     for (let barIdx = 0; barIdx < semitonesAndDuration.length; barIdx++) {
+    //         player.start();
+    //         const bar = semitonesAndDuration[barIdx];
+    //         for (let i = 0; i < bar.length; i++) {
+    //             setActiveNoteIndex(noteCursor);
+    //             noteCursor += 1;
+    //             if (bar[i].semitone !== Infinity) {
+    //                 // @ts-ignore
+    //                 const frequency = Tone.Frequency('C4').transpose(bar[i].semitone);
+    //                 // @ts-ignore
+    //                 synth.triggerAttackRelease(frequency, bar[i].duration);
+    //             }
+    //             await sleep(bar[i].duration);
+    //             synth.triggerRelease();
+    //             // await sleep(50);
+    //         }
+    //         player.stop();
+    //         await sleep(50);
+    //     }
+    //     player.dispose();
+    // }).toDestination();
+
+
+    let noteCursor = 0;
+    for (let barIdx = 0; barIdx < semitonesAndDuration.length; barIdx++) {
+        const bar = semitonesAndDuration[barIdx];
+        for (let i = 0; i < bar.length; i++) {
+            setActiveNoteIndex(noteCursor);
+            noteCursor += 1;
+            if (bar[i].semitone !== Infinity) {
+                // @ts-ignore
+                const frequency = Tone.Frequency('C4').transpose(bar[i].semitone);
+                // @ts-ignore
+                synth.triggerAttackRelease(frequency, bar[i].duration);
             }
-            player.stop();
+            await sleep(bar[i].duration);
+            synth.triggerRelease();
             await sleep(50);
         }
-        player.dispose();
-    }).toDestination();
+    }
 }
 
 

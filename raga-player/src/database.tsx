@@ -57,11 +57,57 @@ export const RAGAS: { [key: string]: string[] } = {
     's r1 g1 m1 p d1 n1 S',
     'S n1 d1 p m1 g1 r1 s',
   ],
+  'bēgaḍa': [
+    's g2 r2 g2 m1 p d2 p S',
+    'S n1 d2 p m1 g2 r2 s'
+  ]
 };
 
 
 // ṣṭḥṇḷṛṅḍ
 export const SONGS: { [key: string]: SongType } = {
+  'Arivāyi Amṛitāyi': {
+    'raga': 'bēgaḍa',
+    'lyrics': 'aṛivāyi, amṛtāyi, akamala,ril ciram,' +
+      'amarunn,akhila ca,rācara, janani,' +
+      'azhakin, niṛavē, - aṛivin, tikavē,' +
+      'amṛtā,nandama,yi bhava, śamanē,' +
+
+      'uṣassāyi, uṇarvāyi, ulaka, poruḷāyi,' +
+      'maruvum, sura muni, sēvita, caraṇē,' +
+      'uṣassāyi, uṇarvāyi, ulaka, poruḷāyi,' +
+      'maruvum, sura muni, sēvita, caraṇē,' +
+      'karuṇārṇ,avamē, praṇav,āmṛtamē,' +
+      'sakalāma,ya duri,tāpaha, nayanē,' +
+
+      'śrutiyāyi, layamāyi, teḷinīr, kuḷirāyi,' +
+      'sirakaḷil, unarvāy,ozhukum, taṭinī,' +
+      'karaḷin, oḷiyē, kavit,āmṛtamē,' +
+      'kadana, smṛtikaḷe, māikkuka, jananī,' +
+
+      'kanivāyi, tuṇayāyi, anavara,tam hṛdi,' +
+      'tanalaru,ḷum sura, taru val,lari nī,' +
+      'pularit,tēn malar, kānti, katiroḷi,' +
+      'vitaṛum, bhuvana ma,nōhara, vadanē',
+
+    'notes': 's s d.p., s s g g, g m d d, p m g,' +
+      'g m p, g r s, s s d. d., d. r s,' +
+      'g m d, p p mg, g m d Sn, SnS p mg,' +
+      'g m d, p g r, rs d.p., d. r s,' +
+
+      'p p dp, S S S, p d p, d R S,' +
+      'd S G, R S S S, pd p p, d R S,' +
+      'n n dp, S S S, p d p, d R S,' +
+      'd S G, R S S S, pd p p, d R S,' +
+      'd S GR, G G G, G M R, d dR S,' +
+        'r m d, g p S S, p g r, r s s,' +
+
+
+      ('p p dp, S S S, p d p, d R S,' +
+        'd S G, R S S S, pd p p, d R S,' +
+        'd S GR, G G G, G M R, d dR S,' +
+        'r m d, g p S S, p g r, r s s,').repeat(2),
+  },
   'Āṭalarasē': {
     'raga': 'sēnāvati',
     'lyrics': 'āṭalarasē, āṭalarasē,' +

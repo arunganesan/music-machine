@@ -1,11 +1,6 @@
-* Sample actual harmonium sound: https://www.india-instruments.com/sound-samples-591.html
-* Long term: we can add lyrics to each line. It's already typed out. basically each line for a song has lyrics + notes. the current line that's playing will highlight that lyric. "play song" will go through all. if you click on individual lines, it will just play that line in the current tempo + shruti.
-* Build and put it on website so we can load it on phone/ipad
-
-
-
-* Change notes to d4 or d2 or d3 or d to represent the size of the note
-* Calculate length of each note based on how it's lined up with the bar
-
-# Visual
-* Line up the lyrics into bars
+* Use the native web audio. We just need to adjust playback and crop the buffer (all should be easily possible).
+* We can just pre-calculate the sounds for all bars and literally piece together the entire buffer before playing. Like a compile stage (I like that a lot)
+* Then we just need to play/pause from react
+* Finally we should actually load the audio files from a server. Duh we can't load from local file system
+* Maybe use https://www.npmjs.com/package/react-audio-player
+* Also something like https://stackoverflow.com/questions/14908838/loading-an-audio-buffer-and-play-it-using-the-audio-tag
