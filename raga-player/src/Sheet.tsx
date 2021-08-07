@@ -62,8 +62,9 @@ export default function Sheet(props: Props) {
     }
   });
 
-  const sandsPerBar = musicalBars.map(bar => getSemitoneAndDurationForBar(bar, shruti, tempo, mapping));
-  const songAllSemitoneAndDurations = _.flatten(sandsPerBar.map(sandPerBar => sandPerBar.sand));
+  const sandsAndNotesPerBar = musicalBars.map(bar => getSemitoneAndDurationForBar(bar, shruti, tempo, mapping));
+  const sandsPerBar = sandsAndNotesPerBar.map(sandAndNote => sandAndNote.sand);
+  const songAllSemitoneAndDurations = _.flatten(sandsAndNotesPerBar.map(sandPerBar => sandPerBar.sand));
   const totalNumLines = Math.ceil(musicalBars.length / barsPerLine);
 
 
@@ -80,7 +81,7 @@ export default function Sheet(props: Props) {
         'duration': 250,
       };
     });
-    await playSemitonesAndDurations(adjustedDuration, num => { });
+    await playSemitonesAndDurations([adjustedDuration], num => { });
   }
 
   let currentNoteIndex = 0;
@@ -98,7 +99,7 @@ export default function Sheet(props: Props) {
 
           <Button
             onClick={async () =>
-              await playSemitonesAndDurations(songAllSemitoneAndDurations, setActiveNoteIndex)
+              await playSemitonesAndDurations(sandsPerBar, setActiveNoteIndex, tempo)
             }>
             Play song
           </Button>
@@ -161,10 +162,10 @@ export default function Sheet(props: Props) {
         return <Line key={`line ${lineNo}`}>
           {_.range(0, barsPerLine).map(barNo => {
             const barIdx = lineNo * barsPerLine + barNo;
-            if (barIdx >= sandsPerBar.length) {
+            if (barIdx >= sandsAndNotesPerBar.length) {
               return <></>;
             }
-            const sandPerBar = sandsPerBar[barIdx];
+            const sandPerBar = sandsAndNotesPerBar[barIdx];
             const totalNotesInBar = sandPerBar.notes.length;
             currentNoteIndex += totalNotesInBar;
             return <Bar

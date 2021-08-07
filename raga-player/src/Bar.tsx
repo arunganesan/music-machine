@@ -52,6 +52,6 @@ export default function Bar(props: Props) {
             })}
         </div>
         <div onClick={async (e) => await playSemitonesAndDurations(
-            semitoneAndDurations, num => { })} className='lyrics'>{lyrics}</div>
+            [semitoneAndDurations], num => { })} className='lyrics'>{lyrics}</div>
     </div>
 }

@@ -67,9 +67,12 @@ export const SONGS: { [key: string]: SongType } = {
     'lyrics': 'āṭalarasē, āṭalarasē,' +
       'āṭumivarai, pārumarasē,' +
       'tattuvankaḷ, kēṭṭarintār,' +
-      'tannil atanai, uṇarvatenṭrō?,',
+      'tannil atanai, uṇarvatenṭrō?',
     'notes': 's r m m m, m gg r s s, _ d. n. s g1 r, r s ss s,' +
-    's sr m m, m m m pm, g gm pp pn, dd dp p p',
+      's sr m m, m m m pm, g gm pp pn, dd dp p p',
+    'tracks': [
+      { 'file': 'keherewa', 'from': 0, 'end': -1 }
+    ]
   },
   'Karuna Sindho Bhairavi': {
     'raga': 'sindhubhairavī',

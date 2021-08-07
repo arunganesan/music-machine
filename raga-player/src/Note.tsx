@@ -30,7 +30,6 @@ export default function Note(props: Props) {
     } = props;
 
     const range = highestNote - lowestNote;
-    console.log(range, highestNote, lowestNote);
     const scaleX = (xcoord: number) => xcoord * xscale * 100 + '%';
     const scaleAndOffsetY = (semitone: number) => _.isFinite(semitone) ? (semitone - lowestNote) / range * 50 : 0;
 
@@ -43,7 +42,7 @@ export default function Note(props: Props) {
         className={'note ' + ((isActive) ? 'active' : '')}
         style={style}
         onClick={async (e) => await playSemitonesAndDurations(
-            [semitoneAndDuration], num => { }
+            [[semitoneAndDuration]], num => { }
         )}
     >
         {note}
