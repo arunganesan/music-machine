@@ -169,7 +169,7 @@ export default function Sheet(props: Props) {
             const totalNotesInBar = sandPerBar.notes.length;
             currentNoteIndex += totalNotesInBar;
             return <Bar
-              key={`active-song-bar-${barIdx}`}
+              key={`active-song-bar-line-${lineNo}-${barIdx}`}
               notes={sandPerBar.notes.map(note => note.split('/')[0])}
               semitoneAndDurations={sandPerBar.sand}
               lyrics={lyricalBars[barIdx]}
