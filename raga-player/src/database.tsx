@@ -66,6 +66,29 @@ export const RAGAS: { [key: string]: string[] } = {
 
 // ṣṭḥṇḷṛṅḍ
 export const SONGS: { [key: string]: SongType } = {
+  'Manassoru Māyā': {
+    'raga': 'mohanam',
+    'lyrics': 'Manassoru, māyā, marīci,ka,' +
+      'atirezh,ātta, marīci,ka,' +
+      'ariyā,tirikke, nizhalpōl,tuṭarum,' +
+      'ariyum,bōl verum, marīci,ka,' +
+      'manassoru, māyā, marīci,ka,' +
+
+      'Vṛthayuṇar,ttīṭum, sukhamuṇar,ttīṭum,' +
+      'āyiram, anubhava,tika yuṇar,ttīṭum,' +
+      'viṣayamal,lēlum, viṣayiyum,allanām,' +
+      'ariyum,bōl varu, marīci,ka,' +
+      'manassoru, māyā, marīci,ka,' +
+
+      'Bhōga ra,saṅgalil, vīṇu na,śikkum,' +
+      'tyāgata,pagniyil, nīri jva,likum,' +
+      'bandha vi,dhāyajam, mōkṣasa,hāyam,' +
+      'ariyum,bōl varu, marīci,ka,' +
+      'manassoru, māyā, marīci,ka,',
+      // ṣṭḥṇḷṛṅḍ
+
+    'notes': ''
+  },
   'Arivāyi Amṛitāyi': {
     'raga': 'bēgaḍa',
     'lyrics': 'aṛivāyi, amṛtāyi, akamala,ril ciram,' +
