@@ -60,6 +60,10 @@ export const RAGAS: { [key: string]: string[] } = {
   'bēgaḍa': [
     's g2 r2 g2 m1 p d2 p S',
     'S n1 d2 p m1 g2 r2 s'
+  ],
+  'naṭabhairavī': [
+    's r2 g1 m1 p d1 n1 S',
+    'S n1 d1 p m1 g1 r2 s',
   ]
 };
 
@@ -85,9 +89,30 @@ export const SONGS: { [key: string]: SongType } = {
       'bandha vi,dhāyajam, mōkṣasa,hāyam,' +
       'ariyum,bōl varu, marīci,ka,' +
       'manassoru, māyā, marīci,ka,',
-      // ṣṭḥṇḷṛṅḍ
 
     'notes': ''
+  },
+  'Anandamāyi Paṭarunna': {
+    'raga': 'naṭabhairavī',
+    'lyrics': 'ananta,māyi paṭa,runnōr,ākāśa,mē,...,' +
+      'antarangam, āveśam,āyuṇa,runnu,' +
+      'am,mē, ambi,kē,, nityakan,yē,' +
+      'nityē ni,rāmayē, nirmala,mē,' +
+      'nityē ni,rāmayē, nirmala,mē,' +
+
+      'arutaru,tē avi,ṭunni,niyum,' +
+      'aṭiyane, mōhitan,ākkaru,tē,' +
+      'anudinam, viṭarumī, hṛdaya, v,ēdanakaḷ,' +
+      'aṛiññiṭu,mō nī, hṛdayēś,varī,' +
+      'aṛiññiṭu,mō nī, hṛdayēś,varī,' +
+
+      'ammayil,lē enikk,ammayil,lē,' +
+      'paṛayū, paṛayū, ānanda,mē,...' +
+      'ānandam, vēndā, ārōrum, vēndā,' +
+      'nirmala, prēma, bhakti, tarū,' +
+      'nirmala, prēma, bhakti, tarū,',
+    'notes': 'n. s r s, n. n.s, r rn., r s n. s, r, r mg r s,' +
+      's r r gm mm, mp pp pr r, sn. n. g r, s',
   },
   'Arivāyi Amṛitāyi': {
     'raga': 'bēgaḍa',
@@ -123,7 +148,7 @@ export const SONGS: { [key: string]: SongType } = {
       'n n dp, S S S, p d p, d R S,' +
       'd S G, R S S S, pd p p, d R S,' +
       'd S GR, G G G, G M R, d dR S,' +
-        'r m d, g p S S, p g r, r s s,' +
+      'r m d, g p S S, p g r, r s s,' +
 
 
       ('p p dp, S S S, p d p, d R S,' +
