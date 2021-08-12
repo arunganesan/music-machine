@@ -64,12 +64,49 @@ export const RAGAS: { [key: string]: string[] } = {
   'naṭabhairavī': [
     's r2 g1 m1 p d1 n1 S',
     'S n1 d1 p m1 g1 r2 s',
+  ],
+  'sarasvatī': [
+    's r2 m2 p d2 S',
+    'S n1 d2 p m2 r2 s',
   ]
 };
 
 
 // ṣṭḥṇḷṛṅḍ
 export const SONGS: { [key: string]: SongType } = {
+  'Tava Tirumozhikaḷ': {
+    'raga': 'sarasvatī',
+    'lyrics': 'Tava tiru,mozhikaḷ, hṛdi tiru,madhuram,' +
+      'śruti vachan,āmṛta, laharima,yam,' +
+      'pularoḷi, tiraḷum, kuvalaya, nayanam,' +
+      'hṛdi timi,rāpaha, mihiraka,ram,' +
+      'hṛdi timi,rāpaha, mihiraka,ram,' +
+
+      'Kaivalaya,dāyini, nin kṛpā,ānugraham,' +
+      'kaiśōra, kāntiyil, nīntippū, mānasam,' +
+      'avyāja, divyamā, pīyūṣa,pānattāl,' +
+      'mṛtyuvum, mitramāyi, tīrumal,lō dṛḍham,' +
+
+      'Aṇu jīvan,āyi hṛttil, maruvunnu, nī' +
+      'viśva,moru pāda,dhūḷiyāl, virachippū, nī,' +
+      'tānu māna,sangaḷkku, tuṇayāya, chaitanya,' +
+      'mahimā,vu nī jñāna, savitāvu, nī,' +
+
+      'Mozhiyilum, mizhiyilum, vazhiyunnu, hā' +
+      'viśva, vijayiyāyi, divyamā, snēhadhā,ra,' +
+      'oru tirin,āḷamā, ammē ta,vāntika,' +
+      'teriyaṭṭe, jīvanā, snēhavāy,pil,',
+    'notes': 's r m p, d d SdS, d RS n d, p m p,' +
+      'm p Sd p, m p p, r p r r, s,' +
+      's r m m, r r s, s r n. d., s s s,' +
+      's r m p, d d SdS, d RS n d, p,' +
+      'm p Sd p, m p p, r p r r, s,' +
+
+      ('p d S, R R R, S R RRM, R R S,' +
+      'SR n d, p p p, mp d d, Sd S S,' +
+      'p d S, nd p p, mp Sd p, m p p,' +
+      'm p d, p r r, sr n. d., s s s,').repeat(3),
+  },
   'Manassoru Māyā': {
     'raga': 'mohanam',
     'lyrics': 'Manassoru, māyā, marīci,ka,' +
