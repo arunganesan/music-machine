@@ -1,3 +1,4 @@
+import { snakeCase } from 'lodash';
 import type { SongType } from './Types';
 
 export const SHRUTI_OFFSET_MAP: { [key: string]: string } = {
@@ -68,12 +69,28 @@ export const RAGAS: { [key: string]: string[] } = {
   'sarasvatī': [
     's r2 m2 p d2 S',
     'S n1 d2 p m2 r2 s',
-  ]
+  ],
 };
+
+
+
 
 
 // ṣṭḥṇḷṛṅḍ
 export const SONGS: { [key: string]: SongType } = {
+  'Manasā Vāchā': {
+    'raga': 'naṭabhairavī',
+    'lyrics': 'manasā, vāchā, karmaṇā,ā,' +
+      'niranta,ram ninne, smarikku,nnu,' +
+      'enniṭṭu, mennōṭu, kanivukāṭ,ṭān,' +
+      'amāntam,entē, ponnam,mē,' +
+      'amāntam,entē, ponnam,mē',
+    'notes': 'ss r,s r, sr m, g,' +
+      'g m p p, r sn., rr s, s,' +
+      'gm m m, p nn nd n, S S S nS, S' +
+      'n R R S, n d d, n n p p, p,' +
+      'm d d p, m g gp, gr gr sn., s,s'
+  },
   'Tava Tirumozhikaḷ': {
     'raga': 'sarasvatī',
     'lyrics': 'Tava tiru,mozhikaḷ, hṛdi tiru,madhuram,' +
@@ -103,9 +120,9 @@ export const SONGS: { [key: string]: SongType } = {
       'm p Sd p, m p p, r p r r, s,' +
 
       ('p d S, R R R, S R RRM, R R S,' +
-      'SR n d, p p p, mp d d, Sd S S,' +
-      'p d S, nd p p, mp Sd p, m p p,' +
-      'm p d, p r r, sr n. d., s s s,').repeat(3),
+        'SR n d, p p p, mp d d, Sd S S,' +
+        'p d S, nd p p, mp Sd p, m p p,' +
+        'm p d, p r r, sr n. d., s s s,').repeat(3),
   },
   'Manassoru Māyā': {
     'raga': 'mohanam',

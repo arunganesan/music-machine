@@ -24,3 +24,9 @@
 * Specify track name. This will load the JSON file (using AJAX) and load up all of the individual bars using Tone.TrackBuffer
 * Then, based on the "start" and "end" mapping, it will lay out all tracks into one giant Tone.TrackBuffer
 * Then it will play that. Simple.
+
+
+
+---
+
+* Should we turn the database into standalone files? Using JS file hardcoded seems weird. We could have a folder for each song... The ragas can be hard coded.
