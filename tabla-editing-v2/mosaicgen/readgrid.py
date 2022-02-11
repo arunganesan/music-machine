@@ -38,7 +38,7 @@ def main():
     Output = width/height and X/Y of each video
     """
     specfile = 'gridspec.json'
-    print read_spec(specfile)
+    print(read_spec(specfile))
 
 
 if __name__ == '__main__':
