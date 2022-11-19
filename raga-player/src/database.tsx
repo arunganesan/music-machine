@@ -78,6 +78,17 @@ export const RAGAS: { [key: string]: string[] } = {
 
 // ṣṭḥṇḷṛṅḍ
 export const SONGS: { [key: string]: SongType } = {
+  'Vēdānta vēnalilūṭe': {
+    'raga': 'naṭabhairavī',
+    'lyrics': 'vēdānta, vēnali, lūṭe,oru,' +
+      'nādānta,pānthana,laññā,āl,' +
+      'nī tān tu,ṇaykkum ava,ne,enna,' +
+      'gītārttham, ippōzh eviṭē, ē',
+    'notes': 'g2 g2 g2 r,sn.d.n. d. n. n.,s s, s ss,' +
+      'n.s s s,s sn., n.r r rs, n.d. d. d.,' +
+      'd. n.r r r, g m m m, m2 m2 m mg, r r r,' +
+      'sr g gr, sn. d. n. n., s, s'
+  },
   'Manasā Vāchā': {
     'raga': 'naṭabhairavī',
     'lyrics': 'manasā, vāchā, karmaṇā,ā,' +
